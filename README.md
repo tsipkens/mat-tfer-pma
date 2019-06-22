@@ -1,8 +1,12 @@
-## README: Particle mass analyzer transfer function evaluation
+## UBC-tfer-PMA
 
 The attached functions and script are intended to reproduce the results of
-this paper. Information on each file is given as header information in
-each file, and only a brief overview is provided here.
+the associated paper. They evaluate the transfer function of the centrifugal 
+particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). 
+This is done using a novel set of expressions derived from particle 
+tracking methods and using a finite difference method. Information on 
+each file is given as header information in each file, and only a brief 
+overview is provided here.
 
 ----------------------------------------------------------------------
 
