@@ -1,5 +1,6 @@
 
-% MAIN Script used in plotting different transfer functions.
+% MAIN      Script used in plotting different transfer functions.
+% Author:   Timothy Sipkens, 2019-06-25
 %=========================================================================%
 
 

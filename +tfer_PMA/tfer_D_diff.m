@@ -1,8 +1,9 @@
 
-function [Lambda,G0] = tfer_D_diff(m_star,m,d,z,prop,varargin)
 % TFER_D_DIFF   Evaluates the transfer function for a PMA in Case D (w/ diffusion).
 % Author:       Timothy Sipkens, 2018-12-27
-% 
+%=========================================================================%
+
+function [Lambda,G0] = tfer_D_diff(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass

@@ -1,8 +1,9 @@
 
-function [Lambda] = tfer_A_Ehara(m_star,m,d,z,prop,varargin)
 % TFER_A_EHARA  Evaluates the transfer function for a PMA in Case A as per Ehara et al. (1996).
 % Author:       Timothy Sipkens, 2018-12-27
-% 
+%=========================================================================%
+
+function [Lambda] = tfer_A_Ehara(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass

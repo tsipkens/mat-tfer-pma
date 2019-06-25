@@ -1,8 +1,9 @@
 
-function [Lambda,G0] = tfer_F(m_star,m,d,z,prop,varargin)
 % TFER_F    Evaluates the transfer function for a PMA in Case F.
 % Author:   Timothy Sipkens, 2019-03-21
-% 
+%=========================================================================%
+
+function [Lambda,G0] = tfer_F(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass

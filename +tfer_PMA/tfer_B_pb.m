@@ -1,8 +1,9 @@
 
-function [Lambda,G0] = tfer_B_pb(m_star,m,d,z,prop,varargin)
 % TFER_B_PB     Evaluates the transfer function for a PMA in Case B (w/ parabolic flow).
 % Author:       Timothy Sipkens, 2019-03-21
-% 
+%=========================================================================%
+
+function [Lambda,G0] = tfer_B_pb(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass

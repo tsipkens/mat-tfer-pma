@@ -1,7 +1,9 @@
 
-function [Lambda] = tfer_tri(m_star,m,d,z,prop,varargin)
 % TFER_TRI Evaluates the transfer function for a PMA as a triangular function.
 % Author: Timothy Sipkens, 2018-12-27
+%=========================================================================%
+
+function [Lambda] = tfer_tri(m_star,m,d,z,prop,varargin)
 % 
 %-------------------------------------------------------------------------%
 % Inputs:
