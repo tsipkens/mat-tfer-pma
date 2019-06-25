@@ -1,4 +1,5 @@
 
+
 function [B,Zp] = dm2zp(d,z,T,p)
 % DM2ZP Calculate electric mobility from a vector of mobility diameter.
 % Adapted from: Buckley et al. and Olfert laboratory.
@@ -30,22 +31,23 @@ end
 
 %-- Perform calculation --------------------------------------------------%
 e = 1.6022e-19; % electron charge [C]
-if nargin<=3 % if pressure and temperature are not specified (Buckley et al. / Davies)
+if nargin<=3 % if pressure and temperature are not specified, use Buckley/Davies
     mu = 1.82e-5; % gas viscosity [Pa*s]
     B = Cc(d)./(3*pi*mu.*d); % mechanical mobility
     
 else % from Olfert laboratory / Kim et al.
     S = 110.4; % temperature [K]
     T_0 = 296.15; % reference temperature [K]
-    vis_23 = 1.83245*10^-5; % reference viscosity [kg/(m*s)] or [Pa*s] or [N*s/m2]
+    vis_23 = 1.83245*10^-5; % reference viscosity [kg/(m*s)]
     mu = vis_23*((T/T_0)^1.5)*((T_0+S)/(T+S)); % gas viscosity
-        % Kim et al. (2005), ISO 15900 Eqn 3
-        
+        % Kim et al. (2005), ISO 15900, Eqn 3
+    
     B = Cc(d,T,p)./(3*pi*mu.*d); % mechanical mobility
     
 end
+%-------------------------------------------------------------------------%
 
-Zp = B.*e.*z;
+Zp = B.*e.*z; % electromobility
 
 end
 
