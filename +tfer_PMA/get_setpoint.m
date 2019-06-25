@@ -1,10 +1,7 @@
 
-% GET_SETPOINT Script to evaluate setpoint parameters, including C0, alpha, and beta.
-% Author: Timothy A. Sipkens, 2019-05-01
-% Note: As a script, this code uses variables currently in the workspace. 
-%  This script is also used to parse some of the inputs to the various 
-%  transfer functions, including the existence of the integer charge state 
-%  and particle mobility. 
+% GET_SETPOINT  Script to evaluate setpoint parameters
+%               including C0, alpha, and beta.
+% Author:       Timothy A. Sipkens, 2019-05-01
 %
 %-------------------------------------------------------------------------%
 % Requied variables:
@@ -22,6 +19,11 @@
 %   C0          Summary parameter for the electrostatic force
 %   tau         Product of mechanical mobility and particle mass
 %   sp          Struct containing mutliple setpoint parameters (V, alpha, etc.)
+% 
+% Notes:    As a script, this code uses variables currently in the 
+%           workspace. This script is also used to parse some of the inputs 
+%           to the various transfer functions, including the existence of 
+%           the integer charge state and particle mobility. 
 %-------------------------------------------------------------------------%
 
 

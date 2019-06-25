@@ -23,7 +23,7 @@ prop = tfer_PMA.prop_CPMA('Olfert'); % get properties of the CPMA
 
 
 %=========================================================================%
-%-- Finite difference solution -------------------------------------------%
+%-- Finite difference solutions ------------------------------------------%
 tic;
 [tfer_FD,~,n] = tfer_PMA.tfer_FD(m_star,...
     m,d,1,prop,'Rm',Rm);
@@ -143,7 +143,7 @@ t(18) = toc;
 
 
 %=========================================================================%
-%-- Plot different transfer functions with respect to m/m* ---------------%
+%-- Plot di
 m_plot = m./m_star;
 
 figure(2);

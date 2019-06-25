@@ -1,7 +1,7 @@
 
 function [Lambda,G0] = tfer_B_pb(m_star,m,d,z,prop,varargin)
-% TFER_B_PB Evaluates the transfer function for a PMA in Case B (w/ parabolic flow).
-% Author: Timothy Sipkens, 2019-03-21
+% TFER_B_PB     Evaluates the transfer function for a PMA in Case B (w/ parabolic flow).
+% Author:       Timothy Sipkens, 2019-03-21
 % 
 %-------------------------------------------------------------------------%
 % Inputs:
@@ -20,7 +20,8 @@ function [Lambda,G0] = tfer_B_pb(m_star,m,d,z,prop,varargin)
 %   G0          Function mapping final to initial radial position
 %-------------------------------------------------------------------------%
 
-tfer_PMA.get_setpoint; % get setpoint
+
+tfer_PMA.get_setpoint; % get setpoint (parses d and z)
 
 %-- Taylor series expansion constants ------------------------------------%
 C3 = tau.*(sp.alpha^2*prop.rc+2*sp.alpha*sp.beta/prop.rc+sp.beta^2/(prop.rc^3)-C0./(m.*prop.rc));

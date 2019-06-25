@@ -1,5 +1,6 @@
 function [prop] = prop_CPMA(opt)
 % PROP_CPMA Generates the prop struct used to summarize CPMA parameters.
+% Author: Timothy Sipkens
 % 
 %-------------------------------------------------------------------------%
 % Input:

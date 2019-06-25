@@ -1,8 +1,7 @@
 
 function [Lambda,prop,n] = tfer_FD(m_star,m,d,z,prop,varargin)
-% TFER_FD Evaluates the transfer function of a PMA using finite differences.
-% Author: Timothy Sipkens, 2018-12-27
-% Based on: Buckley et al., J. Aerosol Sci. (2008) and Olfert group
+% TFER_FD   Evaluates the transfer function of a PMA using finite differences.
+% Author:   Timothy Sipkens, 2018-12-27
 % 
 %-------------------------------------------------------------------------%
 % Inputs:
@@ -21,15 +20,13 @@ function [Lambda,prop,n] = tfer_FD(m_star,m,d,z,prop,varargin)
 %   prop        Device properties (e.g. classifier length)
 %   n           Struct containing information about the particle
 %               distribution at different axial position (used for plotting)
+%
+% Notes:
+% 	This code is adapted from Buckley et al. (2017) and the Olfert
+% 	laboratory. 
 %-------------------------------------------------------------------------%
 
-if ~exist('prop','var') % if particle mass analyzer properties not specified
-    prop = tfer_PMA.prop_CPMA; % will use default in this function
-elseif isempty(prop)
-    prop = tfer_PMA.prop_CPMA;
-end
-
-tfer_PMA.get_setpoint; % get setpoint
+tfer_PMA.get_setpoint; % get setpoint (parses d and z)
 
 
 %-- Discretize the space -------------------------------------------------%
@@ -50,7 +47,8 @@ rc = (prop.r2+prop.r1)/2;
 %-- Evaluate relevant radial quantities ----------------------------------%
 v_theta = sp.alpha.*r_vec+sp.beta./r_vec; % azimuthal velocity distribution
 F_e = C0./r_vec; % electrostatic force
-v_z = 3/2*prop.v_bar.*(1-((r_vec-rc)./(del)).^2); % axial velocity distribution (parabolic)
+v_z = 3/2*prop.v_bar.*(1-((r_vec-rc)./(del)).^2);
+    % axial velocity distribution (parabolic)
 % v_z = v_bar.*ones(size(r_vec)); % axial velocity distribution (plug)
 
 
@@ -76,7 +74,7 @@ for ii=ind % loop over mass (not m_star)
 
     ind_mid = 2:(length(r_vec)-1);
 
-    %-- Get coefficients ------------------%
+    %-- Get coefficients ---------------------------------%
     zet = v_z./dz;
     gam = D(ii)/(2*dr^2);
     kap = D(ii)./(4.*r_vec.*dr);
@@ -93,7 +91,7 @@ for ii=ind % loop over mass (not m_star)
         (gam-kap(end)+phi(end)).*n(end-1);
     RHS = @(n) [RHS1(n),RHS2(n),RHS3(n)];
     
-    %-- Form A matrix ---------------------------------------%
+    %-- Form A matrix ------------------------------------%
     b1 = (zet(1)+2*gam+eta(1)); % center
     c1 = (-gam-kap(1)+phi(1)); % +1
 
@@ -108,7 +106,7 @@ for ii=ind % loop over mass (not m_star)
     b = [b1,b2,b3];
     c = [c1,c2];
     
-    %-- Initialize variables -------------------------%
+    %-- Initialize variables -----------------------------%
     n_vec = ones(size(r_vec)); % number concentration at current axial position
     n_vec0 = n_vec; % initial number concentration (used for tfer_PMA. func. eval.)
     if nargout==3 % initilize variables used for visualizing number concentrations
@@ -116,7 +114,7 @@ for ii=ind % loop over mass (not m_star)
         n_mat(1,:) = n_vec;
     end
     
-    %-- Primary loop for finite difference ---------------------------%
+    %-- Primary loop for finite difference ---------------%
     for jj = 2:nz
         n_vec = max(tfer_PMA.tridiag([0,a],b,c,RHS(n_vec)),0);
             % solve system using Thoman algorithm
