@@ -22,7 +22,7 @@ function [Lambda,G0] = tfer_C(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 
 
-tfer_PMA.get_setpoint; % get setpoint (parses d and z)
+get_setpoint; % get setpoint (parses d and z)
 
 %-- Estimate equilibrium radius ------------------------------------------%
 if round((sqrt(C0./m_star)-sqrt(C0./m_star-4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc

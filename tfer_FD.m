@@ -27,7 +27,7 @@ function [Lambda,prop,n] = tfer_FD(m_star,m,d,z,prop,varargin)
 % 	laboratory. 
 %-------------------------------------------------------------------------%
 
-tfer_PMA.get_setpoint; % get setpoint (parses d and z)
+get_setpoint; % get setpoint (parses d and z)
 
 
 %-- Discretize the space -------------------------------------------------%
@@ -109,7 +109,7 @@ for ii=ind % loop over mass (not m_star)
     
     %-- Initialize variables -----------------------------%
     n_vec = ones(size(r_vec)); % number concentration at current axial position
-    n_vec0 = n_vec; % initial number concentration (used for tfer_PMA. func. eval.)
+    n_vec0 = n_vec; % initial number concentration (used for  func. eval.)
     if nargout==3 % initilize variables used for visualizing number concentrations
         n_mat = zeros(nz,length(r_vec));
         n_mat(1,:) = n_vec;
@@ -117,7 +117,7 @@ for ii=ind % loop over mass (not m_star)
     
     %-- Primary loop for finite difference ---------------%
     for jj = 2:nz
-        n_vec = max(tfer_PMA.tridiag([0,a],b,c,RHS(n_vec)),0);
+        n_vec = max(tridiag([0,a],b,c,RHS(n_vec)),0);
             % solve system using Thoman algorithm
             
         if nargout==3; n_mat(jj,:) = n_vec; end
@@ -133,7 +133,7 @@ for ii=ind % loop over mass (not m_star)
         % evaluate transfer fucntion
         
     if Lambda(ii) < 0.0005; Lambda(ii) = 0; end
-        % truncate small tfer_PMA. func. values
+        % truncate small  func. values
     
 end
 
