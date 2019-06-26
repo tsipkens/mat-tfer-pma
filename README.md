@@ -1,11 +1,25 @@
 ## UBC-tfer-PMA
 
 The attached functions and script are intended to reproduce the results of
+<<<<<<< HEAD
+<<<<<<< HEAD
 the associated paper (submitted). They evaluate the transfer function of
 the centrifugal particle mass analyzer (CPMA) and aerosol particle mass
 analyzer (APM). This is done using a novel set of expressions derived from
 particle tracking methods and using a finite difference method. Information
 on each file is given as header information in each file, and only a brief
+=======
+=======
+>>>>>>> parent of 9c9a7b5... Additional updated to commenting
+the associated paper. They evaluate the transfer function of the centrifugal 
+particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). 
+This is done using a novel set of expressions derived from particle 
+tracking methods and using a finite difference method. Information on 
+each file is given as header information in each file, and only a brief 
+<<<<<<< HEAD
+>>>>>>> parent of 9c9a7b5... Additional updated to commenting
+=======
+>>>>>>> parent of 9c9a7b5... Additional updated to commenting
 overview is provided here.
 
 ----------------------------------------------------------------------

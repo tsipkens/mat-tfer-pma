@@ -1,9 +1,5 @@
 
-% MAIN Script used in plotting different transfer functions.
-%=========================================================================%
 
-
-%-- Initialize script ----------------------------------------------------%
 clear;
 close all;
 
@@ -21,16 +17,17 @@ d = (6.*m./(rho_eff.*pi)).^(1/3);
 prop = prop_CPMA('Olfert'); % get properties of the CPMA
 % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
 
-
-%=========================================================================%
-%-- Finite difference solution -------------------------------------------%
+%%
+%-------------------------------------------------------------------------%
+%-- Finite difference solutions ------------------------------------------%
 tic;
 [tfer_FD,~,n] = tfer_FD(m_star,...
     m,d,1,prop,'Rm',Rm);
 t(1) = toc;
 
 
-%=========================================================================%
+%%
+%-------------------------------------------------------------------------%
 %-- Transfer functions for different cases -------------------------------%
 %-- Setup for centriputal force ------------------------------------------%
 if ~exist('d','var')
@@ -44,6 +41,7 @@ sig = sqrt(2.*prop.L.*D./prop.v_bar);
 D0 = D.*prop.L/(prop.del^2*prop.v_bar); % dimensionless diffusion coeff.
 
 
+%%
 %-- Particle tracking approaches -----------------------------------------%
 %-- Plug flow ------------------------------------------------------------%
 %-- Method A ------------------------------%
@@ -102,17 +100,17 @@ end
 
 
 %-- Diffusive transfer functions -----------------------------------------%
-%-- Method A --------------------------------%
+%-- Method A ------------------------------%
 tic;
 tfer_A_diff = tfer_A_diff(m_star,m,d,z,prop,'Rm',Rm);
 t(11) = toc;
 
-%-- Method B --------------------------------%
+%-- Method B -------------------------------%
 tic;
 tfer_B_diff = tfer_B_diff(m_star,m,d,z,prop,'Rm',Rm);
 t(12) = toc;
 
-%-- Method C --------------------------------%
+%-- Method C -----------------------------%
 tic;
 tfer_C_diff = tfer_C_diff(m_star,m,d,z,prop,'Rm',Rm);
 t(13) = toc;
@@ -142,8 +140,7 @@ t(18) = toc;
 
 
 
-%=========================================================================%
-%-- Plot different transfer functions with respect to m/m* ---------------%
+%%
 m_plot = m./m_star;
 
 figure(2);
