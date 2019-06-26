@@ -1,11 +1,11 @@
 ## UBC-tfer-PMA
 
 The attached functions and script are intended to reproduce the results of
-the associated paper (submitted). They evaluate the transfer function of 
-the centrifugal particle mass analyzer (CPMA) and aerosol particle mass 
-analyzer (APM). This is done using a novel set of expressions derived from 
-particle tracking methods and using a finite difference method. Information 
-on each file is given as header information in each file, and only a brief 
+the associated paper (submitted). They evaluate the transfer function of
+the centrifugal particle mass analyzer (CPMA) and aerosol particle mass
+analyzer (APM). This is done using a novel set of expressions derived from
+particle tracking methods and using a finite difference method. Information
+on each file is given as header information in each file, and only a brief
 overview is provided here.
 
 ----------------------------------------------------------------------
@@ -43,8 +43,9 @@ The functions share common inputs:
   resolution, inner electrode angular speed, or voltage.
 
 Note that in these functions, there is a reference to the script
-(`get_setpoint.m`), which evaluates the setpoint and related properties,
-including C0, alpha, and beta.
+`get_setpoint.m`. This script parses the d and z inputs to each of the
+`tfer_*/m` functions and then evaluates the setpoint and related properties,
+including C0, alpha, and beta. 
 
 #### Demonstration script (`main.m`)
 
