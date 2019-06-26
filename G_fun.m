@@ -1,7 +1,9 @@
 
+% G_FUN     Function used in root-finding procedure to specify search interval.
+% Author:   Timothy Sipkens, 2019-02-02
+%=========================================================================%
+
 function G = G_fun(min_fun,rL,rs,r1,r2,alpha,beta)
-% G_FUN Function used in root-finding procedure to specify search interval.
-% 
 %-------------------------------------------------------------------------%
 % Inputs:
 %   min_fun     Function to minimize, depends on case letter (Sipkens et al.)
@@ -25,6 +27,7 @@ offset = 1e-9; % offset of rs in which rL is considered equal to rs
                     % (.e. no change in radial position of particle)
 
 G = zeros(nL,ns); % pre-allocate output variable
+
 
 %-- Determine interval in which to search and fo root-finding ------------%
 for jj=1:nL % loop throught all specified particle exit radii

@@ -1,8 +1,9 @@
 
-function [Lambda,G0] = tfer_A(m_star,m,d,z,prop,varargin)
-% TFER_A Evaluates the transfer function for a PMA in Case A.
-% Author: Timothy Sipkens, 2018-12-27
-% 
+% TFER_E    Evaluates the transfer function for a PMA in Case E.
+% Author:   Timothy Sipkens, 2019-03-21
+%=========================================================================%
+
+function [Lambda,G0] = tfer_E(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -20,7 +21,8 @@ function [Lambda,G0] = tfer_A(m_star,m,d,z,prop,varargin)
 %   G0          Function mapping final to initial radial position
 %-------------------------------------------------------------------------%
 
-tfer_PMA.get_setpoint; % get setpoint
+
+get_setpoint; % get setpoint (parses d and z)
 
 %-- Estimate equilibrium radius ------------------------------------------%
 if round((sqrt(C0./m_star)-sqrt(C0./m_star-4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc
@@ -35,7 +37,8 @@ lam = 2.*tau.*(sp.alpha^2-sp.beta^2./(rs.^4)).*prop.L./prop.v_bar;
 
 
 %-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) rs+(r-rs).*exp(-lam);
+G0 = @(r) 1./(sp.omega1.*sqrt(m)).*...
+    sqrt((m.*sp.omega1^2.*r.^2-C0).*exp(-lam)+C0);
 
 ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
 rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
