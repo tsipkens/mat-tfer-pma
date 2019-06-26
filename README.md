@@ -24,28 +24,27 @@ include diffusion and assume parabolic axial flow conditions, respectively.
 
 The functions share common inputs:
 
-1. m_star - the setpoint mass,
+1. *m_star* - the setpoint mass,
 
-2. m - the masses at which the transfer function will be evaluated,
+2. *m* - the masses at which the transfer function will be evaluated,
 
-3. d - the mobility diameter (either as a scalar or as a vector with the
+3. *d* - the mobility diameter (either as a scalar or as a vector with the
   same length as the masses at which the transfer function is to be
   evaluated),
 
-4. z - the integer charge state (either as a scalar or as a vector with the
+4. *z* - the integer charge state (either as a scalar or as a vector with the
   same length as the masses at which the transfer function is to be
   evaluated),
 
-5. prop - a struct that contains the properties of the particle mass analyzer
+5. *prop* - a struct that contains the properties of the particle mass analyzer
   (a sample script to generate this quantity is include as `prop_CPMA.m`), and
 
-6. varargin (optional) - name-value pairs to specify either the equivalent
+6. *varargin* (optional) - name-value pairs to specify either the equivalent
   resolution, inner electrode angular speed, or voltage.
 
 Note that in these functions, there is a reference to the script
-`get_setpoint.m`. This script parses the d and z inputs to each of the
-`tfer_*/m` functions and then evaluates the setpoint and related properties,
-including C0, alpha, and beta. 
+(`get_setpoint.m`). This script parses the inputs *d* and *z* and then
+evaluates the setpoint and related properties, including C0, alpha, and beta.
 
 #### Demonstration script (`main.m`)
 
