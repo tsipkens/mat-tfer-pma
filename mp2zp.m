@@ -1,10 +1,8 @@
 
-% MP2ZP     Calculate electric mobility from a vector of particle mass.
-% Author:   Timothy Sipkens, 2019-01-02
-%=========================================================================%
-
 function [Zp,B,d] = mp2zp(m,z,T,P)
-
+% MP2ZP     Calculate electric mobility from a vector of particle mass.
+% Author:   Timothy Sipkens, 2019-1-2
+% 
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m           Particle mass
@@ -17,9 +15,8 @@ function [Zp,B,d] = mp2zp(m,z,T,P)
 %   B           Mechanical mobility
 %   d           Mobility diameter (implied by mass-mobility relation)
 % 
-% Note:
-%   Uses mass-mobility relationship to first convert to a mobility
-%   diameter and then estimates the mobility using dm2zp.
+% Note:     Uses mass-mobility relationship to first convert to a mobility
+%           diameter and then estimates the mobility using dm2zp.
 %-------------------------------------------------------------------------%
 
 

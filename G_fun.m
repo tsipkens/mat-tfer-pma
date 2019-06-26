@@ -1,9 +1,8 @@
 
+function G = G_fun(min_fun,rL,rs,r1,r2,alpha,beta)
 % G_FUN     Function used in root-finding procedure to specify search interval.
 % Author:   Timothy Sipkens, 2019-02-02
-%=========================================================================%
-
-function G = G_fun(min_fun,rL,rs,r1,r2,alpha,beta)
+% 
 %-------------------------------------------------------------------------%
 % Inputs:
 %   min_fun     Function to minimize, depends on case letter (Sipkens et al.)

@@ -1,9 +1,8 @@
 
+function [Lambda,prop,n] = tfer_FD(m_star,m,d,z,prop,varargin)
 % TFER_FD   Evaluates the transfer function of a PMA using finite differences.
 % Author:   Timothy Sipkens, 2018-12-27
-%=========================================================================%
-
-function [Lambda,prop,n] = tfer_FD(m_star,m,d,z,prop,varargin)
+% 
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass

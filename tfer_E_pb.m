@@ -1,9 +1,7 @@
 
+function [Lambda,G0] = tfer_E_pb(m_star,m,d,z,prop,varargin)
 % TFER_E_PB     Evaluates the transfer function for a PMA in Case E (w/ parabolic flow).
 % Author:       Timothy Sipkens, 2019-03-21
-%=========================================================================%
-
-function [Lambda,G0] = tfer_E_pb(m_star,m,d,z,prop,varargin)
 % 
 %-------------------------------------------------------------------------%
 % Inputs:

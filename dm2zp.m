@@ -1,9 +1,8 @@
 
+function [B,Zp] = dm2zp(d,z,T,p)
 % DM2ZP     Calculate electric mobility from a vector of mobility diameter.
 % Author:   Timothy Sipkens, 2019-01-02
-%=========================================================================%
-
-function [B,Zp] = dm2zp(d,z,T,p)
+%
 %-------------------------------------------------------------------------%
 % Inputs:
 %   d           Particle mobility diameter
