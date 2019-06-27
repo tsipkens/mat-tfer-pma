@@ -1,23 +1,26 @@
 
+% DM2ZP     Calculate electric mobility from a vector of mobility diameter.
+% Author:   Timothy Sipkens, 2019-01-02
+%=========================================================================%
 
 function [B,Zp] = dm2zp(d,z,T,p)
-% DM2ZP Calculate electric mobility from a vector of mobility diameter.
-% Adapted from: Buckley et al. and Olfert laboratory.
-% Author: Timothy Sipkens, 2019-01-02
-% Note: Temperature and pressure must both be specified before they are
-%   used.
-%
 %-------------------------------------------------------------------------%
 % Inputs:
 %   d           Particle mobility diameter
 %   z           Integer charge state
-%   T           System temperature  
-%                   (Optional, if not specified use code from Buckley et al.)
-%   P           System pressure     (Optional, same as above)
+%   T           System temperature  (Optional, see note 1 below)
+%   P           System pressure     (Optional, see note 1 below)
 %
 % Outputs:
 %   Zp          Electromobility
 %   B           Mechanical mobility
+%
+% Notes:
+% 1 Temperature (T) and pressure (p) must both be specified before 
+%   they are used. Otherwise, they are ignored and the code from Buckley
+%   et al. (2017) is used.
+% 2 Some of the code is adapted from Buckley et al. (2017) and Olfert 
+%   laboratory.
 %-------------------------------------------------------------------------%
 
 
@@ -30,12 +33,13 @@ end
 
 
 %-- Perform calculation --------------------------------------------------%
-e = 1.6022e-19; % electron charge [C]
-if nargin<=3 % if pressure and temperature are not specified, use Buckley/Davies
+e = 1.6022e-19; % define electron charge [C]
+
+if nargin<=3 % if P and T are not specified, use Buckley/Davies
     mu = 1.82e-5; % gas viscosity [Pa*s]
     B = Cc(d)./(3*pi*mu.*d); % mechanical mobility
     
-else % from Olfert laboratory / Kim et al.
+else % If P and T are Olfert laboratory / Kim et al.
     S = 110.4; % temperature [K]
     T_0 = 296.15; % reference temperature [K]
     vis_23 = 1.83245*10^-5; % reference viscosity [kg/(m*s)]
@@ -47,28 +51,35 @@ else % from Olfert laboratory / Kim et al.
 end
 %-------------------------------------------------------------------------%
 
+
 Zp = B.*e.*z; % electromobility
 
 end
 
 
+
 function Cc = Cc(d,T,p)
-% CC Function to evaluate Cunningham slip correction factor.
-% Author: Timothy Sipkens, 2019-01-02
+% CC.m      Function to evaluate Cunningham slip correction factor.
+% Author:   Timothy Sipkens, 2019-01-02
 %
 %-------------------------------------------------------------------------%
 % Inputs:
 %   d           Particle mobility diameter
 %   T           System temperature  
-%                   (Optional, if not specified use code from Buckley et al.)
+%                   (Optional, s)
 %   P           System pressure     (Optional, same as above)
 %
 % Outputs:
 %   Zp          Electromobility
 %   B           Mechanical mobility
+% 
+% Note:
+% 1 As with above, the temperature (T) and pressure (p) must both be 
+%   specified before they are used. Otherwise, they are ignored and the 
+%   code from Buckley et al. (2017) is used.
 %-------------------------------------------------------------------------%
 
-if nargin==1 % if pressure and temperature are not specified (Buckley et al. / Davies)
+if nargin==1 % if P and T are not specified, use Buckley/Davies
     mfp = 66.5e-9; % mean free path
     
     % for air, from Davies (1945)
@@ -77,15 +88,15 @@ if nargin==1 % if pressure and temperature are not specified (Buckley et al. / D
     A3 = 0.55;
     
 else % from Olfert laboratory / Kim et al.
-    S = 110.4; % temperature in K
-    mfp_0 = 6.730*10^-8; % mean free path of gas molecules in air at reference conditions [m]
+    S = 110.4; % temperature [K]
+    mfp_0 = 6.730*10^-8; % mean free path of gas molecules in air [m]
     T_0 = 296.15; % reference temperature [K]
     p_0 = 101325; % reference pressure, [Pa] (760 mmHg to Pa)
     
     p = p*p_0;
     
-    % Kim et al. (2005) (doi:10.6028/jres.110.005), ISO 15900 Eqn 4
     mfp = mfp_0*(T/T_0)^2*(p_0/p)*((T_0+S)/(T+S)); % mean free path
+        % Kim et al. (2005) (doi:10.6028/jres.110.005), ISO 15900 Eqn 4
     
     A1 = 1.165;
     A2 = 0.483;

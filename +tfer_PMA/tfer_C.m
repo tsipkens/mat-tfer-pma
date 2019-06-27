@@ -1,8 +1,9 @@
 
+% TFER_C    Evaluates the transfer function for a PMA in Case C.
+% Author:   Timothy Sipkens, 2019-03-21
+%=========================================================================%
+
 function [Lambda,G0] = tfer_C(m_star,m,d,z,prop,varargin)
-% TFER_C Evaluates the transfer function for a PMA in Case C.
-% Author: Timothy Sipkens, 2019-03-21
-% 
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -20,16 +21,8 @@ function [Lambda,G0] = tfer_C(m_star,m,d,z,prop,varargin)
 %   G0          Function mapping final to initial radial position
 %-------------------------------------------------------------------------%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-get_setpoint; % get setpoint (parses d and z)
-=======
-tfer_PMA.get_setpoint; % get setpoint
->>>>>>> parent of 9c9a7b5... Additional updated to commenting
-=======
-tfer_PMA.get_setpoint; % get setpoint
->>>>>>> parent of 9c9a7b5... Additional updated to commenting
+tfer_PMA.get_setpoint; % get setpoint (parses d and z)
 
 %-- Estimate equilibrium radius ------------------------------------------%
 if round((sqrt(C0./m_star)-sqrt(C0./m_star-4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc

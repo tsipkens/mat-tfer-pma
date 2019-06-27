@@ -1,8 +1,9 @@
 
+% TFER_D    Evaluates the transfer function for a PMA in Case D.
+% Author:   Timothy Sipkens, 2019-03-21
+%=========================================================================%
+
 function [Lambda,G0] = tfer_D(m_star,m,d,z,prop,varargin)
-% TFER_D Evaluates the transfer function for a PMA in Case D.
-% Author: Timothy Sipkens, 2019-03-21
-% 
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -20,16 +21,8 @@ function [Lambda,G0] = tfer_D(m_star,m,d,z,prop,varargin)
 %   G0          Function mapping final to initial radial position
 %-------------------------------------------------------------------------%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-get_setpoint; % get setpoint (parses d and z)
-=======
-tfer_PMA.get_setpoint; % get setpoint
->>>>>>> parent of 9c9a7b5... Additional updated to commenting
-=======
-tfer_PMA.get_setpoint; % get setpoint
->>>>>>> parent of 9c9a7b5... Additional updated to commenting
+tfer_PMA.get_setpoint; % get setpoint (parses d and z)
 
 %-- Taylor series expansion constants ------------------------------------%
 C3 = tau.*(sp.alpha^2*prop.rc+2*sp.alpha*sp.beta/prop.rc+sp.beta^2/(prop.rc^3)-C0./(m.*prop.rc));

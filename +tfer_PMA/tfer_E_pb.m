@@ -1,7 +1,9 @@
 
+% TFER_E_PB     Evaluates the transfer function for a PMA in Case E (w/ parabolic flow).
+% Author:       Timothy Sipkens, 2019-03-21
+%=========================================================================%
+
 function [Lambda,G0] = tfer_E_pb(m_star,m,d,z,prop,varargin)
-% TFER_E_PB Evaluates the transfer function for a PMA in Case E (w/ parabolic flow).
-% Author: Timothy Sipkens, 2019-03-21
 % 
 %-------------------------------------------------------------------------%
 % Inputs:
@@ -21,15 +23,7 @@ function [Lambda,G0] = tfer_E_pb(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-get_setpoint; % get setpoint (parses d and z)
-=======
-tfer_PMA.get_setpoint; % get setpoint
->>>>>>> parent of 9c9a7b5... Additional updated to commenting
-=======
-tfer_PMA.get_setpoint; % get setpoint
->>>>>>> parent of 9c9a7b5... Additional updated to commenting
+tfer_PMA.get_setpoint; % get setpoint (parses d and z)
 
 %-- Estimate equilibrium radius ------------------------------------------%
 if round((sqrt(C0./m_star)-sqrt(C0./m_star-4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc
@@ -53,7 +47,7 @@ min_fun = @(rL,r0,ii) F(rL,ii)-F(r0,ii)-prop.L;
 
 
 %-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
+G0 = @(r) tfer_PMA.G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
 
 ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
 rb = min(prop.r2,max(prop.r1,G0(prop.r2)));

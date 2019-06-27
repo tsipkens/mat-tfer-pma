@@ -1,8 +1,9 @@
 
+% TFER_B_PB     Evaluates the transfer function for a PMA in Case B (w/ parabolic flow).
+% Author:       Timothy Sipkens, 2019-03-21
+%=========================================================================%
+
 function [Lambda,G0] = tfer_B_pb(m_star,m,d,z,prop,varargin)
-% TFER_B_PB Evaluates the transfer function for a PMA in Case B (w/ parabolic flow).
-% Author: Timothy Sipkens, 2019-03-21
-% 
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -20,16 +21,8 @@ function [Lambda,G0] = tfer_B_pb(m_star,m,d,z,prop,varargin)
 %   G0          Function mapping final to initial radial position
 %-------------------------------------------------------------------------%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-get_setpoint; % get setpoint (parses d and z)
-=======
-tfer_PMA.get_setpoint; % get setpoint
->>>>>>> parent of 9c9a7b5... Additional updated to commenting
-=======
-tfer_PMA.get_setpoint; % get setpoint
->>>>>>> parent of 9c9a7b5... Additional updated to commenting
+tfer_PMA.get_setpoint; % get setpoint (parses d and z)
 
 %-- Taylor series expansion constants ------------------------------------%
 C3 = tau.*(sp.alpha^2*prop.rc+2*sp.alpha*sp.beta/prop.rc+sp.beta^2/(prop.rc^3)-C0./(m.*prop.rc));
@@ -54,7 +47,7 @@ min_fun = @(rL,r0,ii) F(rL,ii)-F(r0,ii)-prop.L;
 
 
 %-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
+G0 = @(r) tfer_PMA.G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
 
 ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
 rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
