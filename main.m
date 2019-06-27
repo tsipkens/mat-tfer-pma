@@ -19,14 +19,14 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = prop_CPMA('Olfert'); % get properties of the CPMA
-prop.omega_hat = 1; % NOTE: Uncomment for APM condition
+prop = tfer_PMA.prop_CPMA('Olfert'); % get properties of the CPMA
+% prop.omega_hat = 1; % NOTE: Uncomment for APM condition
 
 
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
 tic;
-[tfer_FD,~,n] = tfer_FD(m_star,...
+[tfer_FD,~,n] = tfer_PMA.tfer_FD(m_star,...
     m,d,1,prop,'Rm',Rm);
 t(1) = toc;
 
@@ -35,9 +35,9 @@ t(1) = toc;
 %-- Transfer functions for different cases -------------------------------%
 %-- Setup for centriputal force ------------------------------------------%
 if ~exist('d','var')
-    B = mp2zp(m,z,prop.T,prop.p);
+    B = tfer_PMA.mp2zp(m,z,prop.T,prop.p);
 else
-    B = dm2zp(d,z,prop.T,prop.p);
+    B = tfer_PMA.dm2zp(d,z,prop.T,prop.p);
 end
 tau = B.*m;
 D = prop.D(B).*z;
