@@ -13,14 +13,14 @@ function [m_star,prop] = get_mstar(prop,V,omega1,omega2)
 %
 % Ouputs:
 %   m_star  Mass setpoint [kg]
-%   prop    Updated struct containing physical dimensions of CPMA
+%   prop    Updated struct containing physical dimensions of CPMA, where
 %           omega_hat is updated
 %-------------------------------------------------------------------------%
 
 e = 1.60218e-19; % electron charge [C]
 
 omega_hat = omega2./omega1;
-prop.omega_hat = omega_hat; % update prop to reflect setpoint
+prop.omega_hat = omega_hat; % update prop to reflect setpoints
 
 alpha = omega1.*(prop.r_hat.^2-omega_hat)./(prop.r_hat.^2-1);
 beta = omega1.*prop.r1.^2.*(omega_hat-1)./(prop.r_hat^2-1);
