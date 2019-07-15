@@ -10,6 +10,12 @@ function [m_star,prop] = get_mstar(prop,V,omega1,omega2)
 %   V       Operating voltage of the CPMA [V]
 %   omega1  Rotational speed of inner electrode [rad/s]
 %   omega2  Rotation speed of outer electrode [rad/s]
+%
+% Ouputs:
+%   m_star  Mass setpoint [kg]
+%   prop    Updated struct containing physical dimensions of CPMA
+%           omega_hat is updated
+%-------------------------------------------------------------------------%
 
 e = 1.60218e-19; % electron charge [C]
 
