@@ -5,6 +5,8 @@
 
 function [m_star] = get_mstar(prop,V,omega1,omega2)
 
+e = 1.60218e-19; % electron charge [C]
+
 omega_hat = omega2./omega1;
 
 alpha = omega1.*(prop.r_hat.^2-omega_hat)./(prop.r_hat.^2-1);
