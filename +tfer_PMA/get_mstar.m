@@ -1,13 +1,20 @@
 
-% GET_MSTAR Get mass setpoint from provided speeds and voltages
+% GET_MSTAR Get mass setpoint for a CPMA from provided speeds and voltages
 % Author:   Timothy Sipkens, 2019-15-07
 %=========================================================================%
 
-function [m_star] = get_mstar(prop,V,omega1,omega2)
+function [m_star,prop] = get_mstar(prop,V,omega1,omega2)
+%-------------------------------------------------------------------------%
+% Inputs:
+%   prop    Struct containing physical dimensions of CPMA
+%   V       Operating voltage of the CPMA [V]
+%   omega1  Rotational speed of inner electrode [rad/s]
+%   omega2  Rotation speed of outer electrode [rad/s]
 
 e = 1.60218e-19; % electron charge [C]
 
 omega_hat = omega2./omega1;
+prop.omega_hat = omega_hat; % update prop to reflect setpoint
 
 alpha = omega1.*(prop.r_hat.^2-omega_hat)./(prop.r_hat.^2-1);
 beta = omega1.*prop.r1.^2.*(omega_hat-1)./(prop.r_hat^2-1);
