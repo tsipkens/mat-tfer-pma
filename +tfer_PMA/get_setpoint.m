@@ -4,7 +4,7 @@
 %=========================================================================%
 %
 %-------------------------------------------------------------------------%
-% Requied variables:
+% Required variables:
 %   m_star      Mass corresponding to the measurement set point of the APM
 %   d           Particle mobility diameter, can be vector [nm]
 %   m           Particle mass, can be vector of same length as d
