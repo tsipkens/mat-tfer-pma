@@ -1,6 +1,6 @@
 
 % PROP_CPMA Generates the prop struct used to summarize CPMA parameters.
-% Author: Timothy Sipkens
+% Author:   Timothy Sipkens, 2019-06-26
 %=========================================================================%
 
 function [prop] = prop_CPMA(opt)
@@ -15,9 +15,9 @@ function [prop] = prop_CPMA(opt)
 
 
 if ~exist('opt','var') % if properties set is not specified
-    opt = 'Buckley';
+    opt = 'Olfert';
 elseif isempty(opt)
-    opt = 'Buckley';
+    opt = 'Olfert';
 end
 
 if strcmp(opt,'Olfert')

@@ -1,5 +1,5 @@
 
-% GET_MSTAR Get mass setpoint for a CPMA from provided speeds and voltages
+% GET_MSTAR Get mass setpoint for a CPMA from provided speeds and voltages.
 % Author:   Timothy Sipkens, 2019-15-07
 %=========================================================================%
 
