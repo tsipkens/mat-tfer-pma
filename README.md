@@ -8,7 +8,6 @@ particle tracking methods and using a finite difference method. Information
 on each file is given as header information in each file, and only a brief
 overview is provided here.
 
-----------------------------------------------------------------------
 
 ### Code description and components
 
@@ -46,6 +45,7 @@ Note that in these functions, there is a reference to the script
 (`get_setpoint.m`). This script parses the inputs *d* and *z* and then
 evaluates the setpoint and related properties, including C0, alpha, and beta.
 
+
 #### Demonstration script (`main.m`)
 
 This script is included to demonstrate evaluation of the transfer function
@@ -53,6 +53,7 @@ over multiple cases.
 
 Figure 2 that is produced by this procedure will resemble those given in
 the associated work
+
 
 #### Remaining functions
 
@@ -63,10 +64,9 @@ details provided in each file.
 
 #### License
 
-This code is distributed under an MIT license
-(see corresponding LICENSE file).
+This software is licensed under an MIT license (see the corresponding file
+for details).
 
-----------------------------------------------------------------------
 
 #### Contact
 
