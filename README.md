@@ -1,4 +1,4 @@
-## UBC-tfer-PMA
+# UBC-tfer-PMA
 
 The attached functions and script are intended to reproduce the results of
 the associated paper (submitted). They evaluate the transfer function of
@@ -49,10 +49,8 @@ evaluates the setpoint and related properties, including C0, alpha, and beta.
 #### Demonstration script (`main.m`)
 
 This script is included to demonstrate evaluation of the transfer function
-over multiple cases.
-
-Figure 2 that is produced by this procedure will resemble those given in
-the associated work
+over multiple cases. Figure 2 that is produced by this procedure will
+resemble those given in the associated work
 
 
 #### Remaining functions
