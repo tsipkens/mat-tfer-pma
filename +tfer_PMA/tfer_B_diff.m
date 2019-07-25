@@ -48,6 +48,8 @@ K22 = kap_fun(G0(prop.r2),prop.r2);
 K21 = kap_fun(G0(prop.r2),prop.r1);
 K12 = kap_fun(G0(prop.r1),prop.r2);
 K11 = kap_fun(G0(prop.r1),prop.r1);
-Lambda = max(-1/(4*prop.del).*(K22-K12-K21+K11),0);
+Lambda = -1/(4*prop.del).*(K22-K12-K21+K11);
+Lambda(K22>1e2) = 0; % remove cases with large values out of error fun. eval.
+Lambda(abs(Lambda)<1e-10) = 0; % remove cases with roundoff error
 
 end
