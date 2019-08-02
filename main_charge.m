@@ -10,10 +10,10 @@ close all;
 
 Rm = 10; % equivalent resolution of transfer functions (Reavell et al.)
 
-m_star = 1000e-18; % mass in kg (1 fg = 1e-18 kg)
+m_star = 100e-18; % mass in kg (1 fg = 1e-18 kg)
 m = linspace(1e-10,4,801).*m_star; % vector of mass
 
-z_max = 0;
+z_max = 1;
 z_vec = 0:z_max;
 for zz=1:length(z_vec)
     z = z_vec(zz); % integer charge state

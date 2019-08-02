@@ -8,11 +8,11 @@
 clear;
 close all;
 
-V = 10000; % voltage to replicate Ehara et al.
-omega1 = 1000*0.1047; % angular speed, converted from rpm to rad/s
+V = 10; % voltage to replicate Ehara et al.
+omega1 = 2500*0.1047; % angular speed, converted from rpm to rad/s
 
 e = 1.60218e-19; % electron charge [C]
-m = linspace(2800,3200,601)*e; % vector of mass
+m = linspace(1e-10,1,601)*e; % vector of mass
 
 z = 1; % integer charge state
 
@@ -20,7 +20,9 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_PMA.prop_CPMA('Ehara'); % get properties of the CPMA
+prop = tfer_PMA.prop_CPMA('Olfert-Collings'); % get properties of the CPMA
+% prop.omega_hat = 1; % NOTE: Uncomment for APM condition
+% prop.D = @(B) zeros(size(B));
 
 
 %=========================================================================%
@@ -70,11 +72,11 @@ t(8) = toc;
 m_plot = m./e;
 
 figure(2);
-plot(m_plot,tfer_A);
-hold on;
-plot(m_plot,tfer_A_Ehara);
-plot(m_plot,tfer_A_pb);
-% plot(m_plot,min(tfer_FD,1),'k');
+% plot(m_plot,tfer_A);
+% hold on;
+% plot(m_plot,tfer_A_Ehara);
+% plot(m_plot,tfer_A_pb);
+plot(m_plot,min(tfer_FD,1),'k');
 hold off;
 
 % ylim([0,1.2]);

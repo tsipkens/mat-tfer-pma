@@ -75,14 +75,16 @@ for ii=ind % loop over mass (not m_star)
 
     ind_mid = 2:(length(r_vec)-1);
 
-    %-- Get coefficients ---------------------------------%
+    
+    %-- Get coefficients -------------------------------------%
     zet = v_z./dz;
     gam = D(ii)/(2*dr^2);
     kap = D(ii)./(4.*r_vec.*dr);
     eta = 1./(2.*r_vec).*drcr_dr;
     phi = c_r./(4*dr);
     
-    %-- Righ-hand side of eq. to be solved ---------------%
+    
+    %-- Righ-hand side of eq. to be solved --------------------%
     RHS1 = @(n) (zet(1)-2*gam-eta(1)).*n(1)+...
         (gam+kap(1)-phi(1)).*n(2);
     RHS2 = @(n) (zet(ind_mid)-2*gam-eta(ind_mid)).*n(2:(end-1))+...
@@ -92,7 +94,8 @@ for ii=ind % loop over mass (not m_star)
         (gam-kap(end)+phi(end)).*n(end-1);
     RHS = @(n) [RHS1(n),RHS2(n),RHS3(n)];
     
-    %-- Form A matrix ------------------------------------%
+    
+    %-- Form A matrix -----------------------------------------%
     b1 = (zet(1)+2*gam+eta(1)); % center
     c1 = (-gam-kap(1)+phi(1)); % +1
 
@@ -107,7 +110,8 @@ for ii=ind % loop over mass (not m_star)
     b = [b1,b2,b3];
     c = [c1,c2];
     
-    %-- Initialize variables -----------------------------%
+    
+    %-- Initialize variables -----------------------------------%
     n_vec = ones(size(r_vec)); % number concentration at current axial position
     n_vec0 = n_vec; % initial number concentration (used for  func. eval.)
     if nargout==3 % initilize variables used for visualizing number concentrations
@@ -115,15 +119,26 @@ for ii=ind % loop over mass (not m_star)
         n_mat(1,:) = n_vec;
     end
     
-    %-- Primary loop for finite difference ---------------%
-    for jj = 2:nz
+    
+    %-- Take first step in implicit scheme, for stability ------%
+    n_vec = max(tfer_PMA.tridiag([0,a],b,c,RHS(n_vec)),0);
+            % solve system using Thomas algorithm
+            
+    if nargout==3; n_mat(2,:) = n_vec; end
+        % record particle distribution at this axial position
+    
+        
+    %-- Primary loop for finite difference ---------------------%
+    for jj = 3:nz
         n_vec = max(tfer_PMA.tridiag([0,a],b,c,RHS(n_vec)),0);
-            % solve system using Thoman algorithm
+            % solve system using Thomas algorithm
             
         if nargout==3; n_mat(jj,:) = n_vec; end
             % record particle distribution at this axial position
     end
     
+    
+    %-- Format output ------------------------------------------%
     if nargout==3 % for visualizing number concentrations
         kk = kk+1;
         n.n_mat{kk} = max(n_mat,0);
