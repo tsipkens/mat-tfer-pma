@@ -10,7 +10,7 @@ close all;
 
 Rm = 10; % equivalent resolution of transfer functions (Reavell et al.)
 
-m_star = 1e-18; % mass in kg (1 fg = 1e-18 kg)
+m_star = 0.01e-18; % mass in kg (1 fg = 1e-18 kg)
 m = linspace(0.8,1.2,601).*m_star; % vector of mass
 
 z = 1; % integer charge state
@@ -148,18 +148,19 @@ t(18) = toc;
 m_plot = m./m_star;
 
 figure(2);
-plot(m_plot,tfer_A);
-hold on;
+% plot(m_plot,tfer_A);
+% hold on;
 % plot(m_plot,tfer_A_Ehara);
-% plot(m_plot,tfer_A_diff);
+plot(m_plot,tfer_A_diff);
+hold on;
 % plot(m_plot,tfer_A_pb);
-plot(m_plot,tfer_B);
+% plot(m_plot,tfer_B);
 plot(m_plot,tfer_B_diff);
 % plot(m_plot,tfer_B_pb);
 % plot(m_plot,tfer_C);
-% plot(m_plot,tfer_C_diff);
+plot(m_plot,tfer_C_diff);
 % plot(m_plot,tfer_D);
-% plot(m_plot,tfer_D_diff);
+plot(m_plot,tfer_D_diff);
 % plot(m_plot,tfer_E,'r');
 % plot(m_plot,tfer_E_diff,'r');
 % plot(m_plot,tfer_E_pb);
