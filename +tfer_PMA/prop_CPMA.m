@@ -35,10 +35,18 @@ elseif strcmp(opt,'Buckley')
     prop.r2 = 0.025; % outer electrode radius [m]
     prop.r1 = 0.024; % inner electrode radius [m]
     prop.L = 0.1;    % length of APM [m]
-    RPM = 13350; % rotational speed [rpm]
-    prop.omega = RPM*2*pi/60; % rotational speed [rad/s]
     prop.omega_hat = 1; % APM, so rotational speed is the same
     prop.Q = 1.02e-3/60; % aerosol flowrate [m^3/s]
+    prop.T = 298; % system temperature [K]
+    prop.p = 1; % system pressure [atm]
+
+elseif strcmp(opt,'Ehara')
+    %-- APM parameters from Ehara et al. -------------%
+    prop.r2 = 0.103; % outer electrode radius [m]
+    prop.r1 = 0.1; % inner electrode radius [m]
+    prop.L = 0.2;    % length of APM [m]
+    prop.omega_hat = 1; % APM, so rotational speed is the same
+    prop.Q = 1.6667e-5/2; % aerosol flowrate [m^3/s]
     prop.T = 298; % system temperature [K]
     prop.p = 1; % system pressure [atm]
 

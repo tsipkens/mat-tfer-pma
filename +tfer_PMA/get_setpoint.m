@@ -27,10 +27,14 @@
 %-------------------------------------------------------------------------%
 
 
-%-- Set up mobility calculations and parse inputs ------------------------%
-if ~exist('z','var') % if integer charge is not specified, use z = 1
-    z = 1;
-end
+%-- Parse inputs ---------------------------------------------------------%
+if ~exist('z','var'); z = []; end
+if isempty(z); z = 1; end % if integer charge is not specified, use z = 1
+
+if ~exist('m_star','var'); m_star = []; end
+
+
+%-- Set up mobility calculations -----------------------------------------%
 e = 1.60218e-19; % electron charge [C]
 q = z.*e; % particle charge
 
@@ -48,6 +52,9 @@ D = prop.D(B).*z; % diffusion as a function of mechanical mobiltiy and charge st
 if exist('varargin','var') % parse input name-value pair, if it exists
     if length(varargin)==2
         sp.(varargin{1}) = varargin{2};
+    elseif length(varargin)==4
+        sp.(varargin{1}) = varargin{2};
+        sp.(varargin{3}) = varargin{4};
     else
         sp.Rm = 3; % by default use resolution, with value of 3
     end
@@ -57,18 +64,29 @@ end
 
 
 %-- Proceed depnding on which setpoint parameter is specified ------------%
-if isfield(sp,'omega1') % if angular speed of inner electrode is specified
+if isempty(m_star) % case if m_star is nto specified (use voltage and speed)
+    
+    %-- Azimuth velocity distribution and voltage ------------------------%
+    sp.alpha = sp.omega1.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
+    sp.beta = sp.omega1.*prop.r1.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1);
+    
+    m_star = sp.V./(log(1/prop.r_hat)./e.*...
+        (sp.alpha.*prop.rc+sp.beta./prop.rc).^2);
+        % q = e, z = 1 for setpoint
+    
+elseif isfield(sp,'omega1') % if angular speed of inner electrode is specified
     
     %-- Azimuth velocity distribution and voltage ------------------------%
     sp.alpha = sp.omega1.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
     sp.beta = sp.omega1.*prop.r1.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1);
     
     sp.V = m_star.*log(1/prop.r_hat)./e.*(sp.alpha.*prop.rc+sp.beta./prop.rc).^2;
-    
+        % q = e, z = 1 for setpoint
     
 elseif isfield(sp,'V') % if voltage is specified
     
     v_theta_rc = sqrt(sp.V.*e./(m_star.*log(1/prop.r_hat)));
+        % q = e, z = 1 for setpoint
     A = prop.rc.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1)+...
         1./prop.rc.*(prop.r1.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1));
     sp.omega1 = v_theta_rc./A;
@@ -82,7 +100,10 @@ elseif isfield(sp,'Rm') % if resolution is specified
     %-- Use definition of Rm to derive angular speed at centerline -------%
     %-- See Reavell et al. (2011) for resolution definition --%
     n_B = -0.6436;
-    B_star = tfer_PMA.mp2zp(m_star,1,prop.T,prop.p); % involves invoking mass-mobility relation
+    B_star = tfer_PMA.mp2zp(m_star,1,prop.T,prop.p);
+        % involves invoking mass-mobility relation
+        % z = 1 for the setpoint
+        
     sp.m_max = m_star*(1/sp.Rm+1);
     omega = sqrt(prop.Q/(m_star*B_star*2*pi*prop.rc^2*prop.L*...
         ((sp.m_max/m_star)^(n_B+1)-(sp.m_max/m_star)^n_B)));
@@ -96,7 +117,6 @@ elseif isfield(sp,'Rm') % if resolution is specified
     sp.alpha = sp.omega1.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
     sp.beta = sp.omega1.*prop.r1.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1);
     sp.V = m_star.*log(1/prop.r_hat)./e.*(sp.alpha.*prop.rc+sp.beta./prop.rc).^2;
-    
     
 else
     error('Invalid setpoint parameter specified.');

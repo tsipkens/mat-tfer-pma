@@ -10,13 +10,14 @@ close all;
 
 Rm = 10; % equivalent resolution of transfer functions (Reavell et al.)
 
-m_star = 0.01e-18; % mass in kg (1 fg = 1e-18 kg)
-m = linspace(0.5,4.5,801).*m_star; % vector of mass
+m_star = 1000e-18; % mass in kg (1 fg = 1e-18 kg)
+m = linspace(1e-10,4,801).*m_star; % vector of mass
 
-z_max = 4;
-for zz=1:z_max
-    z = zz; % integer charge state
-    disp(['Processing ',num2str(zz),' of ',num2str(z_max),'...']);
+z_max = 0;
+z_vec = 0:z_max;
+for zz=1:length(z_vec)
+    z = z_vec(zz); % integer charge state
+    disp(['Processing ',num2str(zz),' of ',num2str(length(z_vec)),'...']);
 
     rho_eff = 900; % effective density
     d = (6.*m./(rho_eff.*pi)).^(1/3);
@@ -24,12 +25,12 @@ for zz=1:z_max
 
     prop = tfer_PMA.prop_CPMA('Olfert'); % get properties of the CPMA
     % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
-
-
+    
+    
     %=========================================================================%
     %-- Finite difference solution -------------------------------------------%
     tic;
-    tfer_FD(:,zz) = tfer_PMA.tfer_FD(m_star,...
+    [tfer_FD(:,zz),~,n] = tfer_PMA.tfer_FD(m_star,...
         m,d,z,prop,'Rm',Rm);
     t(1) = toc;
 
