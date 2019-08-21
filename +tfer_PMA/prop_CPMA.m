@@ -46,7 +46,7 @@ elseif strcmp(opt,'Ehara')
     prop.r1 = 0.1; % inner electrode radius [m]
     prop.L = 0.2;    % length of APM [m]
     prop.omega_hat = 1; % APM, so rotational speed is the same
-    prop.Q = 0.5/1000/60; % aerosol flowrate [m^3/s]
+    prop.Q = 0.5/1000/60; % aerosol flowrate [m^3/s], assumed
     prop.T = 298; % system temperature [K]
     prop.p = 1; % system pressure [atm]
 
@@ -58,6 +58,16 @@ elseif strcmp(opt,'Olfert-Collings')
     prop.L = 0.2;
     prop.omega_hat = 0.945;
     prop.Q = 0.5/1000/60; % aerosol flowrate [m^3/s]
+    prop.T = 295; % system temperature [K]
+    prop.p = 1; % system pressure [atm]
+    
+elseif strcmp(opt,'Kuwata')
+    %-- Parameters from Kuwata --------------------------%
+    prop.r2 = 0.052; % outer electrode radius [m]
+    prop.r1 = 0.05; % inner electrode radius [m]
+    prop.L = 0.25;
+    prop.omega_hat = 1;
+    prop.Q = 1.67e-5; % aerosol flowrate [m^3/s]
     prop.T = 295; % system temperature [K]
     prop.p = 1; % system pressure [atm]
     

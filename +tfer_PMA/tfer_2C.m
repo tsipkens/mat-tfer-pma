@@ -1,9 +1,9 @@
 
-% TFER_D    Evaluates the transfer function for a PMA in Case D.
+% TFER_2C   Evaluates the transfer function for a PMA in Case D.
 % Author:   Timothy Sipkens, 2019-03-21
 %=========================================================================%
 
-function [Lambda,G0] = tfer_D(m_star,m,d,z,prop,varargin)
+function [Lambda,G0] = tfer_2C(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -41,7 +41,7 @@ G0 = @(r) (tan((f(r)-prop.L)./(2.*C6.*prop.v_bar))./C6-C4)./(2.*C5)+prop.rc;
 ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
 rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
 
-Lambda = (1/(2*prop.del)).*(rb-ra);
+Lambda = real((1/(2*prop.del)).*(rb-ra));
 
 end
 

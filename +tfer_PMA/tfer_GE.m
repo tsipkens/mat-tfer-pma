@@ -1,10 +1,9 @@
 
-% TFER_E_PB     Evaluates the transfer function for a PMA in Case E (w/ parabolic flow).
-% Author:       Timothy Sipkens, 2019-03-21
+% TFER_GE   Evaluates the transfer function for a PMA in Case F.
+% Author:   Timothy Sipkens, 2019-03-21
 %=========================================================================%
 
-function [Lambda,G0] = tfer_E_pb(m_star,m,d,z,prop,varargin)
-% 
+function [Lambda,G0] = tfer_GE(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -34,15 +33,16 @@ end
 
 
 %-- Estimate recurring quantities ----------------------------------------%
-A1 = -3.*prop.v_bar./(4.*tau.*sp.omega1.^4.*prop.del^2);
-A2 = sp.omega1.^2.*(prop.rc^2-prop.del^2)+C0./m;
-A3 = 4*prop.rc.*sp.omega1.*sqrt(C0./m);
-A4 = @(r,ii) sp.omega1.^2.*(r.^2-4*prop.rc.*r);
+C6 = 2*sp.alpha*sp.beta-C0./m;
+C7 = sqrt(4*sp.alpha^2*sp.beta^2-C6.^2);
+
+A1 = prop.v_bar./(4.*tau.*sp.alpha^2);
+A2 = 2.*C6./C7;
 
 
 %-- Set up F function for minimization -----------------------------------%
-F = @(r,ii) A1(ii).*(A2(ii).*log(C0./m(ii)-(sp.omega1.*r).^2)+...
-    A3(ii).*atanh(sqrt(m(ii)./C0).*sp.omega1.*r)+A4(r,ii));
+F = @(r,ii) A1(ii).*(log(sp.alpha^2.*r^4+sp.beta^2+C6(ii).*r.^2)-...
+    A2(ii).*atan((2*sp.alpha^2.*r.^2+C6(ii))./C7(ii)));
 min_fun = @(rL,r0,ii) F(rL,ii)-F(r0,ii)-prop.L;
 
 
@@ -52,8 +52,7 @@ G0 = @(r) tfer_PMA.G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
 ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
 rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
 
-Lambda = 3/4.*(rb-ra)./prop.del-1/4.*((rb-prop.rc)./prop.del).^3+...
-    1/4.*((ra-prop.rc)./prop.del).^3;
+Lambda = (1/(2*prop.del)).*(rb-ra);
 
 end
 

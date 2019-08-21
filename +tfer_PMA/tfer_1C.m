@@ -1,9 +1,9 @@
 
-% TFER_C    Evaluates the transfer function for a PMA in Case C.
-% Author:   Timothy Sipkens, 2019-03-21
+% TFER_1C	Evaluates the transfer function for a PMA in Case B.
+% Author:	Timothy Sipkens, 2019-03-21
 %=========================================================================%
 
-function [Lambda,G0] = tfer_C(m_star,m,d,z,prop,varargin)
+function [Lambda,G0] = tfer_1C(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -24,26 +24,13 @@ function [Lambda,G0] = tfer_C(m_star,m,d,z,prop,varargin)
 
 tfer_PMA.get_setpoint; % get setpoint (parses d and z)
 
-%-- Estimate equilibrium radius ------------------------------------------%
-if round((sqrt(C0./m_star)-sqrt(C0./m_star-4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc
-    rs = real((sqrt(C0./m)-sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha)); % equiblirium radius for a given mass
-else
-    rs = real((sqrt(C0./m)+sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha)); % equiblirium radius for a given mass
-end
-
-
-%-- Estimate device parameter --------------------------------------------%
-lam = 2.*tau.*(sp.alpha^2-sp.beta^2./(rs.^4)).*prop.L./prop.v_bar;
-
-
 %-- Taylor series expansion constants ------------------------------------%
-C1 = 2.*tau.*(sp.alpha^2-sp.beta^2./(rs.^4));
-C2 = -2.*tau.*(sp.alpha^2./rs-5*sp.beta^2./(rs.^5));
+C3 = tau.*(sp.alpha^2*prop.rc+2*sp.alpha*sp.beta/prop.rc+sp.beta^2/(prop.rc^3)-C0./(m.*prop.rc));
+C4 = tau.*(sp.alpha^2-2*sp.alpha*sp.beta/(prop.rc^2)-3*sp.beta^2/(prop.rc^4)+C0./(m.*(prop.rc^2)));
 
 
 %-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) rs+C1.*(r-rs).*exp(-lam)./...
-    (C2.*(r-rs)+C1-C2.*(r-rs).*exp(-lam));
+G0 = @(r) prop.rc+(r-prop.rc+C3./C4).*exp(-C4.*prop.L./prop.v_bar)-C3./C4;
 
 ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
 rb = min(prop.r2,max(prop.r1,G0(prop.r2)));

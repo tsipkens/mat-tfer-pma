@@ -41,6 +41,13 @@ The functions share common inputs:
 6. *varargin* (optional) - name-value pairs to specify either the equivalent
   resolution, inner electrode angular speed, or voltage.
 
+The functions also often share common outputs:
+
+1. *Lambda* - the transfer function, and
+
+2. *G0* - the mapping function, transforming a finial radius to the
+corresponding position of the particle at the inlet.
+
 Note that in these functions, there is a reference to the script
 (`get_setpoint.m`). This script parses the inputs *d* and *z* and then
 evaluates the setpoint and related properties, including C0, alpha, and beta.
@@ -50,7 +57,9 @@ evaluates the setpoint and related properties, including C0, alpha, and beta.
 
 This script is included to demonstrate evaluation of the transfer function
 over multiple cases. Figure 2 that is produced by this procedure will
-resemble those given in the associated work
+resemble those given in the associated work. Other scripts, `main_*.m`
+are intended to replicate figures in other works and to consider multiple
+charging. 
 
 
 #### Remaining functions
@@ -70,4 +79,4 @@ for details).
 
 This program was written by Timothy A. Sipkens
 ([tsipkens@mail.ubc.ca](mailto:tsipkens@mail.ubc.ca)) while at the
-University of British Columbia
+University of British Columbia.

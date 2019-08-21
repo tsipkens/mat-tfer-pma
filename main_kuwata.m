@@ -8,27 +8,28 @@
 clear;
 close all;
 
-V = 10; % voltage to replicate Ehara et al.
-omega = 1000*0.1047; % angular speed, converted from rpm to rad/s
+V = 100; % voltage to replicate Ehara et al.
+omega = 5000*0.1047; % angular speed, converted from rpm to rad/s
 
 e = 1.60218e-19; % electron charge [C]
-m = linspace(1e-10,7,601)*e; % vector of mass
+m = linspace(0.4,0.7,601).*1e-18; % vector of mass
 % m = linspace(1e-10,6,601)*e; % vector of mass
 
 z = 1; % integer charge state
 
-rho_eff = 900; % effective density
-d = (6.*m./(rho_eff.*pi)).^(1/3);
+d = 100e-9.*ones(size(m));
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_PMA.prop_CPMA('Ehara'); % get properties of the CPMA
+prop = tfer_PMA.prop_CPMA('Kuwata'); % get properties of the CPMA
+prop.D = @(B) 1e-10.*ones(size(B));
+
+
 
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
-tic;
-[tfer_FD,~,n] = tfer_PMA.tfer_FD([],...
+[tfer_FD,sp] = tfer_PMA.tfer_FD([],...
     m,d,1,prop,'V',V,'omega',omega);
-t(1) = toc;
+
 
 
 %=========================================================================%
@@ -36,41 +37,26 @@ t(1) = toc;
 %-- Setup for centriputal force ------------------------------------------%
 B = tfer_PMA.dm2zp(d,z,prop.T,prop.p);
 tau = B.*m;
-D = prop.D(B);
-sig = sqrt(2.*prop.L.*D./prop.v_bar);
-D0 = D.*prop.L/(prop.del^2*prop.v_bar); % dimensionless diffusion coeff.
-
 
 %-- Particle tracking approaches -----------------------------------------%
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
-tic;
-[tfer_1S,G0_1S] = tfer_PMA.tfer_1S([],m,d,z,prop,'V',V,'omega',omega);
-t(2) = toc;
-
-%-- Method 1S, Ehara et al. ----------------%
-tfer_Ehara = tfer_PMA.tfer_Ehara([],m,d,z,prop,'V',V,'omega',omega);
-
-
-
-%-- Parabolic flow -------------------------------------------------------%
-%-- Method 1S ------------------------------%
-tic;
-[tfer_1S_pb,G0_1S_pb] = tfer_PMA.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
-t(8) = toc;
+[tfer_1S] = ...
+    tfer_PMA.tfer_1S([],m,d,z,prop,'V',V,'omega',omega);
+[tfer_1S_pb] = ...
+    tfer_PMA.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
 
 
 
 %=========================================================================%
 %-- Plot different transfer functions with respect to m/m* ---------------%
-m_plot = m./e;
+m_plot = m;
 
 figure(2);
-plot(m_plot,tfer_1S);
+plot(m_plot,min(tfer_FD,1));
 hold on;
-plot(m_plot,tfer_Ehara);
-plot(m_plot,tfer_1S_pb);
-plot(m_plot,min(tfer_FD,1),'k');
+plot(m_plot,min(tfer_1S,1));
+plot(m_plot,min(tfer_1S_pb,1));
 hold off;
 
 % ylim([0,1.2]);

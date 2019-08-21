@@ -1,9 +1,9 @@
 
-% TFER_F_DIFF   Evaluates the transfer function for a PMA in Case F (w/ diffusion).
+% TFER_1S_DIFF	Evaluates the transfer function for a PMA in Case A (w/ diffusion).
 % Author:       Timothy Sipkens, 2018-12-27
 %=========================================================================%
 
-function [Lambda,G0] = tfer_F_diff(m_star,m,d,z,prop,varargin)
+function [Lambda,G0] = tfer_1S_diff(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -35,7 +35,7 @@ D = prop.D(B).*z;
     % integer charge state
 sig = sqrt(2.*prop.L.*D./prop.v_bar); % diffusive spreading parameter
 
-[~,G0] = tfer_PMA.tfer_F(m_star,m,d,z,prop,varargin{:});
+[~,G0] = tfer_PMA.tfer_1S(m_star,m,d,z,prop,varargin{:});
     % get G0 function for this case
 
 rho_fun = @(G,r) (G-r)./(sqrt(2).*sig); % reuccring quantity

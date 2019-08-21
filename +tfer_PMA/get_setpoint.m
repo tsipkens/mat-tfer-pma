@@ -15,7 +15,7 @@
 %                   ('omega1',double) - Angular speed of inner electrode
 %                   ('V',double) - Setpoint voltage
 %
-% Smaple outputs:
+% Sample outputs:
 %   C0          Summary parameter for the electrostatic force
 %   tau         Product of mechanical mobility and particle mass
 %   sp          Struct containing mutliple setpoint parameters (V, alpha, etc.)
@@ -34,20 +34,6 @@ if isempty(z); z = 1; end % if integer charge is not specified, use z = 1
 if ~exist('m_star','var'); m_star = []; end
 
 
-%-- Set up mobility calculations -----------------------------------------%
-e = 1.60218e-19; % electron charge [C]
-q = z.*e; % particle charge
-
-if ~exist('d','var') % evaluate mechanical mobility
-    warning('Invoking mass-mobility relation to determine Zp.');
-    B = tfer_PMA.mp2zp(m,z,prop.T,prop.p);
-else
-    B = tfer_PMA.dm2zp(d,z,prop.T,prop.p);
-end
-tau = B.*m;
-D = prop.D(B).*z; % diffusion as a function of mechanical mobiltiy and charge state
-
-
 %-- Parse inputs for setpoint --------------------------------------------%
 if exist('varargin','var') % parse input name-value pair, if it exists
     if length(varargin)==2
@@ -63,16 +49,34 @@ else
 end
 
 
-%-- Proceed depnding on which setpoint parameter is specified ------------%
-if isempty(m_star) % case if m_star is nto specified (use voltage and speed)
+%-- Set up mobility calculations -----------------------------------------%
+e = 1.60218e-19; % electron charge [C]
+q = z.*e; % particle charge
+
+if ~exist('d','var') % evaluate mechanical mobility
+    warning('Invoking mass-mobility relation to determine Zp.');
+    B = tfer_PMA.mp2zp(m,z,prop.T,prop.p);
+else
+    B = tfer_PMA.dm2zp(d,z,prop.T,prop.p);
+end
+tau = B.*m;
+D = prop.D(B).*z; % diffusion as a function of mechanical mobiltiy and charge state
+
+
+%=========================================================================%
+%-- Proceed depending on which setpoint parameter is specified -----------%
+if isempty(m_star) % case if m_star is not specified (use voltage and speed)
     
     %-- Azimuth velocity distribution and voltage ------------------------%
-    sp.alpha = sp.omega1.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
-    sp.beta = sp.omega1.*prop.r1.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1);
+    sp.alpha = sp.omega.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
+    sp.beta = sp.omega.*prop.rc.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1);
     
     m_star = sp.V./(log(1/prop.r_hat)./e.*...
         (sp.alpha.*prop.rc+sp.beta./prop.rc).^2);
         % q = e, z = 1 for setpoint
+    
+    sp.omega1 = sp.alpha+sp.beta./(prop.r1.^2);
+    sp.omega2 = sp.alpha+sp.beta./(prop.r2.^2);
     
 elseif isfield(sp,'omega1') % if angular speed of inner electrode is specified
     
@@ -82,6 +86,21 @@ elseif isfield(sp,'omega1') % if angular speed of inner electrode is specified
     
     sp.V = m_star.*log(1/prop.r_hat)./e.*(sp.alpha.*prop.rc+sp.beta./prop.rc).^2;
         % q = e, z = 1 for setpoint
+    
+    sp.omega2 = sp.alpha+sp.beta./(prop.r2.^2);
+    sp.omega = sp.alpha+sp.beta./(prop.rc.^2);
+        
+elseif isfield(sp,'omega') % if angular speed at gap center is specified
+    
+    %-- Azimuth velocity distribution and voltage ------------------------%
+    sp.alpha = sp.omega.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
+    sp.beta = sp.omega.*prop.rc.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1);
+    
+    sp.V = m_star.*log(1/prop.r_hat)./e.*(sp.alpha.*prop.rc+sp.beta./prop.rc).^2;
+        % q = e, z = 1 for setpoint
+    
+    sp.omega1 = sp.alpha+sp.beta./(prop.r1.^2);
+    sp.omega2 = sp.alpha+sp.beta./(prop.r2.^2);
     
 elseif isfield(sp,'V') % if voltage is specified
     
@@ -93,7 +112,8 @@ elseif isfield(sp,'V') % if voltage is specified
     
     sp.alpha = sp.omega1.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
     sp.beta = sp.omega1.*prop.r1.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1);
-    
+    sp.omega2 = sp.alpha+sp.beta./(prop.r2.^2);
+    sp.omega = sp.alpha+sp.beta./(prop.rc.^2);
     
 elseif isfield(sp,'Rm') % if resolution is specified
     
@@ -116,14 +136,19 @@ elseif isfield(sp,'Rm') % if resolution is specified
     %-- Azimuth velocity distribution and voltage ------------------------%
     sp.alpha = sp.omega1.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
     sp.beta = sp.omega1.*prop.r1.^2.*(prop.omega_hat-1)./(prop.r_hat^2-1);
+    sp.omega2 = sp.alpha+sp.beta./(prop.r2.^2);
+    sp.omega = sp.alpha+sp.beta./(prop.rc.^2);
     sp.V = m_star.*log(1/prop.r_hat)./e.*(sp.alpha.*prop.rc+sp.beta./prop.rc).^2;
     
 else
     error('Invalid setpoint parameter specified.');
     
 end
+sp.m_star = m_star;
+    % copy center mass to sp
+    % center mass is for a singly charged particle
 
-
+B_star = tfer_PMA.mp2zp(m_star,1,prop.T,prop.p);
 C0 = sp.V.*q./log(1/prop.r_hat); % calcualte recurring C0 parameter
 
 
