@@ -68,7 +68,6 @@ end
 
 
 %-- Loop over mass, but not m_star ---------------------------------------%
-if nargout==3; kk = 0; end % if outputting particle distribution, initialize kk
 Lambda = zeros(1,length(m));% initialize the transfer function variable
 for ii=ind % loop over mass (not m_star)
     
@@ -113,8 +112,7 @@ for ii=ind % loop over mass (not m_star)
     
     %-- Format output ------------------------------------------%
     if nargout==3 % for visualizing number concentrations
-        kk = kk+1;
-        n.n_mat{kk} = max(n_mat,0);
+        n.n_mat{ii} = max(n_mat,0);
     end
     
     Lambda(ii) = sum(n_vec.*v_z)/sum(n_vec0.*v_z);

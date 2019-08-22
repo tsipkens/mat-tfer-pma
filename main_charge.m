@@ -14,7 +14,7 @@ m_star = 0.01e-18; % mass in kg (1 fg = 1e-18 kg)
 m = linspace(1e-10,5,801).*m_star; % vector of mass
 
 z_max = 4;
-z_vec = 1:z_max;
+z_vec = [1,4];%1:z_max;
 for zz=1:length(z_vec)
     z = z_vec(zz); % integer charge state
     disp(['Processing ',num2str(zz),' of ',num2str(length(z_vec)),'...']);
@@ -30,7 +30,7 @@ for zz=1:length(z_vec)
     %=========================================================================%
     %-- Finite difference solution -------------------------------------------%
     tic;
-    [tfer_FD(:,zz),sp] = tfer_PMA.tfer_FD(m_star,...
+    [tfer_FD(:,zz),sp,n{zz}] = tfer_PMA.tfer_FD(m_star,...
         m,d,z,prop,'Rm',Rm);
     t(1) = toc;
     
