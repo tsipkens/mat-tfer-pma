@@ -21,7 +21,7 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_PMA.prop_CPMA('Ehara'); % get properties of the CPMA
+prop = tfer_PMA.prop_PMA('Ehara'); % get properties of the CPMA
 
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%

@@ -21,7 +21,7 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_PMA.prop_CPMA('Olfert-Collings'); % get properties of the CPMA
+prop = tfer_PMA.prop_PMA('Olfert-Collings'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
 omega_hat = prop.omega_hat; % only valid for CPMA
 
