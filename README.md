@@ -1,11 +1,12 @@
-# UBC-tfer-PMA
+# mat-tfer-PMA
 
-The attached functions and script are intended to reproduce the results of
-the associated paper (submitted). They evaluate the transfer function of
-the centrifugal particle mass analyzer (CPMA) and aerosol particle mass
-analyzer (APM). This is done using a novel set of expressions derived from
-particle tracking methods and using a finite difference method. Information
-on each file is given as header information in each file, and only a brief
+The attached MATLAB functions and scripts are intended to reproduce the 
+results of the associated paper (submitted). They evaluate the transfer 
+function of  particle mass analyzers (PMAs), including the centrifugal 
+particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). 
+This is done using a novel set of expressions derived from particle 
+tracking methods and using a finite difference method. Information on 
+each file is given as header information in each file, and only a brief
 overview is provided here.
 
 
@@ -57,9 +58,10 @@ evaluates the setpoint and related properties, including C0, alpha, and beta.
 
 This script is included to demonstrate evaluation of the transfer function
 over multiple cases. Figure 2 that is produced by this procedure will
-resemble those given in the associated work. Other scripts, `main_*.m`
-are intended to replicate figures in other works and to consider multiple
-charging. 
+resemble those given in the associated work. 
+
+Other scripts, `main_*.m` are intended to replicate figures in other 
+works and to consider multiple charging. 
 
 
 #### Remaining functions
