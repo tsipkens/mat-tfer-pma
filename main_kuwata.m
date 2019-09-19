@@ -20,14 +20,14 @@ z = 1; % integer charge state
 d = 100e-9.*ones(size(m));
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_PMA.prop_PMA('Kuwata'); % get properties of the CPMA
+prop = tfer_pma.prop_PMA('Kuwata'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
 
 
 
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
-[tfer_FD,sp] = tfer_PMA.tfer_FD([],...
+[tfer_FD,sp] = tfer_pma.tfer_FD([],...
     m,d,1,prop,'V',V,'omega',omega);
 
 
@@ -35,16 +35,16 @@ prop.D = @(B) 1e-10.*ones(size(B));
 %=========================================================================%
 %-- Transfer functions for different cases -------------------------------%
 %-- Setup for centriputal force ------------------------------------------%
-B = tfer_PMA.dm2zp(d,z,prop.T,prop.p);
+B = tfer_pma.dm2zp(d,z,prop.T,prop.p);
 tau = B.*m;
 
 %-- Particle tracking approaches -----------------------------------------%
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
 [tfer_1S] = ...
-    tfer_PMA.tfer_1S([],m,d,z,prop,'V',V,'omega',omega);
+    tfer_pma.tfer_1S([],m,d,z,prop,'V',V,'omega',omega);
 [tfer_1S_pb] = ...
-    tfer_PMA.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
+    tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
 
 
 

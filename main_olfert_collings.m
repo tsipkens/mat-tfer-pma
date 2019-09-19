@@ -21,7 +21,7 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_PMA.prop_PMA('Olfert-Collings'); % get properties of the CPMA
+prop = tfer_pma.prop_PMA('Olfert-Collings'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
 omega_hat = prop.omega_hat; % only valid for CPMA
 
@@ -30,11 +30,11 @@ omega_hat = prop.omega_hat; % only valid for CPMA
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
 prop.omega_hat = 1;
-[tfer_FD_w1,sp] = tfer_PMA.tfer_FD([],...
+[tfer_FD_w1,sp] = tfer_pma.tfer_FD([],...
     m,d,1,prop,'V',V,'omega',omega);
 
 prop.omega_hat = omega_hat;
-[tfer_FD,sp_cpma] = tfer_PMA.tfer_FD([],...
+[tfer_FD,sp_cpma] = tfer_pma.tfer_FD([],...
     m,d,1,prop,'V',V,'omega',omega);
 
 
@@ -42,8 +42,8 @@ prop.omega_hat = omega_hat;
 %=========================================================================%
 %-- Transfer functions for different cases -------------------------------%
 %-- Setup for centriputal force ------------------------------------------%
-prop = tfer_PMA.prop_CPMA('Olfert-Collings'); % get properties of the CPMA
-B = tfer_PMA.dm2zp(d,z,prop.T,prop.p);
+prop = tfer_pma.prop_CPMA('Olfert-Collings'); % get properties of the CPMA
+B = tfer_pma.dm2zp(d,z,prop.T,prop.p);
 tau = B.*m;
 
 %-- Particle tracking approaches -----------------------------------------%
@@ -51,11 +51,11 @@ tau = B.*m;
 %-- Method 1S ------------------------------%
 prop.omega_hat = 1; % NOTE: Uncomment for APM condition
 [tfer_1S_w1] = ...
-    tfer_PMA.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
+    tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
 
 prop.omega_hat = omega_hat;
 [tfer_1S] = ...
-    tfer_PMA.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
+    tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
 
 
 

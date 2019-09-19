@@ -23,14 +23,14 @@ for zz=1:length(z_vec)
     d = (6.*m./(rho_eff.*pi)).^(1/3);
         % specify mobility diameter vector with constant effective density
     
-    prop = tfer_PMA.prop_PMA('Olfert'); % get properties of the CPMA
+    prop = tfer_pma.prop_PMA('Olfert'); % get properties of the CPMA
     % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
     
     
     %=========================================================================%
     %-- Finite difference solution -------------------------------------------%
     tic;
-    [tfer_FD(:,zz),sp,n{zz}] = tfer_PMA.tfer_FD(m_star,...
+    [tfer_FD(:,zz),sp,n{zz}] = tfer_pma.tfer_FD(m_star,...
         m,d,z,prop,'Rm',Rm);
     t(1) = toc;
     
@@ -39,9 +39,9 @@ for zz=1:length(z_vec)
     %-- Transfer functions for different cases -------------------------------%
     %-- Setup for centriputal force ------------------------------------------%
     if ~exist('d','var')
-        B = tfer_PMA.mp2zp(m,z,prop.T,prop.p);
+        B = tfer_pma.mp2zp(m,z,prop.T,prop.p);
     else
-        B = tfer_PMA.dm2zp(d,z,prop.T,prop.p);
+        B = tfer_pma.dm2zp(d,z,prop.T,prop.p);
     end
     tau = B.*m;
     D = prop.D(B);
@@ -55,7 +55,7 @@ for zz=1:length(z_vec)
     %-- Method 1C --------------------------------%
     tic;
     tfer_1C_diff(:,zz) = ...
-        tfer_PMA.tfer_1C_diff(m_star,m,d,z,prop,'Rm',Rm);
+        tfer_pma.tfer_1C_diff(m_star,m,d,z,prop,'Rm',Rm);
     t(12) = toc;
 end
 
