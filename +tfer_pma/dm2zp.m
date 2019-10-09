@@ -57,11 +57,10 @@ Zp = B.*e.*z; % electromobility
 end
 
 
-
+%== CC.m =================================================================%
+%   Function to evaluate Cunningham slip correction factor.
+%   Author:  Timothy Sipkens, 2019-01-02
 function Cc = Cc(d,T,p)
-% CC.m      Function to evaluate Cunningham slip correction factor.
-% Author:   Timothy Sipkens, 2019-01-02
-%
 %-------------------------------------------------------------------------%
 % Inputs:
 %   d           Particle mobility diameter

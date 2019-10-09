@@ -1,9 +1,9 @@
 
-% TFER_C    Evaluates the transfer function for a PMA in Case C.
-% Author:   Timothy Sipkens, 2019-03-21
+% TFER_EHARA    Evaluates the transfer function for a PMA in Case A as per Ehara et al. (1996).
+% Author:       Timothy Sipkens, 2018-12-27
 %=========================================================================%
 
-function [Lambda,G0] = tfer_C(m_star,m,d,z,prop,varargin)
+function [Lambda] = tfer_Ehara(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -22,13 +22,19 @@ function [Lambda,G0] = tfer_C(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 
 
-tfer_PMA.get_setpoint; % get setpoint (parses d and z)
+[sp,tau,C0] = ...
+    tfer_pma.get_setpoint(m_star,m,d,z,prop,varargin{:});
+        % get setpoint (parses d and z)
 
 %-- Estimate equilibrium radius ------------------------------------------%
 if round((sqrt(C0./m_star)-sqrt(C0./m_star-4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc
-    rs = real((sqrt(C0./m)-sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha)); % equiblirium radius for a given mass
+    rs = real((sqrt(C0./m)-...
+        sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha));
+        % equiblirium radius for a given mass
 else
-    rs = real((sqrt(C0./m)+sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha)); % equiblirium radius for a given mass
+    rs = real((sqrt(C0./m)+...
+        sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha));
+        % equiblirium radius for a given mass
 end
 
 
@@ -36,19 +42,12 @@ end
 lam = 2.*tau.*(sp.alpha^2-sp.beta^2./(rs.^4)).*prop.L./prop.v_bar;
 
 
-%-- Taylor series expansion constants ------------------------------------%
-C1 = 2.*tau.*(sp.alpha^2-sp.beta^2./(rs.^4));
-C2 = -2.*tau.*(sp.alpha^2./rs-5*sp.beta^2./(rs.^5));
+%-- Evaluate transfer function -------------------------------------------%
+rho_s = (rs-prop.rc)/prop.del;
+Lambda = ((1-rho_s)+(1+rho_s).*exp(-lam))./2.*and(1<rho_s,rho_s<coth(lam./2))+...
+    exp(-lam).*and(-1<rho_s,rho_s<1)+...
+    ((1+rho_s)+(1-rho_s).*exp(-lam))./2.*and(-coth(lam./2)<rho_s,rho_s<-1);
 
-
-%-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) rs+C1.*(r-rs).*exp(-lam)./...
-    (C2.*(r-rs)+C1-C2.*(r-rs).*exp(-lam));
-
-ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
-rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
-
-Lambda = (1/(2*prop.del)).*(rb-ra);
 
 end
 

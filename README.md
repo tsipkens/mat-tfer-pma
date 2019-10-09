@@ -1,14 +1,14 @@
-## UBC-tfer-PMA
+# mat-tfer-pma
 
-The attached functions and script are intended to reproduce the results of
-the associated paper (submitted). They evaluate the transfer function of
-the centrifugal particle mass analyzer (CPMA) and aerosol particle mass
-analyzer (APM). This is done using a novel set of expressions derived from
-particle tracking methods and using a finite difference method. Information
-on each file is given as header information in each file, and only a brief
+The attached MATLAB functions and scripts are intended to reproduce the 
+results of the associated paper (submitted). They evaluate the transfer 
+function of  particle mass analyzers (PMAs), including the centrifugal 
+particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). 
+This is done using a novel set of expressions derived from particle 
+tracking methods and using a finite difference method. Information on 
+each file is given as header information in each file, and only a brief
 overview is provided here.
 
-----------------------------------------------------------------------
 
 ### Code description and components
 
@@ -37,22 +37,32 @@ The functions share common inputs:
   evaluated),
 
 5. *prop* - a struct that contains the properties of the particle mass analyzer
-  (a sample script to generate this quantity is include as `prop_CPMA.m`), and
+  (a sample script to generate this quantity is include as `prop_PMA.m`), and
 
 6. *varargin* (optional) - name-value pairs to specify either the equivalent
   resolution, inner electrode angular speed, or voltage.
+
+The functions also often share common outputs:
+
+1. *Lambda* - the transfer function, and
+
+2. *G0* - the mapping function, transforming a finial radius to the
+corresponding position of the particle at the inlet.
 
 Note that in these functions, there is a reference to the script
 (`get_setpoint.m`). This script parses the inputs *d* and *z* and then
 evaluates the setpoint and related properties, including C0, alpha, and beta.
 
+
 #### Demonstration script (`main.m`)
 
 This script is included to demonstrate evaluation of the transfer function
-over multiple cases.
+over multiple cases. Figure 2 that is produced by this procedure will
+resemble those given in the associated work. 
 
-Figure 2 that is produced by this procedure will resemble those given in
-the associated work
+Other scripts, `main_*.m` are intended to replicate figures in other 
+works and to consider multiple charging. 
+
 
 #### Remaining functions
 
@@ -63,13 +73,12 @@ details provided in each file.
 
 #### License
 
-This code is distributed under an MIT license
-(see corresponding LICENSE file).
+This software is licensed under an MIT license (see the corresponding file
+for details).
 
-----------------------------------------------------------------------
 
 #### Contact
 
 This program was written by Timothy A. Sipkens
 ([tsipkens@mail.ubc.ca](mailto:tsipkens@mail.ubc.ca)) while at the
-University of British Columbia
+University of British Columbia.

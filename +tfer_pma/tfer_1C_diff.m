@@ -1,9 +1,9 @@
 
-% TFER_B_DIFF   Evaluates the transfer function for a PMA in Case B (w/ diffusion).
+% TFER_1C_DIFF  Evaluates the transfer function for a PMA in Case B (w/ diffusion).
 % Author:       Timothy Sipkens, 2018-12-27
 %=========================================================================%
 
-function [Lambda,G0] = tfer_B_diff(m_star,m,d,z,prop,varargin)
+function [Lambda,G0] = tfer_1C_diff(m_star,m,d,z,prop,varargin)
 %-------------------------------------------------------------------------%
 % Inputs:
 %   m_star      Setpoint particle mass
@@ -24,10 +24,10 @@ function [Lambda,G0] = tfer_B_diff(m_star,m,d,z,prop,varargin)
 
 %-- Evaluate mechanical mobility for diffusion calc. ---------------------%
 if ~exist('d','var')
-    B = tfer_PMA.mp2zp(m,z,prop.T,prop.p);
+    B = tfer_pma.mp2zp(m,z,prop.T,prop.p);
         % if mobility is not specified, use mass-mobility relation to estimate
 else
-    B = tfer_PMA.dm2zp(d,z,prop.T,prop.p);
+    B = tfer_pma.dm2zp(d,z,prop.T,prop.p);
 end
 
 D = prop.D(B).*z;
@@ -35,7 +35,7 @@ D = prop.D(B).*z;
     % integer charge state
 sig = sqrt(2.*prop.L.*D./prop.v_bar); % diffusive spreading parameter
 
-[~,G0] = tfer_PMA.tfer_B(m_star,m,d,z,prop,varargin{:});
+[~,G0] = tfer_pma.tfer_1C(m_star,m,d,z,prop,varargin{:});
     % get G0 function for this case
 
 rho_fun = @(G,r) (G-r)./(sqrt(2).*sig); % reuccring quantity
@@ -48,6 +48,8 @@ K22 = kap_fun(G0(prop.r2),prop.r2);
 K21 = kap_fun(G0(prop.r2),prop.r1);
 K12 = kap_fun(G0(prop.r1),prop.r2);
 K11 = kap_fun(G0(prop.r1),prop.r1);
-Lambda = max(-1/(4*prop.del).*(K22-K12-K21+K11),0);
+Lambda = -1/(4*prop.del).*(K22-K12-K21+K11);
+Lambda(K22>1e2) = 0; % remove cases with large values out of error fun. eval.
+Lambda(abs(Lambda)<1e-10) = 0; % remove cases with roundoff error
 
 end
