@@ -14,7 +14,7 @@ function [prop] = prop_PMA(opts)
 %-------------------------------------------------------------------------%
 
 
-if ~exist('opt','var') % if properties set is not specified
+if ~exist('opts','var') % if properties set is not specified
     opts = 'Olfert';
 elseif isempty(opts)
     opts = 'Olfert';

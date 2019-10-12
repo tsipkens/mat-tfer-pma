@@ -8,11 +8,11 @@
 clear;
 close all;
 
-V = 10; % voltage to replicate Ehara et al.
+V = 100; % voltage to replicate Ehara et al.
 omega = 2500*0.1047; % angular speed, converted from rpm to rad/s
 
 e = 1.60218e-19; % electron charge [C]
-m = linspace(1e-10,1,601)*e; % vector of mass
+m = linspace(4,6,601)*e; % vector of mass
 % m = linspace(1e-10,6,601)*e; % vector of mass
 
 z = 1; % integer charge state
@@ -42,19 +42,15 @@ prop.omega_hat = omega_hat;
 %=========================================================================%
 %-- Transfer functions for different cases -------------------------------%
 %-- Setup for centriputal force ------------------------------------------%
-prop = tfer_pma.prop_CPMA('Olfert-Collings'); % get properties of the CPMA
+prop = tfer_pma.prop_PMA('Olfert-Collings'); % get properties of the CPMA
 B = tfer_pma.dm2zp(d,z,prop.T,prop.p);
 tau = B.*m;
 
 %-- Particle tracking approaches -----------------------------------------%
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
-prop.omega_hat = 1; % NOTE: Uncomment for APM condition
+prop.omega_hat = 1;
 [tfer_1S_w1] = ...
-    tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
-
-prop.omega_hat = omega_hat;
-[tfer_1S] = ...
     tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
 
 
@@ -67,7 +63,6 @@ figure(2);
 plot(m_plot,min(tfer_FD,1));
 hold on;
 plot(m_plot,min(tfer_FD_w1,1));
-plot(m_plot,min(tfer_1S,1));
 plot(m_plot,min(tfer_1S_w1,1));
 hold off;
 

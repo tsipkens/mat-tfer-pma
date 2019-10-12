@@ -8,11 +8,11 @@
 clear;
 close all;
 
-V = 10; % voltage to replicate Ehara et al.
+V = 1000; % voltage to replicate Ehara et al.
 omega = 1000*0.1047; % angular speed, converted from rpm to rad/s
 
 e = 1.60218e-19; % electron charge [C]
-m = linspace(1e-10,7,601)*e; % vector of mass
+m = linspace(260,340,601).*e; % vector of mass
 % m = linspace(1e-10,6,601)*e; % vector of mass
 
 z = 1; % integer charge state
@@ -46,7 +46,7 @@ D0 = D.*prop.L/(prop.del^2*prop.v_bar); % dimensionless diffusion coeff.
 %-- Method 1S ------------------------------%
 tic;
 [tfer_1S,G0_1S] = tfer_pma.tfer_1S([],m,d,z,prop,'V',V,'omega',omega);
-t(2) = toc;
+t(1) = toc;
 
 %-- Method 1S, Ehara et al. ----------------%
 tfer_Ehara = tfer_pma.tfer_Ehara([],m,d,z,prop,'V',V,'omega',omega);
@@ -57,7 +57,7 @@ tfer_Ehara = tfer_pma.tfer_Ehara([],m,d,z,prop,'V',V,'omega',omega);
 %-- Method 1S ------------------------------%
 tic;
 [tfer_1S_pb,G0_1S_pb] = tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
-t(8) = toc;
+t(2) = toc;
 
 
 
