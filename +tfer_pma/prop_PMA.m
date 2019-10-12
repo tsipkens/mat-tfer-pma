@@ -21,7 +21,7 @@ elseif isempty(opts)
 end
 
 switch opts
-    
+
     %-- CPMA parameters from Olfert lab ----------------------------------%
     case 'Olfert'
         prop.r1 = 0.06; % inner electrode radius [m]
@@ -43,9 +43,9 @@ switch opts
         prop.Q = 1.02e-3/60; % aerosol flowrate [m^3/s]
         prop.T = 298; % system temperature [K]
         prop.p = 1; % system pressure [atm]
-    
+
     %-- CPMA parameters from Olfert lab ----------------------------------%
-    case strcmp(opts,'FlareNet18')
+    case 'FlareNet18'
         prop.r1 = 0.06; % inner electrode radius [m]
         prop.r2 = 0.061; % outer electrode radius [m]
         prop.L = 0.2; % length of chamber [m]
@@ -63,7 +63,7 @@ switch opts
         prop.Q = 0.5/1000/60; % aerosol flowrate [m^3/s], assumed
         prop.T = 298; % system temperature [K]
         prop.p = 1; % system pressure [atm]
-    
+
     %-- Parameters from Olfert and Collings -------------%
     %   Nearly identical to the Ehara et al. case
     case 'Olfert-Collings'
@@ -74,7 +74,7 @@ switch opts
         prop.Q = 0.5/1000/60; % aerosol flowrate [m^3/s]
         prop.T = 295; % system temperature [K]
         prop.p = 1; % system pressure [atm]
-    
+
     %-- Parameters from Kuwata --------------------------%
     case 'Kuwata'
         prop.r2 = 0.052; % outer electrode radius [m]
@@ -103,4 +103,3 @@ prop.D = @(B) kB.*prop.T.*B; % diffusion coefficient
 
 
 end
-
