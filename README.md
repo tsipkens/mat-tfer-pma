@@ -105,7 +105,9 @@ for details).
 
 This program was written by Timothy A. Sipkens
 ([tsipkens@mail.ubc.ca](mailto:tsipkens@mail.ubc.ca)) while at the
-University of British Columbia.
+University of British Columbia. This program was written in close 
+association with Steven Rogak (University of British Columbia) and 
+Jason Olfert (University of Alberta).
 
 #### References
 
