@@ -8,17 +8,34 @@ results of the associated paper (submitted). They evaluate the transfer
 function of  particle mass analyzers (PMAs), including the centrifugal 
 particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). 
 This is done using a novel set of expressions derived from particle 
-tracking methods and using a finite difference method. Information on 
+tracking methods [[1][1]] and using a finite difference method. Information on 
 each file is given as header information in each file, and only a brief
 overview is provided here.
 
 
 ### Code description and components
 
+This program contains two main components: 
+
+1. A MATLAB package, `+tfer_PMA`, which contains the relevant functions 
+for evaluating the transfer function of a PMA. Such a package is 
+designed to be imported into other projects (e.g. 
+https://github.com/tsipkens/mat-2d-aerosol-inversion), where it can speed or
+improve the accuracy of PMA data inversion. 
+
+2. Various `main*.m` scripts that are used to call and analyze the transfer function 
+under different conditions, particularily those relevant to the associated 
+paper [[1][1]] and poster [[2][2]]. 
+
+These are each discussed in more detail below. 
+
+### The transfer function package (`+tfer_pma`)
+
 #### Functions to evaluate transfer functions (`tfer_*.m`)
 
-The core of this program is a set of functions evaluating the transfer
-function for the various cases presented in the associated work, that is
+As noted above, the core of this program is a set of 
+functions evaluating the transfer function for the various 
+cases presented in the associated work, that is
 the functions featuring the names `tfer_*.m`. The file names feature case
 letters, corresponding to different assumptions about the particle
 migration velocity and flow conditions discussed in the associated work,
@@ -52,25 +69,29 @@ The functions also often share common outputs:
 2. *G0* - the mapping function, transforming a finial radius to the
 corresponding position of the particle at the inlet.
 
-Note that in these functions, there is a reference to the script
-(`get_setpoint.m`). This script parses the inputs *d* and *z* and then
+Note that in these functions, there is a reference to the function
+`get_setpoint.m`. This function parses the inputs *d* and *z* and then
 evaluates the setpoint and related properties, including C0, alpha, and beta.
-
-
-#### Demonstration script (`main.m`)
-
-This script is included to demonstrate evaluation of the transfer function
-over multiple cases. Figure 2 that is produced by this procedure will
-resemble those given in the associated work. 
-
-Other scripts, `main_*.m` are intended to replicate figures in other 
-works and to consider multiple charging. 
-
+The key output from this function is the `sp` structure, which contains
+the parameters that fully specify the PMA setpoint. 
 
 #### Remaining functions
 
 The remaining functions help in transfer function evaluation, with the
-details provided in each file.
+details provided in each file. THis includes functions to convert
+between particle mass and electromobility. Notably, `mp2zp.m` invokes
+the mass-mobility relation to determine the mobility of particles. 
+There are certain assumptions implicit in this evaluation that
+should be checked by the user. 
+
+### Demonstration scripts (`main*.m`)
+
+The main.m script is included to demonstrate evaluation of the transfer function
+over multiple cases. Figure 2 that is produced by this procedure will
+resemble those given in the associated work [[1][1]]. 
+
+Other scripts, `main_*.m` are intended to replicate figures in other 
+works and to consider multiple charging. 
 
 ----------------------------------------------------------------------
 
@@ -85,3 +106,12 @@ for details).
 This program was written by Timothy A. Sipkens
 ([tsipkens@mail.ubc.ca](mailto:tsipkens@mail.ubc.ca)) while at the
 University of British Columbia.
+
+#### References
+
+1. [Sipkens et al., Aerosol Sci. Technol. (2019)][1]
+2. [Sipkens et al., European Aerosol Conference (2019)][2]
+
+[1]: https://doi.org/10.1080/02786826.2019.1680794
+[2]: https://www.researchgate.net/publication/336549933_Examination_of_the_methods_available_to_compute_the_transfer_function_of_CPMA_and_APM_devices
+
