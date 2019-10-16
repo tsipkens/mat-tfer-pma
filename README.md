@@ -1,5 +1,7 @@
 # mat-tfer-pma
 
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
 The attached MATLAB functions and scripts are intended to reproduce the 
 results of the associated paper (submitted). They evaluate the transfer 
 function of  particle mass analyzers (PMAs), including the centrifugal 
