@@ -1,4 +1,4 @@
-# mat-tfer-pma
+# mat-tfer-pma: MATLAB tools for PMA transfer function evaluation
 
 [![DOI](https://zenodo.org/badge/191454449.svg)](https://zenodo.org/badge/latestdoi/191454449)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
