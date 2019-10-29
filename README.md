@@ -1,6 +1,7 @@
 # mat-tfer-pma
 
 [![DOI](https://zenodo.org/badge/191454449.svg)](https://zenodo.org/badge/latestdoi/191454449)
+[![DOIfs](https://img.shields.io/badge/DOI-10.6084/m9.figshare.9960110.v5-blue)](https://doi.org/10.6084/m9.figshare.9960110.v5)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 The attached MATLAB functions and scripts are intended to reproduce the 
