@@ -49,7 +49,7 @@ D0 = D.*prop.L/(prop.del^2*prop.v_bar); % dimensionless diffusion coeff.
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
 tic;
-[tfer_1S,G0_1S] = tfer_pma.tfer_1S(m_star,m,d,z,prop,'Rm',Rm);
+[tfer_1S,G0_1S,sp] = tfer_pma.tfer_1S(m_star,m,d,z,prop,'Rm',Rm);
 t(2) = toc;
 
 %-- Method 1S, Ehara et al. ----------------%

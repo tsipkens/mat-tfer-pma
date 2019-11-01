@@ -64,10 +64,13 @@ The functions share common inputs:
 
 The functions also often share common outputs:
 
-1. *Lambda* - the transfer function, and
+1. *Lambda* - the transfer function, 
 
 2. *G0* - the mapping function, transforming a finial radius to the
-corresponding position of the particle at the inlet.
+corresponding position of the particle at the inlet, and
+
+3. *sp* - a structure containing a complete description of the 
+device set point used in evaluation.
 
 Note that in these functions, there is a reference to the function
 `get_setpoint.m`. This function parses the inputs *d* and *z* and then
