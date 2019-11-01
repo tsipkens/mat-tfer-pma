@@ -26,7 +26,7 @@ prop = tfer_pma.prop_pma('Olfert'); % get properties of the CPMA
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
 tic;
-[tfer_FD,sp,n] = tfer_pma.tfer_FD(m_star,...
+[tfer_FD,~,n] = tfer_pma.tfer_FD(m_star,...
     m,d,1,prop,'Rm',Rm);
 t(1) = toc;
 
