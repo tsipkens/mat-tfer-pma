@@ -21,7 +21,7 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_pma.prop_PMA('Olfert-Collings'); % get properties of the CPMA
+prop = tfer_pma.prop_pma('Olfert-Collings'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
 omega_hat = prop.omega_hat; % only valid for CPMA
 
@@ -42,7 +42,7 @@ prop.omega_hat = omega_hat;
 %=========================================================================%
 %-- Transfer functions for different cases -------------------------------%
 %-- Setup for centriputal force ------------------------------------------%
-prop = tfer_pma.prop_PMA('Olfert-Collings'); % get properties of the CPMA
+prop = tfer_pma.prop_pma('Olfert-Collings'); % get properties of the CPMA
 B = tfer_pma.dm2zp(d,z,prop.T,prop.p);
 tau = B.*m;
 

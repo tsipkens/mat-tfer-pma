@@ -20,7 +20,7 @@ z = 1; % integer charge state
 d = 100e-9.*ones(size(m));
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_pma.prop_PMA('Kuwata'); % get properties of the CPMA
+prop = tfer_pma.prop_pma('Kuwata'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
 
 
