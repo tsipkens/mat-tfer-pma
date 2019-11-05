@@ -1,4 +1,4 @@
-# mat-tfer-pma
+# MATLAB tools for PMA transfer function evaluation (mat-tfer-pma)
 
 [![DOI](https://zenodo.org/badge/191454449.svg)](https://zenodo.org/badge/latestdoi/191454449)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
@@ -12,8 +12,7 @@ tracking methods [[1][1]] and using a finite difference method. Information on
 each file is given as header information in each file, and only a brief
 overview is provided here.
 
-
-### Code description and components
+## Code description and components
 
 This program contains two main components: 
 
@@ -29,7 +28,7 @@ paper [[1][1]] and poster [[2][2]].
 
 These are each discussed in more detail below. 
 
-### The transfer function package (`+tfer_pma`)
+## The transfer function package (`+tfer_pma`)
 
 #### Functions to evaluate transfer functions (`tfer_*.m`)
 
@@ -74,8 +73,8 @@ device set point used in evaluation.
 
 Note that in these functions, there is a reference to the function
 `get_setpoint.m`. This function parses the inputs *d* and *z* and then
-evaluates the setpoint and related properties, including C0, alpha, and beta.
-The key output from this function is the `sp` structure, which contains
+evaluates the setpoint and related properties, including *C0*, *alpha*, and *beta*.
+The key output from this function is the *sp* structure, which contains
 the parameters that fully specify the PMA setpoint. 
 
 #### Remaining functions
@@ -87,7 +86,7 @@ the mass-mobility relation to determine the mobility of particles.
 There are certain assumptions implicit in this evaluation that
 should be checked by the user. 
 
-### Demonstration scripts (`main*.m`)
+## Demonstration scripts (`main*.m`)
 
 The main.m script is included to demonstrate evaluation of the transfer function
 over multiple cases. Figure 2 that is produced by this procedure will
@@ -114,8 +113,8 @@ Jason Olfert (University of Alberta).
 
 #### References
 
-1. [Sipkens et al., Aerosol Sci. Technol. (2019)][1]
-2. [Sipkens et al., European Aerosol Conference (2019)][2]
+1. [Sipkens et al. 2019. New approaches to calculate the transfer function of particle mass analyzers. *Aerosol Sci. Technol.* doi: 10.1080/02786826.2019.1680794.][1]
+2. [Sipkens et al. 2019. Examination of the methods available to compute the transfer function of CPMA and APM devices. Poster presented at the European Aerosol Conference. Gothenburg, Sweden, August 26.][2]
 
 [1]: https://doi.org/10.1080/02786826.2019.1680794
 [2]: https://www.researchgate.net/publication/336549933_Examination_of_the_methods_available_to_compute_the_transfer_function_of_CPMA_and_APM_devices
