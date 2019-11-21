@@ -28,13 +28,9 @@ paper [[1][1]] and poster [[2][2]].
 
 These are each discussed in more detail below. 
 
-## 2. The transfer function package 
+## 2. The transfer function package: `+tfer_pma`
 
-`+tfer_pma`
-
-#### 2.1 Functions to evaluate transfer functions
-
-`tfer_*.m`
+#### 2.1 Functions to evaluate transfer functions: `tfer_*.m`
 
 As noted above, the core of this program is a set of 
 functions evaluating the transfer function for the various 
@@ -90,9 +86,7 @@ the mass-mobility relation to determine the mobility of particles.
 There are certain assumptions implicit in this evaluation that
 should be checked by the user. 
 
-## 3. Demonstration scripts
-
-`main*.m`
+## 3. Demonstration scripts: `main*.m`
 
 The main.m script is included to demonstrate evaluation of the transfer function
 over multiple cases. Figure 2 that is produced by this procedure will
