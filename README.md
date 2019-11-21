@@ -31,6 +31,9 @@ These are each discussed in more detail below.
 
 ## 2. The transfer function package: `+tfer_pma`
 
+This package forms the core of the program and can be used
+in other projects. 
+
 #### 2.1 Functions to evaluate transfer functions: `tfer_*.m`
 
 As noted above, the core of this program is a set of 
