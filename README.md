@@ -7,11 +7,11 @@ The attached MATLAB functions and scripts evaluate the transfer
 function of  particle mass analyzers (PMAs), including the centrifugal 
 particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). 
 This is done using a novel set of expressions derived from particle 
-tracking methods or using a finite difference method. Information on 
-each file is given as header information in each file. 
-Accordingly, only a brief overview is provided here. 
+tracking methods or using a finite difference method. 
 Information on the methods is given in the associated paper [[1][1]], 
-the result of which this code is intended to reproduce.
+the results of which this code is intended to reproduce.
+Information on the different functions is given as header information in each file. 
+Accordingly, only a brief overview is provided here. 
 
 ## 1. Code description and components
 
