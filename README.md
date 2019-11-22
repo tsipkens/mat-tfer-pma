@@ -191,7 +191,9 @@ used in this program [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 #### References
 
 [Ehara, K., C. Hagwood, and K. J. Coakley. 1996. Novel method to classify aerosol particles according to their mass-to-charge ratio—Aerosol particle mass analyser. *J. Aerosol Sci.* 27 (2):217–34. doi: 10.1016/0021-8502(95)00562-5.][ehara96]
+
 [Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2019a. New approaches to calculate the transfer function of particle mass analyzers. *Aerosol Sci. Technol.* doi: 10.1080/02786826.2019.1680794.][ast19]
+
 [Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2019b. Examination of the methods available to compute the transfer function of CPMA and APM devices. Poster presented at the European Aerosol Conference. Gothenburg, Sweden, August 26.][eac19]
 
 [ehara96]: https://doi.org/10.1016/0021-8502(95)00562-5
