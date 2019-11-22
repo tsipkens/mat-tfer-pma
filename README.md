@@ -83,23 +83,23 @@ Details on these alphanumeric codes are provided in the associated journal artic
 [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 The following acts only as a brief summary:
 
-1. *FD* - Finite difference simulations to evaluate a numerical transfer function.
+*FD* - Finite difference simulations to evaluate a numerical transfer function.
 
-2. *1C* - 1st order Taylor series expansion for the particle migration velocity about the centerline radius, `rc`.
+*1C* - 1st order Taylor series expansion for the particle migration velocity about the centerline radius, `rc`.
 
-3. *1S* - 1st order Taylor series expansion for the particle migration velocity about the equilibrium radius, `rs`.
+*1S* - 1st order Taylor series expansion for the particle migration velocity about the equilibrium radius, `rs`.
 
-4. *2C* - 2nd order Taylor series expansion for the particle migration velocity about the centerline radius, `rc`.
+*2C* - 2nd order Taylor series expansion for the particle migration velocity about the centerline radius, `rc`.
 
-5. *2S* - 2nd order Taylor series expansion for the particle migration velocity about the equilibrium radius, `rs`.
+*2S* - 2nd order Taylor series expansion for the particle migration velocity about the equilibrium radius, `rs`.
 
-6. *W1* - Exact expression for the particle migration velocity, assuming that the inner and outer electrodes have the same rotational speed (i.e. APM conditions, `omega_hat = 1`).
+*W1* - Exact expression for the particle migration velocity, assuming that the inner and outer electrodes have the same rotational speed (i.e. APM conditions, `omega_hat = 1`).
 
-7. *GE* - The exact expression for the particle migration velocity, that is a generalization of the *W1* case.
+*GE* - The exact expression for the particle migration velocity, that is a generalization of the *W1* case.
 
-8. *ehara* - A direct implementation of the original expressions derived by [Ehara, Hagwood, and Coakley (1996)][ehara96]. This function will not be accurate for CPMA conditions (that is, it requires that `omega_hat = 1` in the `prop` structure).
+*ehara* - A direct implementation of the original expressions derived by [Ehara, Hagwood, and Coakley (1996)][ehara96]. This function will not be accurate for CPMA conditions (that is, it requires that `omega_hat = 1` in the `prop` structure).
 
-9. *tri* - A triangular approximation of the transfer function using the setpoint resolution and mass of a single charged particle (multiple charging is not currently incorporated).
+*tri* - A triangular approximation of the transfer function using the setpoint resolution and mass of a single charged particle (multiple charging is not currently incorporated).
 
 The codes are also occasionally modified with additional suffixes:
 
@@ -120,16 +120,17 @@ particle mass analyzer and
 series of name-value pairs used to determine the setpoint. 
 
 For the latter quantity, the setpoint generally
-requires the pracitioner to specify two of the setpoint parameters, which can include:
+requires the practitioner to specify two of the setpoint parameters, 
+which here can include:
 (a) the setpoint mass for a singly charged particle, `m_star`;
 (b) the voltage, `V`;
 (c) the resolution, `Rm`;
-(d) the angular speed at the centerline, `omega`; and the
+(d) the angular speed at the centerline, `omega`; and 
 (e) the angular speed at the inner electrode, `omega1`;.
-In general, if `m_star` is specified as one of the setpoint parameters, any one
+For this program, if `m_star` is specified as one of the setpoint parameters, any one
 of the other parameters can be specified. If `m_star` is not specified, the program
-will expect inputs for `V` and `omega`. Other combinations are not supported. The
-name-value pairs are specified as is typical of similar MATLAB functions. For example,
+will expect inputs for `V` and `omega`. Other combinations are not currently supported. The
+name-value pairs are specified similar to other MATLAB functions. For example,
 to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter 
 ``` 
 sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'V',20); 
