@@ -113,10 +113,10 @@ This function parses a series of name-value pairs to output a cohesive
 structure fully defining the device setpoint, `sp`. This method takes
 two inputs.
 
-1. `prop` - This is the aforementioned struct that contains the properties of the
+`prop` - This is the aforementioned struct that contains the properties of the
 particle mass analyzer and
 
-2. `varargin` - This is a variable length input that contains a
+`varargin` - This is a variable length input that contains a
 series of name-value pairs used to determine the setpoint. The setpoint generally
 requires one to specify two of the setpoint parameters, which can include:
 (a) the setpoint mass for a singly charged particle, `m_star`;
@@ -128,9 +128,9 @@ In general, if `m_star` is specified as one of the setpoint parameters, any one
 of the other parameters can be specified. If `m_star` is not specified, the program
 will expect inputs for `V` and `omega`. Other combinations are not supported. The
 name-value pairs are specified as is typical of similar MATLAB functions. For example,
-to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter
-```
-sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'V',20);
+to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter 
+``` 
+sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'V',20); 
 ```
 If only the setpoint mass is specified as a name-value pair, the program will
 use a resolution of 3 or `Rm = 3`. Accordingly,
