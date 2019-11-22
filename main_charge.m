@@ -13,6 +13,13 @@ Rm = 10; % equivalent resolution of transfer functions (Reavell et al.)
 m_star = 0.01e-18; % mass in kg (1 fg = 1e-18 kg)
 m = linspace(1e-10,5,801).*m_star; % vector of mass
 
+prop = tfer_pma.prop_pma('Olfert'); % get properties of the CPMA
+    % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
+
+sp = tfer_pma.get_setpoint(prop,'m_star',m_star,'Rm',Rm);
+    % get setpoint parameters
+
+
 z_max = 4;
 z_vec = 1:z_max;
 for zz=1:length(z_vec)
@@ -23,15 +30,11 @@ for zz=1:length(z_vec)
     d = (6.*m./(rho_eff.*pi)).^(1/3);
         % specify mobility diameter vector with constant effective density
     
-    prop = tfer_pma.prop_pma('Olfert'); % get properties of the CPMA
-    % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
-    
-    
     %=========================================================================%
     %-- Finite difference solution -------------------------------------------%
     tic;
-    [tfer_FD(:,zz),sp,n{zz}] = tfer_pma.tfer_FD(m_star,...
-        m,d,z,prop,'Rm',Rm);
+    [tfer_FD(:,zz),n{zz}] = tfer_pma.tfer_FD(sp,...
+        m,d,z,prop);
     t(1) = toc;
     
     
@@ -55,7 +58,7 @@ for zz=1:length(z_vec)
     %-- Method 1C --------------------------------%
     tic;
     tfer_1C_diff(:,zz) = ...
-        tfer_pma.tfer_1C_diff(m_star,m,d,z,prop,'Rm',Rm);
+        tfer_pma.tfer_1C_diff(sp,m,d,z,prop);
     t(12) = toc;
 end
 
