@@ -113,12 +113,14 @@ This function parses a series of name-value pairs to output a cohesive
 structure fully defining the device setpoint, `sp`. This method takes
 two inputs.
 
-`prop` - This is the aforementioned struct that contains the properties of the
+1. `prop` - This is the aforementioned struct that contains the properties of the
 particle mass analyzer and
 
-`varargin` - This is a variable length input that contains a
-series of name-value pairs used to determine the setpoint. The setpoint generally
-requires one to specify two of the setpoint parameters, which can include:
+2. `varargin` - This is a variable length input that contains a
+series of name-value pairs used to determine the setpoint. 
+
+For the latter quantity, the setpoint generally
+requires the pracitioner to specify two of the setpoint parameters, which can include:
 (a) the setpoint mass for a singly charged particle, `m_star`;
 (b) the voltage, `V`;
 (c) the resolution, `Rm`;
