@@ -1,5 +1,5 @@
 
-% MAIN      Script used in plotting different transfer functions.
+% MAIN      Script used in plotting the cases from Olfert and Collings (2005).
 % Author:   Timothy Sipkens, 2019-06-25
 %=========================================================================%
 
@@ -23,35 +23,29 @@ d = (6.*m./(rho_eff.*pi)).^(1/3);
 
 prop = tfer_pma.prop_pma('Olfert-Collings'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
-omega_hat = prop.omega_hat; % only valid for CPMA
+
+prop_cpma = prop;
+sp_cpma = tfer_pma.get_setpoint(prop_cpma,'V',V,'omega',omega);
+
+prop.omega_hat = 1;
+sp = tfer_pma.get_setpoint(prop,'V',V,'omega',omega);
+    % get setpoint parameters
 
 
 
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
-prop.omega_hat = 1;
-[tfer_FD_w1,sp] = tfer_pma.tfer_FD([],...
-    m,d,1,prop,'V',V,'omega',omega);
-
-prop.omega_hat = omega_hat;
-[tfer_FD,sp_cpma] = tfer_pma.tfer_FD([],...
-    m,d,1,prop,'V',V,'omega',omega);
+[tfer_FD_w1] = tfer_pma.tfer_FD(sp,m,d,1,prop); % for APM
+[tfer_FD,sp_cpma] = ...
+    tfer_pma.tfer_FD(sp_cpma,m,d,1,prop_cpma); % for CPMA
 
 
 
 %=========================================================================%
-%-- Transfer functions for different cases -------------------------------%
-%-- Setup for centriputal force ------------------------------------------%
-prop = tfer_pma.prop_pma('Olfert-Collings'); % get properties of the CPMA
-B = tfer_pma.dm2zp(d,z,prop.T,prop.p);
-tau = B.*m;
-
 %-- Particle tracking approaches -----------------------------------------%
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
-prop.omega_hat = 1;
-[tfer_1S_w1] = ...
-    tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
+[tfer_1S_w1] = tfer_pma.tfer_1S_pb(sp,m,d,z,prop);
 
 
 

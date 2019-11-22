@@ -1,5 +1,5 @@
 
-% MAIN      Script used in plotting different transfer functions.
+% MAIN      Script used in plotting the cases from Ehara (1996).
 % Author:   Timothy Sipkens, 2019-06-25
 %=========================================================================%
 
@@ -23,11 +23,15 @@ d = (6.*m./(rho_eff.*pi)).^(1/3);
 
 prop = tfer_pma.prop_pma('Ehara'); % get properties of the CPMA
 
+sp = tfer_pma.get_setpoint(prop,'V',V,'omega',omega);
+    % get setpoint parameters
+
+    
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
 tic;
-[tfer_FD,~,n] = tfer_pma.tfer_FD([],...
-    m,d,1,prop,'V',V,'omega',omega);
+[tfer_FD,n] = tfer_pma.tfer_FD(sp,...
+    m,d,1,prop);
 t(1) = toc;
 
 
@@ -45,18 +49,18 @@ D0 = D.*prop.L/(prop.del^2*prop.v_bar); % dimensionless diffusion coeff.
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
 tic;
-[tfer_1S,G0_1S] = tfer_pma.tfer_1S([],m,d,z,prop,'V',V,'omega',omega);
+[tfer_1S,G0_1S] = tfer_pma.tfer_1S(sp,m,d,z,prop);
 t(1) = toc;
 
 %-- Method 1S, Ehara et al. ----------------%
-tfer_Ehara = tfer_pma.tfer_Ehara([],m,d,z,prop,'V',V,'omega',omega);
+tfer_Ehara = tfer_pma.tfer_Ehara(sp,m,d,z,prop);
 
 
 
 %-- Parabolic flow -------------------------------------------------------%
 %-- Method 1S ------------------------------%
 tic;
-[tfer_1S_pb,G0_1S_pb] = tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
+[tfer_1S_pb,G0_1S_pb] = tfer_pma.tfer_1S_pb(sp,m,d,z,prop);
 t(2) = toc;
 
 

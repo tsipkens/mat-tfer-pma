@@ -1,5 +1,5 @@
 
-% MAIN      Script used in plotting different transfer functions.
+% MAIN      Script used in plotting the cases from Kuwata (2015).
 % Author:   Timothy Sipkens, 2019-06-25
 %=========================================================================%
 
@@ -23,12 +23,13 @@ d = 100e-9.*ones(size(m));
 prop = tfer_pma.prop_pma('Kuwata'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
 
+sp = tfer_pma.get_setpoint(prop,'V',V,'omega',omega);
+    % get setpoint parameters
 
 
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
-[tfer_FD,sp] = tfer_pma.tfer_FD([],...
-    m,d,1,prop,'V',V,'omega',omega);
+[tfer_FD] = tfer_pma.tfer_FD(sp,m,d,1,prop);
 
 
 
@@ -42,9 +43,9 @@ tau = B.*m;
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
 [tfer_1S] = ...
-    tfer_pma.tfer_1S([],m,d,z,prop,'V',V,'omega',omega);
+    tfer_pma.tfer_1S(sp,m,d,z,prop);
 [tfer_1S_pb] = ...
-    tfer_pma.tfer_1S_pb([],m,d,z,prop,'V',V,'omega',omega);
+    tfer_pma.tfer_1S_pb(sp,m,d,z,prop);
 
 
 

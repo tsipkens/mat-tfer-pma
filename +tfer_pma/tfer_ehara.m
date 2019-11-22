@@ -1,6 +1,6 @@
 
-% TFER_W1   Evaluates the transfer function for a PMA in Case E.
-% Author:   Timothy Sipkens, 2019-03-21
+% TFER_EHARA    Evaluates the transfer function for a PMA in Case A as per Ehara et al. (1996).
+% Author:       Timothy Sipkens, 2018-12-27
 %-------------------------------------------------------------------------%
 % Inputs:
 %   sp          Structure defining various setpoint parameters 
@@ -13,26 +13,23 @@
 %
 % Outputs:
 %   Lambda      Transfer function
-%   G0          Function mapping final to initial radial position
 %=========================================================================%
 
-function [Lambda,G0] = tfer_W1(sp,m,d,z,prop)
+function [Lambda] = tfer_ehara(sp,m,d,z,prop)
 
-[tau,C0,~,rs] = tfer_pma.parse_inputs(sp,m,d,z,prop);
+[tau,~,~,rs] = tfer_pma.parse_inputs(sp,m,d,z,prop);
         % parse inputs for common parameters
 
 %-- Estimate device parameter --------------------------------------------%
 lam = 2.*tau.*(sp.alpha^2-sp.beta^2./(rs.^4)).*prop.L./prop.v_bar;
 
 
-%-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) 1./(sp.omega1.*sqrt(m)).*...
-    sqrt((m.*sp.omega1^2.*r.^2-C0).*exp(-lam)+C0);
+%-- Evaluate transfer function -------------------------------------------%
+rho_s = (rs-prop.rc)/prop.del;
+Lambda = ((1-rho_s)+(1+rho_s).*exp(-lam))./2.*and(1<rho_s,rho_s<coth(lam./2))+...
+    exp(-lam).*and(-1<rho_s,rho_s<1)+...
+    ((1+rho_s)+(1-rho_s).*exp(-lam))./2.*and(-coth(lam./2)<rho_s,rho_s<-1);
 
-ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
-rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
-
-Lambda = (1/(2*prop.del)).*(rb-ra);
 
 end
 
