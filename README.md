@@ -3,7 +3,7 @@
 
 [![DOI](https://zenodo.org/badge/191454449.svg)](https://zenodo.org/badge/latestdoi/191454449)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
-[![Version](https://img.shields.io/badge/Version-1.4-blue.svg)]()
+[![Version](https://img.shields.io/badge/Version-2.0-blue.svg)]()
 
 ## 1. Code description and components
 
@@ -12,10 +12,10 @@ function of particle mass analyzers (PMAs), including the centrifugal
 particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM).
 This is primarily done using a novel set of expressions derived from particle
 tracking methods, information for which is given in an associated paper
-[(Sipkens, Olfert, and Rogak, 2019a)][ast19],
-A method is also included to perform finite difference simulations of the particle number
+[(Sipkens, Olfert, and Rogak, 2019a)][ast19]. 
+A function is also included to perform finite difference simulations of the particle number
 throughout the classifier and evaluate the resultant numerical transfer function. 
-Further information on the different methods in this distributions is given as header 
+Further information on the different methods in this program is given as header 
 information in each file, such that only a brief overview is provided here.
 
 This program contains two main components:
@@ -23,7 +23,7 @@ This program contains two main components:
 1. A MATLAB package, +tfer_PMA, which contains the relevant functions
 for evaluating the transfer function of a PMA. Such a package is
 designed to be imported into other projects (e.g. it has been imported into
-[mat-2d-aerosol-inversion][https://github.com/tsipkens/mat-2d-aerosol-inversion]),
+[mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion)),
 where it can speed or improve the accuracy of PMA data inversion.
 
 2. Various `main*` scripts that are used to call and analyze the transfer function
@@ -36,42 +36,50 @@ These two components are each discussed in more detail below.
 
 ## 2. The transfer function package: +tfer_pma
 
-This package forms the core of the program and can be used
-in other projects (e.g. it has been imported into
-[mat-2d-aerosol-inversion][https://github.com/tsipkens/mat-2d-aerosol-inversion]).
+This package forms the core of the program and, as noted above, can be used
+in other projects. This is done by copying the +tfer_pma folder 
+into the main directory of another program. 
+The functions can then be accessed using `tfer_pma.function_name` as is 
+demonstrated in the `main*` scripts that are included with this program.  
+This usage is also explicitly demonstrated in 
+[mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion), 
+where the imported package is used to speed up 2D inversion schemes. 
 
-#### 2.1 Functions to evaluate transfer functions: `tfer_*(...)`
+#### 2.1 Methods to evaluate transfer functions: `tfer_*(...)`
 
-As noted above, the core of this program is a set of
+The +tfer_pma package is primarily composed of
 functions that evaluate the transfer function for the various
-cases presented in the associated work [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
+cases presented in the associated work 
+[(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 These functions feature names of the form `tfer_*`. 
 
 ###### 2.1.1 Input and output arguments
 
-These functions share common inputs:
+These methods share common inputs:
 
-1. `sp` - a MATLAB structure containing the relevant setpoint parameters
-(see 2.2 for the relevant function used to create this structure),
+1. `sp` - A MATLAB structure containing the relevant setpoint parameters
+(see 2.2 for the relevant function used to create this structure). 
 
-2. `m` - the masses at which the transfer function will be evaluated,
+2. `m` - The masses at which the transfer function will be evaluated. 
 
-3. `d` - the mobility diameter (either as a scalar or as a vector with the
-  same length as `m`, at which the transfer function is to be
-  evaluated),
+3. `d` - The mobility diameters (either as a scalar or as a vector with the
+  same length as `m`) at which the transfer function is to be
+  evaluated). 
 
-4. `z` - the integer charge state (either as a scalar or as a vector with the
-  same length as `m`, at which the transfer function is to be
-  evaluated), and
+4. `z` - The integer charge state (either as a scalar or as a vector with the
+  same length as `m`) at which the transfer function is to be
+  evaluated. 
 
-5. `prop` - a struct that contains the properties of the particle mass analyzer
-  (a sample script to generate this quantity is included as `prop_pma`).
+5. `prop` - A MATLAB structure that contains the properties of the particle mass analyzer. 
+This includes fields that describe the inner radius, `r1`; outer
+radius, `r2`; length, `L`; and flows, `Q*`. A sample script to generate 
+this quantity is included as `prop_pma`.
 
 The functions also often share common outputs:
 
-1. `Lambda` - the transfer function and
+1. `Lambda` - The transfer function. 
 
-2. `G0` - the mapping function, transforming a finial radius to the
+2. `G0` - The mapping function, transforming a finial radius to the
 corresponding position of the particle at the inlet (only available for
 the particle tracking methods).
 
@@ -111,7 +119,7 @@ The codes are also occasionally modified with additional suffixes:
 
 This function parses a series of name-value pairs to output a cohesive
 structure fully defining the device setpoint, `sp`. This method takes
-two inputs.
+two inputs:
 
 1. `prop` - This is the aforementioned struct that contains the properties of the
 particle mass analyzer and
