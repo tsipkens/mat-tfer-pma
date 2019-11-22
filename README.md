@@ -45,7 +45,7 @@ This usage is also explicitly demonstrated in
 [mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion), 
 where the imported package is used to speed up 2D inversion schemes. 
 
-#### 2.1 Methods to evaluate transfer functions: `tfer_*(...)`
+### 2.1 Methods to evaluate transfer functions: `tfer_*(...)`
 
 The +tfer_pma package is primarily composed of
 functions that evaluate the transfer function for the various
@@ -53,7 +53,7 @@ cases presented in the associated work
 [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 These functions feature names of the form `tfer_*`. 
 
-###### 2.1.1 Input and output arguments
+#### 2.1.1 Input and output arguments
 
 These methods share common inputs:
 
@@ -83,7 +83,7 @@ The functions also often share common outputs:
 corresponding position of the particle at the inlet (only available for
 the particle tracking methods).
 
-###### 2.1.2 Structure of filenames
+#### 2.1.2 Structure of filenames
 
 Alphanumeric codes are appended to the filenames and
 refer to the method or approximation used in transfer function evaluation.
@@ -115,7 +115,7 @@ The codes are also occasionally modified with additional suffixes:
 
 *diff* - Uses the diffusing form of the transfer function given in [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 
-#### 2.2 Determining the setpoint: `get_setpoint(...)`
+### 2.2 Determining the setpoint: `get_setpoint(...)`
 
 This function parses a series of name-value pairs to output a cohesive
 structure fully defining the device setpoint, `sp`. This method takes
@@ -154,7 +154,7 @@ sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'Rm',3);
 ```
 will yield identical results.
 
-#### 2.3 Remaining functions
+### 2.3 Remaining functions
 
 The remaining functions help in transfer function evaluation, with the
 details provided in each file. This includes functions to convert
@@ -165,9 +165,16 @@ should be checked by the user.
 
 ## 3. Demonstration scripts: `main*`
 
-The `main` script is included to demonstrate evaluation of the transfer function
-over multiple cases. Figure 2 that is produced by this procedure will
-resemble those given in the associated journal article [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
+These scripts are included to demonstrate evaluation of the transfer function
+over multiple cases. These scripts first initialize the PMA setpoint, `sp`;
+properties, `prop`; and vectors at which the transfer function will
+be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating 
+the transfer function and plotting the results. 
+
+The `main` script is included to replicate the results of 
+[(Sipkens, Olfert, and Rogak, 2019a)][ast19], 
+where Figure 2 that is produced by this procedure will resemble 
+the figures in that article.
 
 Other scripts, `main_*` are intended to replicate figures in other
 works and to consider multiple charging.
