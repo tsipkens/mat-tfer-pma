@@ -18,36 +18,33 @@ throughout the classifier and evaluate the resultant numerical transfer function
 
 This program contains two main components:
 
-1. A MATLAB package, `+tfer_PMA`, which contains the relevant functions
+1. A MATLAB package, tfer_PMA, which contains the relevant functions
 for evaluating the transfer function of a PMA. Such a package is
 designed to be imported into other projects (e.g. it has been imported into
 [mat-2d-aerosol-inversion][https://github.com/tsipkens/mat-2d-aerosol-inversion]),
 where it can speed or improve the accuracy of PMA data inversion.
 
-2. Various `main*.m` scripts that are used to call and analyze the transfer function
-under different conditions. Of particular note is the `main.m` script that
+2. Various `main*` scripts that are used to call and analyze the transfer function
+under different conditions. Of particular note is the `main` script that
 evaluates the full range of available methods and produces figures similar
 to those in the associate paper [(Sipkens, Olfert, and Rogak, 2019a)][ast19] and poster
 [(Sipkens, Olfert and Rogak, 2019b)][eac19].
 
 These two components are each discussed in more detail below.
 
-## 2. The transfer function package: `+tfer_pma`
+## 2. The transfer function package: +tfer_pma
 
 This package forms the core of the program and can be used
 in other projects (e.g. it has been imported into
 [mat-2d-aerosol-inversion][https://github.com/tsipkens/mat-2d-aerosol-inversion]).
 
-#### 2.1 Functions to evaluate transfer functions: `tfer_*.m`
+#### 2.1 Functions to evaluate transfer functions: `tfer_*(...)`
 
 As noted above, the core of this program is a set of
 functions evaluating the transfer function for the various
 cases presented in the associated work, that is
-the functions featuring the names `tfer_*.m`. The file names feature case
-letters, corresponding to different assumptions about the particle
-migration velocity and flow conditions discussed in the associated work,
-as well as `diff` and `pb` suffixes for those transfer function that
-include diffusion and assume parabolic axial flow conditions, respectively.
+the functions featuring the names `tfer_*`. 
+Further details on these functions are provided below.
 
 ###### 2.1.1 Input and output arguments
 
@@ -79,8 +76,8 @@ the particle tracking methods).
 
 ###### 2.1.2 Structure of filenames
 
-Generally, two character alphanumeric codes included in the filenames
-refer to the method or approximation used to evaluate the transfer function.
+Alphanumeric codes are appended to the filenames and
+refer to the method or approximation used in transfer function evaluation.
 Details on these alphanumeric codes are provided in the associated journal article
 [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 The following acts as a brief summary:
@@ -103,13 +100,13 @@ The following acts as a brief summary:
 
 9. *tri* - A triangular approximation of the transfer function using the setpoint resolution and mass of a single charged particle (multiple charging is not currently incorporated).
 
-The codes are also occasionally modified with two suffixes:
+The codes are also occasionally modified with additional suffixes:
 
 *pb* - Replaces the default treatment of a plug axial flow with a parabolic axial flow.
 
 *diff* - Uses the diffusing form of the transfer function given in [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 
-#### 2.2 Determining the setpoint: `get_setpoint.m`
+#### 2.2 Determining the setpoint: `get_setpoint(...)`
 
 This function parses a series of name-value pairs to output a cohesive
 structure fully defining the device setpoint, `sp`. This method takes
@@ -154,13 +151,13 @@ the mass-mobility relation to determine the mobility of particles.
 There are certain assumptions implicit in this evaluation that
 should be checked by the user.
 
-## 3. Demonstration scripts: `main*.m`
+## 3. Demonstration scripts: `main*`
 
-The `main.m` script is included to demonstrate evaluation of the transfer function
+The `main` script is included to demonstrate evaluation of the transfer function
 over multiple cases. Figure 2 that is produced by this procedure will
 resemble those given in the associated journal article [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 
-Other scripts, `main_*.m` are intended to replicate figures in other
+Other scripts, `main_*` are intended to replicate figures in other
 works and to consider multiple charging.
 
 ----------------------------------------------------------------------
