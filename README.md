@@ -13,12 +13,14 @@ particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM).
 This is primarily done using a novel set of expressions derived from particle
 tracking methods, information for which is given in an associated paper
 [(Sipkens, Olfert, and Rogak, 2019a)][ast19],
-A function is also included to perform finite difference simulations of the particle number
-throughout the classifier and evaluate the resultant numerical transfer function. Further information on the different methods in this distributions is given as header information in each file, such that only a brief overview is provided here.
+A method is also included to perform finite difference simulations of the particle number
+throughout the classifier and evaluate the resultant numerical transfer function. 
+Further information on the different methods in this distributions is given as header 
+information in each file, such that only a brief overview is provided here.
 
 This program contains two main components:
 
-1. A MATLAB package, tfer_PMA, which contains the relevant functions
+1. A MATLAB package, +tfer_PMA, which contains the relevant functions
 for evaluating the transfer function of a PMA. Such a package is
 designed to be imported into other projects (e.g. it has been imported into
 [mat-2d-aerosol-inversion][https://github.com/tsipkens/mat-2d-aerosol-inversion]),
@@ -41,14 +43,13 @@ in other projects (e.g. it has been imported into
 #### 2.1 Functions to evaluate transfer functions: `tfer_*(...)`
 
 As noted above, the core of this program is a set of
-functions evaluating the transfer function for the various
-cases presented in the associated work, that is
-the functions featuring the names `tfer_*`. 
-Further details on these functions are provided below.
+functions that evaluate the transfer function for the various
+cases presented in the associated work [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
+These functions feature names of the form `tfer_*`. 
 
 ###### 2.1.1 Input and output arguments
 
-The functions share common inputs:
+These functions share common inputs:
 
 1. `sp` - a MATLAB structure containing the relevant setpoint parameters
 (see 2.2 for the relevant function used to create this structure),
@@ -56,15 +57,15 @@ The functions share common inputs:
 2. `m` - the masses at which the transfer function will be evaluated,
 
 3. `d` - the mobility diameter (either as a scalar or as a vector with the
-  same length as the masses at which the transfer function is to be
+  same length as `m`, at which the transfer function is to be
   evaluated),
 
 4. `z` - the integer charge state (either as a scalar or as a vector with the
-  same length as the masses at which the transfer function is to be
-  evaluated),
+  same length as `m`, at which the transfer function is to be
+  evaluated), and
 
 5. `prop` - a struct that contains the properties of the particle mass analyzer
-  (a sample script to generate this quantity is include as `prop_PMA.m`), and
+  (a sample script to generate this quantity is included as `prop_pma`).
 
 The functions also often share common outputs:
 
@@ -80,7 +81,7 @@ Alphanumeric codes are appended to the filenames and
 refer to the method or approximation used in transfer function evaluation.
 Details on these alphanumeric codes are provided in the associated journal article
 [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
-The following acts as a brief summary:
+The following acts only as a brief summary:
 
 1. *FD* - Finite difference simulations to evaluate a numerical transfer function.
 
