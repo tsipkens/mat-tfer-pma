@@ -91,29 +91,24 @@ Details on these alphanumeric codes are provided in the associated journal artic
 [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
 The following acts only as a brief summary:
 
-*FD* - Finite difference simulations to evaluate a numerical transfer function.
+| Code | Description |
+| :--- | :--- |
+| FD | Finite difference simulations to evaluate a numerical transfer function. |
+| 1C | 1st order Taylor series expansion for the particle migration velocity about the centerline radius, `rc`. |
+| 1S | 1st order Taylor series expansion for the particle migration velocity about the equilibrium radius, `rs`. |
+| 2C | 2nd order Taylor series expansion for the particle migration velocity about the centerline radius, `rc`. |
+| 2S | 2nd order Taylor series expansion for the particle migration velocity about the equilibrium radius, `rs`. |
+| W1 | Exact expression for the particle migration velocity, assuming that the inner and outer electrodes have the same rotational speed (i.e. APM conditions, `omega_hat = 1`). |
+| GE | The exact expression for the particle migration velocity, that is a generalization of the *W1* case. |
+| ehara | A direct implementation of the original expressions derived by [Ehara, Hagwood, and Coakley (1996)][ehara96]. This function will not be accurate for CPMA conditions (that is, it requires that `omega_hat = 1` in the `prop` structure). |
+| tri | A triangular approximation of the transfer function using the setpoint resolution and mass of a single charged particle (multiple charging is not currently incorporated). |
 
-*1C* - 1st order Taylor series expansion for the particle migration velocity about the centerline radius, `rc`.
+The codes are also occasionally modified with additional suffixes with the following meanings:
 
-*1S* - 1st order Taylor series expansion for the particle migration velocity about the equilibrium radius, `rs`.
-
-*2C* - 2nd order Taylor series expansion for the particle migration velocity about the centerline radius, `rc`.
-
-*2S* - 2nd order Taylor series expansion for the particle migration velocity about the equilibrium radius, `rs`.
-
-*W1* - Exact expression for the particle migration velocity, assuming that the inner and outer electrodes have the same rotational speed (i.e. APM conditions, `omega_hat = 1`).
-
-*GE* - The exact expression for the particle migration velocity, that is a generalization of the *W1* case.
-
-*ehara* - A direct implementation of the original expressions derived by [Ehara, Hagwood, and Coakley (1996)][ehara96]. This function will not be accurate for CPMA conditions (that is, it requires that `omega_hat = 1` in the `prop` structure).
-
-*tri* - A triangular approximation of the transfer function using the setpoint resolution and mass of a single charged particle (multiple charging is not currently incorporated).
-
-The codes are also occasionally modified with additional suffixes:
-
-*pb* - Replaces the default treatment of a plug axial flow with a parabolic axial flow.
-
-*diff* - Uses the diffusing form of the transfer function given in [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
+| Code | Description |
+| :--- | :--- |
+| pb | Replaces the default treatment of a plug axial flow with a parabolic axial flow. |
+| diff | Uses the diffusing form of the transfer function given in [(Sipkens, Olfert, and Rogak, 2019a)][ast19]. |
 
 ### 2.2 Determining the setpoint: `get_setpoint(...)`
 
