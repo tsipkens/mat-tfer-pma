@@ -3,7 +3,7 @@
 
 [![DOI](https://zenodo.org/badge/191454449.svg)](https://zenodo.org/badge/latestdoi/191454449)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
-[![Version](https://img.shields.io/badge/Version-2.0-blue.svg)]()
+[![Version](https://img.shields.io/badge/Version-2.0.1-blue.svg)]()
 
 ## 1. Code description and components
 
