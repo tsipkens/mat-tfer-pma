@@ -12,10 +12,10 @@ function of particle mass analyzers (PMAs), including the centrifugal
 particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM).
 This is primarily done using a novel set of expressions derived from particle
 tracking methods, information for which is given in an associated paper
-[(Sipkens, Olfert, and Rogak, 2019a)][ast19]. 
+[(Sipkens, Olfert, and Rogak, 2020)][ast20].
 A function is also included to perform finite difference simulations of the particle number
-throughout the classifier and evaluate the resultant numerical transfer function. 
-Further information on the different methods in this program is given as header 
+throughout the classifier and evaluate the resultant numerical transfer function.
+Further information on the different methods in this program is given as header
 information in each file, such that only a brief overview is provided here.
 
 This program contains two main components:
@@ -29,7 +29,7 @@ where it can speed or improve the accuracy of PMA data inversion.
 2. Various `main*` scripts that are used to call and analyze the transfer function
 under different conditions. Of particular note is the `main` script that
 evaluates the full range of available methods and produces figures similar
-to those in the associate paper [(Sipkens, Olfert, and Rogak, 2019a)][ast19] and poster
+to those in the associate paper [(Sipkens, Olfert, and Rogak, 2020)][ast20] and poster
 [(Sipkens, Olfert and Rogak, 2019b)][eac19].
 
 These two components are each discussed in more detail below.
@@ -37,47 +37,47 @@ These two components are each discussed in more detail below.
 ## 2. The transfer function package: +tfer_pma
 
 This package forms the core of the program and, as noted above, can be used
-in other projects. This is done by copying the +tfer_pma folder 
-into the main directory of another program. 
-The functions can then be accessed using `tfer_pma.function_name` as is 
+in other projects. This is done by copying the +tfer_pma folder
+into the main directory of another program.
+The functions can then be accessed using `tfer_pma.function_name` as is
 demonstrated in the `main*` scripts that are included with this program.  
-This usage is also explicitly demonstrated in 
-[mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion), 
-where the imported package is used to speed up 2D inversion schemes. 
+This usage is also explicitly demonstrated in
+[mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion),
+where the imported package is used to speed up 2D inversion schemes.
 
 ### 2.1 Methods to evaluate transfer functions: `tfer_*(...)`
 
 The +tfer_pma package is primarily composed of
 functions that evaluate the transfer function for the various
-cases presented in the associated work 
-[(Sipkens, Olfert, and Rogak, 2019a)][ast19].
-These functions feature names of the form `tfer_*`. 
+cases presented in the associated work
+[(Sipkens, Olfert, and Rogak, 2020)][ast20].
+These functions feature names of the form `tfer_*`.
 
 #### 2.1.1 Input and output arguments
 
 These methods share common inputs:
 
 1. `sp` - A MATLAB structure containing the relevant setpoint parameters
-(see 2.2 for the relevant function used to create this structure). 
+(see 2.2 for the relevant function used to create this structure).
 
-2. `m` - The masses at which the transfer function will be evaluated. 
+2. `m` - The masses at which the transfer function will be evaluated.
 
 3. `d` - The mobility diameters (either as a scalar or as a vector with the
   same length as `m`) at which the transfer function is to be
-  evaluated). 
+  evaluated).
 
 4. `z` - The integer charge state (either as a scalar or as a vector with the
   same length as `m`) at which the transfer function is to be
-  evaluated. 
+  evaluated.
 
-5. `prop` - A MATLAB structure that contains the properties of the particle mass analyzer. 
+5. `prop` - A MATLAB structure that contains the properties of the particle mass analyzer.
 This includes fields that describe the inner radius, `r1`; outer
-radius, `r2`; length, `L`; and flows, `Q*`. A sample script to generate 
+radius, `r2`; length, `L`; and flows, `Q*`. A sample script to generate
 this quantity is included as `prop_pma`.
 
 The functions also often share common outputs:
 
-1. `Lambda` - The transfer function. 
+1. `Lambda` - The transfer function.
 
 2. `G0` - The mapping function, transforming a finial radius to the
 corresponding position of the particle at the inlet (only available for
@@ -88,7 +88,7 @@ the particle tracking methods).
 Alphanumeric codes are appended to the filenames and
 refer to the method or approximation used in transfer function evaluation.
 Details on these alphanumeric codes are provided in the associated journal article
-[(Sipkens, Olfert, and Rogak, 2019a)][ast19].
+[(Sipkens, Olfert, and Rogak, 2019a)][ast20].
 The following acts only as a brief summary:
 
 | Code | Description |
@@ -108,7 +108,7 @@ The codes are also occasionally modified with additional suffixes with the follo
 | Code | Description |
 | :--- | :--- |
 | pb | Replaces the default treatment of a plug axial flow with a parabolic axial flow. |
-| diff | Uses the diffusing form of the transfer function given in [(Sipkens, Olfert, and Rogak, 2019a)][ast19]. |
+| diff | Uses the diffusing form of the transfer function given in [(Sipkens, Olfert, and Rogak, 2019a)][ast20]. |
 
 ### 2.2 Determining the setpoint: `get_setpoint(...)`
 
@@ -120,23 +120,23 @@ two inputs:
 particle mass analyzer and
 
 2. `varargin` - This is a variable length input that contains a
-series of name-value pairs used to determine the setpoint. 
+series of name-value pairs used to determine the setpoint.
 
 For the latter quantity, the setpoint generally
-requires the practitioner to specify two of the setpoint parameters, 
+requires the practitioner to specify two of the setpoint parameters,
 which here can include:
 (a) the setpoint mass for a singly charged particle, `m_star`;
 (b) the voltage, `V`;
 (c) the resolution, `Rm`;
-(d) the angular speed at the centerline, `omega`; and 
+(d) the angular speed at the centerline, `omega`; and
 (e) the angular speed at the inner electrode, `omega1`;.
 For this program, if `m_star` is specified as one of the setpoint parameters, any one
 of the other parameters can be specified. If `m_star` is not specified, the program
 will expect inputs for `V` and `omega`. Other combinations are not currently supported. The
 name-value pairs are specified similar to other MATLAB functions. For example,
-to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter 
-``` 
-sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'V',20); 
+to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter
+```
+sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'V',20);
 ```
 If only the setpoint mass is specified as a name-value pair, the program will
 use a resolution of 3 or `Rm = 3`. Accordingly,
@@ -163,12 +163,12 @@ should be checked by the user.
 These scripts are included to demonstrate evaluation of the transfer function
 over multiple cases. These scripts first initialize the PMA setpoint, `sp`;
 properties, `prop`; and vectors at which the transfer function will
-be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating 
-the transfer function and plotting the results. 
+be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating
+the transfer function and plotting the results.
 
-The `main` script is included to replicate the results of 
-[(Sipkens, Olfert, and Rogak, 2019a)][ast19], 
-where Figure 2 that is produced by this procedure will resemble 
+The `main` script is included to replicate the results of
+[(Sipkens, Olfert, and Rogak, 2020)][ast20],
+where Figure 2 that is produced by this procedure will resemble
 the figures in that article.
 
 Other scripts, `main_*` are intended to replicate figures in other
@@ -197,16 +197,16 @@ This code should be cited by:
   versions of this code on [Zenodo](https://zenodo.org/badge/latestdoi/191454449)), and
 
 2. citing the associated journal article describing the particle tracking methods
-used in this program [(Sipkens, Olfert, and Rogak, 2019a)][ast19].
+used in this program [(Sipkens, Olfert, and Rogak, 2019a)][ast20].
 
 #### References
 
-[Ehara, K., C. Hagwood, and K. J. Coakley. 1996. Novel method to classify aerosol particles according to their mass-to-charge ratio—Aerosol particle mass analyser. *J. Aerosol Sci.* 27 (2):217–34. doi: 10.1016/0021-8502(95)00562-5.][ehara96]
+[Ehara, K., C. Hagwood, and K. J. Coakley. 1996. Novel method to classify aerosol particles according to their mass-to-charge ratio—Aerosol particle mass analyser. *J. Aerosol Sci.* 27:2, 217–34. DOI: 10.1016/0021-8502(95)00562-5.][ehara96]
 
-[Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2019a. New approaches to calculate the transfer function of particle mass analyzers. *Aerosol Sci. Technol.* doi: 10.1080/02786826.2019.1680794.][ast19]
+[Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2020. New approaches to calculate the transfer function of particle mass analyzers. *Aerosol Sci. Technol.* 54:1, 111-127. DOI: 10.1080/02786826.2019.1680794.][ast20]
 
-[Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2019b. Examination of the methods available to compute the transfer function of CPMA and APM devices. Poster presented at the European Aerosol Conference. Gothenburg, Sweden, August 26.][eac19]
+[Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2019. Examination of the methods available to compute the transfer function of CPMA and APM devices. Poster presented at the European Aerosol Conference. Gothenburg, Sweden, August 26.][eac19]
 
 [ehara96]: https://doi.org/10.1016/0021-8502(95)00562-5
-[ast19]: https://doi.org/10.1080/02786826.2019.1680794
+[ast20]: https://doi.org/10.1080/02786826.2019.1680794
 [eac19]: https://www.researchgate.net/publication/336549933_Examination_of_the_methods_available_to_compute_the_transfer_function_of_CPMA_and_APM_devices
