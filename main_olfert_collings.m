@@ -21,8 +21,10 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_pma.prop_pma('Olfert-Collings'); % get properties of the CPMA
+prop = tfer_pma.prop_pma('olfert-collings'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
+prop.rho0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
+prop.Dm = 3;
 
 prop_cpma = prop;
 sp_cpma = tfer_pma.get_setpoint(prop_cpma,'V',V,'omega',omega);

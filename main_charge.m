@@ -13,8 +13,12 @@ Rm = 10; % equivalent resolution of transfer functions (Reavell et al.)
 m_star = 0.01e-18; % mass in kg (1 fg = 1e-18 kg)
 m = linspace(1e-10,5,801).*m_star; % vector of mass
 
-prop = tfer_pma.prop_pma('Olfert'); % get properties of the CPMA
-    % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
+prop = tfer_pma.prop_pma('olfert'); % get properties of the CPMA
+% prop.omega_hat = 1; % NOTE: Uncomment for APM condition
+
+rho_eff = 900; % effective density (held constant over integer charge states)
+prop.rho0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
+prop.Dm = 3;
 
 sp = tfer_pma.get_setpoint(prop,'m_star',m_star,'Rm',Rm);
     % get setpoint parameters
@@ -26,7 +30,6 @@ for zz=1:length(z_vec)
     z = z_vec(zz); % integer charge state
     disp(['Processing ',num2str(zz),' of ',num2str(length(z_vec)),'...']);
     
-    rho_eff = 900; % effective density
     d = (6.*m./(rho_eff.*pi)).^(1/3);
         % specify mobility diameter vector with constant effective density
     

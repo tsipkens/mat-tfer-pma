@@ -20,8 +20,10 @@ z = 1; % integer charge state
 d = 100e-9.*ones(size(m));
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_pma.prop_pma('Kuwata'); % get properties of the CPMA
-prop.D = @(B) 1e-10.*ones(size(B));
+prop = tfer_pma.prop_pma('kuwata'); % get properties of the CPMA
+prop.rho0 = 900*pi/6; % copy mass-mobility relation info (only used to find Rm)
+prop.Dm = 3;
+prop.D = @(B) 1e-10.*ones(size(B)); % reduce diffusion
 
 sp = tfer_pma.get_setpoint(prop,'V',V,'omega',omega);
     % get setpoint parameters
