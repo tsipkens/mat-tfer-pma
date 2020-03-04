@@ -114,8 +114,10 @@ The codes are also occasionally modified with additional suffixes with the follo
 ### 2.2 Determining the setpoint: `get_setpoint(...)`
 
 This function parses a series of name-value pairs to output a cohesive
-structure fully defining the device setpoint, `sp`. This method takes
-two inputs:
+structure fully defining the device setpoint, output in the form of `sp` 
+or the *setpoint structure*. 
+
+This method takes two inputs:
 
 1. `prop` - This is the aforementioned struct that contains the properties of the
 particle mass analyzer and
@@ -136,19 +138,32 @@ of the other parameters can be specified. If `m_star` is not specified, the prog
 will expect inputs for `V` and `omega`. Other combinations are not currently supported. The
 name-value pairs are specified similar to other MATLAB functions. For example,
 to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter
-```
+```Matlab
 sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'V',20);
 ```
 If only the setpoint mass is specified as a name-value pair, the program will
 use a resolution of 3 or `Rm = 3`. Accordingly,
-```
+```Matlab
 sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18);
 ```
 and
-```
+```Matlab
 sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'Rm',3);
 ```
-will yield identical results.
+will yield identical results. The function can also handle vector inputs, 
+outputing a structured array with one entry per setpoint. For example, 
+a vector of mass setpoints and a resolution of *R*<sub>m</sub> = 10 
+can be specified using:
+
+```Matlab
+m_star = 1e-18.*logspace(log10(0.1),log10(100),25); % mass setpoints
+sp = tfer_pma.get_setpoint(prop,'m_star',m_star,'Rm',10); % PMA setpoints for Rm = 10
+```
+
+Note that the input to the function must either be (a) two vectors of the 
+same length or (b) a scalar and a vector (as in the example above).
+
+#### 
 
 ### 2.3 Remaining functions
 
