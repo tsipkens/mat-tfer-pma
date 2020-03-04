@@ -53,7 +53,7 @@ tic;
 t(1) = toc;
 
 %-- Method 1S, Ehara et al. ----------------%
-tfer_Ehara = tfer_pma.tfer_Ehara(sp,m,d,z,prop);
+tfer_ehara = tfer_pma.tfer_ehara(sp,m,d,z,prop);
 
 
 
@@ -72,7 +72,7 @@ m_plot = m./e;
 figure(2);
 plot(m_plot,tfer_1S);
 hold on;
-plot(m_plot,tfer_Ehara);
+plot(m_plot,tfer_ehara);
 plot(m_plot,tfer_1S_pb);
 plot(m_plot,min(tfer_FD,1),'k');
 hold off;
