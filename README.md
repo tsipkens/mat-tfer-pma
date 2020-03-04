@@ -5,8 +5,6 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 [![Version](https://img.shields.io/badge/Version-2.0.1-blue.svg)]()
 
-## 1. Code description and components
-
 The attached MATLAB functions and scripts evaluate the transfer
 function of particle mass analyzers (PMAs), including the centrifugal
 particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM).
@@ -34,7 +32,7 @@ to those in the associate paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20] and
 
 These two components are each discussed in more detail below.
 
-## 2. The transfer function package: +tfer_pma
+### 1. The transfer function package: +tfer_pma
 
 This package forms the core of the program and, as noted above, can be used
 in other projects. This is done by copying the +tfer_pma folder
@@ -46,7 +44,7 @@ This usage is also explicitly demonstrated in
 where the imported package is used to speed up 2D inversion schemes
 discussed in [Sipkens, Olfert, and Rogak, (2020b)][jas20].
 
-### 2.1 Methods to evaluate transfer functions: `tfer_*(...)`
+#### 1.1 Methods to evaluate transfer functions: tfer_*(...)
 
 The +tfer_pma package is primarily composed of
 functions that evaluate the transfer function for the various
@@ -54,7 +52,7 @@ cases presented in the associated work
 [(Sipkens, Olfert, and Rogak, 2020a)][ast20].
 These functions feature names of the form `tfer_*`.
 
-#### 2.1.1 Input and output arguments
+##### 1.1.1 Input and output arguments
 
 These methods share common inputs:
 
@@ -64,17 +62,17 @@ These methods share common inputs:
 2. `m` - The masses at which the transfer function will be evaluated.
 
 3. `d` - The mobility diameters (either as a scalar or as a vector with the
-  same length as `m`) at which the transfer function is to be
-  evaluated).
+    same length as `m`) at which the transfer function is to be
+    evaluated).
 
 4. `z` - The integer charge state (either as a scalar or as a vector with the
-  same length as `m`) at which the transfer function is to be
-  evaluated.
+    same length as `m`) at which the transfer function is to be
+    evaluated.
 
 5. `prop` - A MATLAB structure that contains the properties of the particle mass analyzer.
 This includes fields that describe the inner radius, `r1`; outer
 radius, `r2`; length, `L`; and flows, `Q*`. A sample script to generate
-this quantity is included as `prop_pma`.
+this quantity is included as `prop_pma( )` in the `tfer_pma` package.
 
 The functions also often share common outputs:
 
@@ -84,7 +82,7 @@ The functions also often share common outputs:
 corresponding position of the particle at the inlet (only available for
 the particle tracking methods).
 
-#### 2.1.2 Structure of filenames
+##### 1.1.2 Structure of filenames
 
 Alphanumeric codes are appended to the filenames and
 refer to the method or approximation used in transfer function evaluation.
@@ -111,7 +109,7 @@ The codes are also occasionally modified with additional suffixes with the follo
 | pb | Replaces the default treatment of a plug axial flow with a parabolic axial flow. |
 | diff | Uses the diffusing form of the transfer function given in [(Sipkens, Olfert, and Rogak, 2019a)][ast20]. |
 
-### 2.2 Determining the setpoint: `get_setpoint(...)`
+#### 1.2 Determining the setpoint: get_setpoint(...)
 
 This function parses a series of name-value pairs to output a cohesive
 structure fully defining the device setpoint, output in the form of `sp` 
@@ -138,6 +136,7 @@ of the other parameters can be specified. If `m_star` is not specified, the prog
 will expect inputs for `V` and `omega`. Other combinations are not currently supported. The
 name-value pairs are specified similar to other MATLAB functions. For example,
 to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter
+
 ```Matlab
 sp = tfer_pma.get_setpoint(prop,'m_star',0.1e-18,'V',20);
 ```
@@ -157,24 +156,30 @@ can be specified using:
 
 ```Matlab
 m_star = 1e-18.*logspace(log10(0.1),log10(100),25); % mass setpoints
-sp = tfer_pma.get_setpoint(prop,'m_star',m_star,'Rm',10); % PMA setpoints for Rm = 10
+sp = tfer_pma.get_setpoint(prop,...
+	'm_star',m_star,'Rm',10); % PMA setpoints for Rm = 10
 ```
 
 Note that the input to the function must either be (a) two vectors of the 
 same length or (b) a scalar and a vector (as in the example above).
 
-#### 
-
-### 2.3 Remaining functions
+#### 2.3 Remaining functions
 
 The remaining functions help in transfer function evaluation, with the
 details provided in each file. This includes functions to convert
-between particle mass and electromobility. Notably, `mp2zp.m` invokes
-the mass-mobility relation to determine the mobility of particles.
-There are certain assumptions implicit in this evaluation that
-should be checked by the user.
+between particle mass and electromobility. 
 
-## 3. Demonstration scripts: `main*`
+Notably, `mp2zp.m` invokes the mass-mobility relation to determine the mobility of particles.
+There are certain assumptions implicit in this evaluation that
+should be checked by the user. The mass-mobility exponent, `Dm`, and effective density, `rho0`, used when invoking the mass-mobility relation are specified in the `prop` structure. The mobility diameter is then estimated as:
+
+```Matlab
+d = (m./prop.rho0).^(1/prop.Dm);
+```
+
+The default values can be found in that function (`prop.Dm = 3;` and `prop.rho0 = 1000*pi/6;` at the time of writing).  
+
+### 3. Demonstration scripts: main*
 
 These scripts are included to demonstrate evaluation of the transfer function
 over multiple cases. These scripts first initialize the PMA setpoint, `sp`;
@@ -210,7 +215,7 @@ Jason Olfert (University of Alberta).
 This code should be cited by:
 
 1. citing the code directly, using the DOI assigned to this code (see the archived
-  versions of this code on [Zenodo](https://zenodo.org/badge/latestdoi/191454449)), and
+    versions of this code on [Zenodo](https://zenodo.org/badge/latestdoi/191454449)), and
 
 2. citing the associated journal article describing the particle tracking methods
 used in this program [(Sipkens, Olfert, and Rogak, 2019a)][ast20].
