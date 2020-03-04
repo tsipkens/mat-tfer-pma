@@ -177,17 +177,36 @@ end
 
 %-- Calculate resolution -------------------------------------------------%
 if isempty(sp.Rm) % if resolution is not specified
-    n_B = -0.6436;
-    B_star = tfer_pma.mp2zp(sp.m_star,1,prop.T,prop.p,prop);
-    t0 = prop.Q/(sp.m_star*B_star*2*pi*prop.L*...
-        sp.omega^2*prop.rc^2);
-    m_rat = @(Rm) 1/Rm+1;
-    fun = @(Rm) (m_rat(Rm))^(n_B+1)-(m_rat(Rm))^n_B;
-    sp.Rm = fminsearch(@(Rm) (t0-fun(Rm))^2,5);
-    sp.m_max = sp.m_star*(1/sp.Rm+1);
+    [sp.Rm,sp.m_max] = get_resolution(sp.m_star,sp.omega,prop);
+        % evaluate resolution in corresponding subfunction
+        % involves a minimization routine
 end
 
 
 m_star = sp.m_star; % output m_star independently
 
 end
+
+
+
+
+%== GET_RESOLUTION =========================================================%
+%   Solver to evaluate the resolution from m_star and prop.
+function [Rm,m_max] = get_resolution(m_star,omega,prop)
+
+n_B = -0.6436; % constant from Reveall et al.
+B_star = tfer_pma.mp2zp(m_star,1,...
+    prop.T,prop.p,prop); % mechanical mobility for z = 1
+
+t0 = prop.Q/(m_star*B_star*2*pi*prop.L*...
+    omega^2*prop.rc^2); % RHS of Eq. (10) in Reveall et al.
+
+m_rat = @(Rm) 1/Rm+1; % function for mass ratio
+fun = @(Rm) (m_rat(Rm))^(n_B+1)-(m_rat(Rm))^n_B; % LHS of Eq. (10) in Reveall et al.
+
+Rm = fminsearch(@(Rm) (t0-fun(Rm))^2,5); % minimization ot find Rm
+m_max = m_star*(1/Rm+1); % approx. upper end of non-diffusing tfer. function
+
+end
+
+
