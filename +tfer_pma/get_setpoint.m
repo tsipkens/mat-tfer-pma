@@ -1,26 +1,54 @@
 
 % GET_SETPOINT Generate setpoint parameter structure from available parameters. 
 % Author:  Timothy Sipkens, 2019-11-21
-%-------------------------------------------------------------------------%
+% 
 % Required variables:
 %   prop        Properties of particle mass analyzer
-%   varargin    Name-value pairs for setpoint    (Optional, default Rm = 3)
+%   varargin    Name-value pairs for setpoint
+%                   (two values required, if one value is specified, uses Rm = 3)
 %                   ('Rm',double) - Resolution
 %                   ('omega1',double) - Angular speed of inner electrode
 %                   ('V',double) - Setpoint voltage
-%
+% 
 % Sample outputs:
 %   sp          Struct containing mutliple setpoint parameters (V, alpha, etc.)
 %   m_star      Setpoint mass, assuming a singly charged particle
 % 
-% Notes:    As a script, this code uses variables currently in the 
-%           workspace. This script is also used to parse some of the inputs 
-%           to the various transfer functions, including the existence of 
-%           the integer charge state and particle mobility. 
+% Notes:
+%   As a script, this code uses variables currently in the 
+%	workspace. This script is also used to parse some of the inputs 
+%	to the various transfer functions, including the existence of 
+%	the integer charge state and particle mobility. 
 %=========================================================================%
 
+
+
+
+%== GET_SETPOINT =========================================================%
+%   Wrapper function for get_setpoint0 to loop through a range of setpoints.
 function [sp,m_star] = get_setpoint(prop,varargin)
 
+n = max(length(varargin{2}),length(varargin{4})); % number of setpoints
+
+if length(varargin{2})~=n; varargin{2} = varargin{2}.*ones(n,1); end
+if length(varargin{4})~=n; varargin{4} = varargin{4}.*ones(n,1); end
+    % expand scalar entries to n setpoints
+
+for ii=n:-1:1 % loop through prescribed setpoints
+    [sp(ii),m_star(ii)] = get_setpoint0(prop,...
+        varargin{1},varargin{2}(ii),...
+        varargin{3},varargin{4}(ii));
+        % get CPMA setpoint parameters for the iith setpoint
+end
+
+end
+
+
+
+
+%== GET_SETPOINT0 ========================================================%
+%   Get parameters for a single setpoint (original function).
+function [sp,m_star] = get_setpoint0(prop,varargin)
 
 %-- Initialize sp structure ----------------------------------------------%
 sp = struct('m_star',[],'V',[],'Rm',[],'omega',[],...
@@ -51,9 +79,11 @@ if isempty(sp.m_star)
     % requires that voltage, 'V', and speed, 'omega' are specified
     
     %-- Evaluate angular speed of inner electrode ------------------------%
-    sp.omega1 = sp.omega./...
-        ((prop.r_hat^2-prop.omega_hat)/(prop.r_hat^2-1)+...
-        prop.r1^2*(prop.omega_hat-1)/(prop.r_hat^2-1)/prop.rc^2);
+    if isempty(sp.omega1)
+        sp.omega1 = sp.omega./...
+            ((prop.r_hat^2-prop.omega_hat)/(prop.r_hat^2-1)+...
+            prop.r1^2*(prop.omega_hat-1)/(prop.r_hat^2-1)/prop.rc^2);
+    end
     
     %-- Azimuth velocity distribution and voltage ------------------------%
     sp.alpha = sp.omega1.*(prop.r_hat.^2-prop.omega_hat)./(prop.r_hat.^2-1);
@@ -63,7 +93,7 @@ if isempty(sp.m_star)
         (sp.alpha.*prop.rc+sp.beta./prop.rc).^2);
         % q = e, z = 1 for setpoint
     
-    sp.omega1 = sp.alpha+sp.beta./(prop.r1.^2);
+    sp.omega = sp.alpha+sp.beta./(prop.rc.^2);
     sp.omega2 = sp.alpha+sp.beta./(prop.r2.^2);
     
     
@@ -153,7 +183,7 @@ if isempty(sp.Rm) % if resolution is not specified
         sp.omega^2*prop.rc^2);
     m_rat = @(Rm) 1/Rm+1;
     fun = @(Rm) (m_rat(Rm))^(n_B+1)-(m_rat(Rm))^n_B;
-    sp.Rm = fminsearch(@(Rm) (t0-fun(Rm))^2,10);
+    sp.Rm = fminsearch(@(Rm) (t0-fun(Rm))^2,5);
     sp.m_max = sp.m_star*(1/sp.Rm+1);
 end
 
