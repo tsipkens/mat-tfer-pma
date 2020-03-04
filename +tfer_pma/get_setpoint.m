@@ -149,7 +149,7 @@ elseif ~isempty(sp.Rm) % if resolution is specified
     
     %-- Use definition of Rm to derive angular speed at centerline -------%
     %-- See Reavell et al. (2011) for resolution definition --%
-    n_B = -0.6436;
+    n_B = get_nb(sp.m_star,prop);
     B_star = tfer_pma.mp2zp(sp.m_star,1,prop.T,prop.p,prop);
         % involves invoking mass-mobility relation
         % z = 1 for the setpoint
@@ -190,11 +190,12 @@ end
 
 
 
-%== GET_RESOLUTION =========================================================%
+%== GET_RESOLUTION =======================================================%
 %   Solver to evaluate the resolution from m_star and prop.
 function [Rm,m_max] = get_resolution(m_star,omega,prop)
 
-n_B = -0.6436; % constant from Reveall et al.
+n_B = get_nb(m_star,prop);
+
 B_star = tfer_pma.mp2zp(m_star,1,...
     prop.T,prop.p,prop); % mechanical mobility for z = 1
 
@@ -209,4 +210,24 @@ m_max = m_star*(1/Rm+1); % approx. upper end of non-diffusing tfer. function
 
 end
 
+
+
+%== GET_NB ===============================================================%
+%   Function to evaluate n_B constant. Taken from Olfert laboratory.
+%   Note: Previous versions of this program would output a constant
+%   value of n_B = -0.6436. This will cause some rather  minor 
+%   compatiblity issues. 
+function n_B = get_nb(m_star,prop)
+
+m_high = m_star*1.001; % perturb m_star up
+m_low  = m_star*.999; % perturb m_star down
+
+B_high = tfer_pma.mp2zp(m_high,1,prop.T,prop.p,prop);
+B_low = tfer_pma.mp2zp(m_low,1,prop.T,prop.p,prop);
+
+n_B = log10(B_high/B_low)/log10(m_high/m_low); % constant from Reveall et al.
+
+% n_B = -0.6436; % deprecated value
+
+end
 
