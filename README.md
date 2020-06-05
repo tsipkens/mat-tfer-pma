@@ -57,7 +57,7 @@ These functions feature names of the form `tfer_*`.
 These methods share common inputs:
 
 1. `sp` - A MATLAB structure containing the relevant setpoint parameters
-(see 2.2 for the relevant function used to create this structure).
+(see 1.2 for the relevant function used to create this structure).
 
 2. `m` - The masses at which the transfer function will be evaluated.
 
@@ -163,7 +163,7 @@ sp = tfer_pma.get_setpoint(prop,...
 Note that the input to the function must either be (a) two vectors of the 
 same length or (b) a scalar and a vector (as in the example above).
 
-#### 2.3 Remaining functions
+#### 1.3 Remaining functions
 
 The remaining functions help in transfer function evaluation, with the
 details provided in each file. This includes functions to convert
@@ -179,7 +179,7 @@ d = (m./prop.rho0).^(1/prop.Dm);
 
 The default values can be found in that function (`prop.Dm = 3;` and `prop.rho0 = 1000*pi/6;` at the time of writing).  
 
-### 3. Demonstration scripts: main*
+### 2. Demonstration scripts: main*
 
 These scripts are included to demonstrate evaluation of the transfer function
 over multiple cases. These scripts first initialize the PMA setpoint, `sp`;
