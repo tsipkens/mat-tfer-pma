@@ -88,7 +88,7 @@ if nargin==1 % if P and T are not specified, use Buckley/Davies
     
 else % from Olfert laboratory / Kim et al.
     S = 110.4; % temperature [K]
-    mfp_0 = 6.730E-8; % mean free path of gas molecules in air [m]
+    mfp_0 = 6.730e-8; % mean free path of gas molecules in air [m]
     T_0 = 296.15; % reference temperature [K]
     p_0 = 101325; % reference pressure, [Pa] (760 mmHg to Pa)
     
