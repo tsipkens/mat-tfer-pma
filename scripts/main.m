@@ -24,20 +24,20 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_pma.prop_pma('olfert'); % get properties of the CPMA
+prop = prop_pma('olfert'); % get properties of the CPMA
 prop.rho0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
 prop.Dm = 3;
 
 % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
 
-sp = tfer_pma.get_setpoint(prop,'m_star',m_star,'Rm',Rm);
+sp = get_setpoint(prop,'m_star',m_star,'Rm',Rm);
     % get setpoint parameters
 
 
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
 tic;
-[tfer_FD,n] = tfer_pma.tfer_FD(sp,...
+[k_FD,n] = tfer_FD(sp,...
     m,d,1,prop);
 t(1) = toc;
 
@@ -47,55 +47,55 @@ t(1) = toc;
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
 tic;
-[tfer_1S,G0_1S] = tfer_pma.tfer_1S(sp,m,d,z,prop);
+[k_1S,G0_1S] = tfer_1S(sp,m,d,z,prop);
 t(2) = toc;
 
 %-- Method 1S, Ehara et al. ----------------%
-tfer_ehara = tfer_pma.tfer_ehara(sp,m,d,z,prop);
+k_ehara = tfer_ehara(sp,m,d,z,prop);
 
 %-- Method 1C ------------------------------%
 tic;
-[tfer_1C,G0_1C] = tfer_pma.tfer_1C(sp,m,d,z,prop);
+[k_1C,G0_1C] = tfer_1C(sp,m,d,z,prop);
 t(3) = toc;
 
 %-- Method 2S ------------------------------%
 tic;
-[tfer_2S,G0_2S] = tfer_pma.tfer_2S(sp,m,d,z,prop);
+[k_2S,G0_2S] = tfer_2S(sp,m,d,z,prop);
 t(4) = toc;
 
 %-- Method 2C ------------------------------%
 tic;
-[tfer_2C,G0_2C] = tfer_pma.tfer_2C(sp,m,d,z,prop);
+[k_2C,G0_2C] = tfer_2C(sp,m,d,z,prop);
 t(5) = toc;
 
 %-- Method W1 ------------------------------%
 if prop.omega_hat==1
     tic;
-    [tfer_W1,G0_W1] = tfer_pma.tfer_W1(sp,m,d,z,prop);
+    [k_W1,G0_W1] = tfer_W1(sp,m,d,z,prop);
     t(6) = toc;
 end
 
 %-- Method GE ------------------------------%
 tic;
-[tfer_GE,G0_GE] = tfer_pma.tfer_GE(sp,m,d,z,prop);
+[k_GE,G0_GE] = tfer_GE(sp,m,d,z,prop);
 t(7) = toc;
 
 
 %-- Parabolic flow -------------------------------------------------------%
 %-- Method 1S ------------------------------%
 tic;
-[tfer_1S_pb,G0_1S_pb] = tfer_pma.tfer_1S_pb(sp,m,d,z,prop);
+[k_1S_pb,G0_1S_pb] = tfer_1S_pb(sp,m,d,z,prop);
 t(8) = toc;
 
 %-- Method 1C ------------------------------%
 tic;
-[tfer_1C_pb,G0_1C_pb] = tfer_pma.tfer_1C_pb(sp,m,d,z,prop);
+[k_1C_pb,G0_1C_pb] = tfer_1C_pb(sp,m,d,z,prop);
 t(9) = toc;
 
 %-- Method W1 ------------------------------%
 if prop.omega_hat==1
     tic;
-    [tfer_W1_pb,G0_W1_pb] = tfer_pma.tfer_W1_pb(sp,m,d,z,prop);
+    [k_W1_pb,G0_W1_pb] = tfer_W1_pb(sp,m,d,z,prop);
     t(10) = toc;
 end
 
@@ -103,40 +103,40 @@ end
 %-- Diffusive transfer functions -----------------------------------------%
 %-- Method 1S --------------------------------%
 tic;
-tfer_1S_diff = tfer_pma.tfer_1S_diff(sp,m,d,z,prop);
+k_1S_diff = tfer_1S_diff(sp,m,d,z,prop);
 t(11) = toc;
 
 %-- Method 1C --------------------------------%
 tic;
-tfer_1C_diff = tfer_pma.tfer_1C_diff(sp,m,d,z,prop);
+k_1C_diff = tfer_1C_diff(sp,m,d,z,prop);
 t(12) = toc;
 
 %-- Method 2S --------------------------------%
 tic;
-tfer_2S_diff = tfer_pma.tfer_2S_diff(sp,m,d,z,prop);
+k_2S_diff = tfer_2S_diff(sp,m,d,z,prop);
 t(13) = toc;
 
 %-- Method 2C --------------------------------%
 tic;
-tfer_2C_diff = tfer_pma.tfer_2C_diff(sp,m,d,z,prop);
+k_2C_diff = tfer_2C_diff(sp,m,d,z,prop);
 t(14) = toc;
 
 %-- Method W1 --------------------------------%
 if prop.omega_hat==1
     tic;
-    tfer_W1_diff = tfer_pma.tfer_W1_diff(sp,m,d,z,prop);
+    k_W1_diff = tfer_W1_diff(sp,m,d,z,prop);
     t(15) = toc;
 end
 
 %-- Method GE --------------------------------%
 tic;
-tfer_GE_diff = tfer_pma.tfer_GE_diff(sp,m,d,z,prop);
+k_GE_diff = tfer_GE_diff(sp,m,d,z,prop);
 t(16) = toc;
 
 
 %-- Triangle approx. -----------------------%
 tic;
-tfer_tri = tfer_pma.tfer_tri(sp,m,d,z,prop);
+k_tri = tfer_tri(sp,m,d,z,prop);
 t(18) = toc;
 
 
@@ -146,26 +146,26 @@ t(18) = toc;
 m_plot = m./m_star;
 
 figure(2);
-% plot(m_plot,tfer_1S);
+% plot(m_plot,k_1S);
 % hold on;
-% plot(m_plot,tfer_ehara);
-% plot(m_plot,tfer_1S_diff);
+% plot(m_plot,k_ehara);
+% plot(m_plot,k_1S_diff);
 % hold on;
-% plot(m_plot,tfer_1S_pb);
-plot(m_plot,tfer_1C);
+% plot(m_plot,k_1S_pb);
+plot(m_plot,k_1C);
 hold on;
-plot(m_plot,tfer_1C_diff);
-plot(m_plot,tfer_1C_pb);
-% plot(m_plot,tfer_2S);
-% plot(m_plot,tfer_2S_diff);
-% plot(m_plot,tfer_2C);
-% plot(m_plot,tfer_2C_diff);
-% plot(m_plot,tfer_W1,'r');
-% plot(m_plot,tfer_W1_diff,'r');
-% plot(m_plot,tfer_W1_pb);
-% plot(m_plot,tfer_GE);
-% plot(m_plot,tfer_tri);
-plot(m_plot,min(tfer_FD,1),'k');
+plot(m_plot,k_1C_diff);
+plot(m_plot,k_1C_pb);
+% plot(m_plot,k_2S);
+% plot(m_plot,k_2S_diff);
+% plot(m_plot,k_2C);
+% plot(m_plot,k_2C_diff);
+% plot(m_plot,k_W1,'r');
+% plot(m_plot,k_W1_diff,'r');
+% plot(m_plot,k_W1_pb);
+% plot(m_plot,k_GE);
+% plot(m_plot,k_tri);
+plot(m_plot,min(k_FD,1),'k');
 hold off;
 
 ylim([0,1.2]);

@@ -1,7 +1,7 @@
 
-% TFER_2S_DIFF  Evaluates the transfer function for a PMA in Case C (w/ diffusion).
+% TFER_W1_DIFF  Evaluates the transfer function for a PMA in Case E (w/ diffusion).
 % Author:       Timothy Sipkens, 2018-12-27
-%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   sp          Structure defining various setpoint parameters 
 %               (e.g. m_star, V). Use 'get_setpoint' method to generate 
@@ -16,21 +16,20 @@
 %   G0          Function mapping final to initial radial position
 %=========================================================================%
 
-function [Lambda,G0] = tfer_2S_diff(sp,m,d,z,prop)
+function [Lambda,G0] = tfer_W1_diff(sp,m,d,z,prop)
 
-[~,~,D] = tfer_pma.parse_inputs(sp,m,d,z,prop); % get diffusion coeff.
+[~,~,D] = parse_inputs(sp,m,d,z,prop); % get diffusion coeff.
 sig = sqrt(2.*prop.L.*D./prop.v_bar); % diffusive spreading parameter
 
 
 %-- Evaluate relevant functions ------------------------------------------%
-[~,G0] = tfer_pma.tfer_2S(sp,m,d,z,prop);
+[~,G0] = tfer_W1(sp,m,d,z,prop);
     % get G0 function for this case
 
 rho_fun = @(G,r) (G-r)./(sqrt(2).*sig); % recurring quantity
 kap_fun = @(G,r) ...
     (G-r).*erf(rho_fun(G,r))+...
     sig.*sqrt(2/pi).*exp(-rho_fun(G,r).^2); % define function for kappa
-
 
 %-- Evaluate the transfer function and its terms -------------------------%
 K22 = kap_fun(G0(prop.r2),prop.r2);

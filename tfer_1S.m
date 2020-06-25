@@ -1,7 +1,7 @@
 
 % TFER_1S   Evaluates the transfer function for a PMA in Case A.
 % Author:   Timothy Sipkens, 2018-12-27
-%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   sp          Structure defining various setpoint parameters 
 %               (e.g. m_star, V). Use 'get_setpoint' method to generate 
@@ -18,7 +18,7 @@
 
 function [Lambda,G0] = tfer_1S(sp,m,d,z,prop)
 
-[tau,~,~,rs] = tfer_pma.parse_inputs(sp,m,d,z,prop);
+[tau,~,~,rs] = parse_inputs(sp,m,d,z,prop);
         % parse inputs for common parameters
 
 %-- Estimate device parameter --------------------------------------------%

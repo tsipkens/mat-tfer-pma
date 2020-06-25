@@ -1,18 +1,16 @@
 
 % PROP_PMA  Generates the prop struct used to summarize CPMA parameters.
 % Author:   Timothy Sipkens, 2019-06-26
-%=========================================================================%
-
-function [prop] = prop_pma(opts)
-%-------------------------------------------------------------------------%
+% 
 % Input:
 %   opt         Options string specifying parameter set
 %                   (Optional, default 'Olfert')
 %
 % Output:
 %   prop        Properties struct for use in evaluating transfer function
-%-------------------------------------------------------------------------%
+%=========================================================================%
 
+function [prop] = prop_pma(opts)
 
 if ~exist('opts','var') % if type of property set is not specified
     opts = 'olfert';

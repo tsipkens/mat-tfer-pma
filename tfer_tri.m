@@ -1,7 +1,7 @@
 
 % TFER_TRI Evaluates the transfer function for a PMA as a triangular function.
 % Author: Timothy Sipkens, 2018-12-27
-%%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   sp          Structure defining various setpoint parameters 
 %               (e.g. m_star, V). Use 'get_setpoint' method to generate 

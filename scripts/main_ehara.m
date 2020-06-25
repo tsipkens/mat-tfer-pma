@@ -1,5 +1,5 @@
 
-% MAIN      Script used in plotting the cases from Olfert and Collings (2005).
+% MAIN      Script used in plotting the cases from Ehara (1996).
 % Author:   Timothy Sipkens, 2019-06-25
 %=========================================================================%
 
@@ -8,11 +8,11 @@
 clear;
 close all;
 
-V = 100; % voltage to replicate Ehara et al.
-omega = 2500*0.1047; % angular speed, converted from rpm to rad/s
+V = 1000; % voltage to replicate Ehara et al.
+omega = 1000*0.1047; % angular speed, converted from rpm to rad/s
 
 e = 1.60218e-19; % electron charge [C]
-m = linspace(4,6,601)*e; % vector of mass
+m = linspace(260,340,601).*e; % vector of mass
 % m = linspace(1e-10,6,601)*e; % vector of mass
 
 z = 1; % integer charge state
@@ -21,33 +21,49 @@ rho_eff = 900; % effective density
 d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
-prop = tfer_pma.prop_pma('olfert-collings'); % get properties of the CPMA
-prop.D = @(B) 1e-10.*ones(size(B));
+prop = prop_pma('ehara'); % get properties of the CPMA
 prop.rho0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
 prop.Dm = 3;
 
-prop_cpma = prop;
-sp_cpma = tfer_pma.get_setpoint(prop_cpma,'V',V,'omega',omega);
-
-prop.omega_hat = 1;
-sp = tfer_pma.get_setpoint(prop,'V',V,'omega',omega);
+sp = get_setpoint(prop,'V',V,'omega',omega);
     % get setpoint parameters
 
-
-
+    
 %=========================================================================%
 %-- Finite difference solution -------------------------------------------%
-[tfer_FD_w1] = tfer_pma.tfer_FD(sp,m,d,1,prop); % for APM
-[tfer_FD,sp_cpma] = ...
-    tfer_pma.tfer_FD(sp_cpma,m,d,1,prop_cpma); % for CPMA
-
+tic;
+[k_FD,n] = tfer_FD(sp,...
+    m,d,1,prop);
+t(1) = toc;
 
 
 %=========================================================================%
+%-- Transfer functions for different cases -------------------------------%
+%-- Setup for centriputal force ------------------------------------------%
+B = dm2zp(d,z,prop.T,prop.p);
+tau = B.*m;
+D = prop.D(B);
+sig = sqrt(2.*prop.L.*D./prop.v_bar);
+D0 = D.*prop.L/(prop.del^2*prop.v_bar); % dimensionless diffusion coeff.
+
+
 %-- Particle tracking approaches -----------------------------------------%
 %-- Plug flow ------------------------------------------------------------%
 %-- Method 1S ------------------------------%
-[tfer_1S_w1] = tfer_pma.tfer_1S_pb(sp,m,d,z,prop);
+tic;
+[k_1S,G0_1S] = tfer_1S(sp,m,d,z,prop);
+t(1) = toc;
+
+%-- Method 1S, Ehara et al. ----------------%
+k_ehara = tfer_ehara(sp,m,d,z,prop);
+
+
+
+%-- Parabolic flow -------------------------------------------------------%
+%-- Method 1S ------------------------------%
+tic;
+[k_1S_pb,G0_1S_pb] = tfer_1S_pb(sp,m,d,z,prop);
+t(2) = toc;
 
 
 
@@ -56,10 +72,11 @@ sp = tfer_pma.get_setpoint(prop,'V',V,'omega',omega);
 m_plot = m./e;
 
 figure(2);
-plot(m_plot,min(tfer_FD,1));
+plot(m_plot,k_1S);
 hold on;
-plot(m_plot,min(tfer_FD_w1,1));
-plot(m_plot,min(tfer_1S_w1,1));
+plot(m_plot,k_ehara);
+plot(m_plot,k_1S_pb);
+plot(m_plot,min(k_FD,1),'k');
 hold off;
 
 % ylim([0,1.2]);

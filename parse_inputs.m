@@ -1,7 +1,7 @@
 
 % PARSE_INPUTS A function to evaluate setpoint parameters including C0, alpha, and beta.
 % Author:  Timothy A. Sipkens, 2019-05-01
-%-------------------------------------------------------------------------%
+% 
 % Required variables:
 %   sp      Mass corresponding to the measurement set point of the APM
 %   d           Struct containing mutliple setpoint parameters (V, alpha, etc.)
@@ -36,9 +36,9 @@ q = z.*e; % particle charge
 %-- Evaluate mechanical mobility -----------------------------------------%
 if isempty(d) % if mobility diameter is NOT specified
     warning('Invoking mass-mobility relation to determine Zp.');
-    B = tfer_pma.mp2zp(m,z,prop.T,prop.p,prop);
+    B = mp2zp(m,z,prop.T,prop.p,prop);
 else % if mobility diameter is specified
-    B = tfer_pma.dm2zp(d,z,prop.T,prop.p);
+    B = dm2zp(d,z,prop.T,prop.p);
 end
 
 

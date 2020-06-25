@@ -1,7 +1,7 @@
 
 % TFER_1S_PB    Evaluates the transfer function for a PMA in Case A (w/ parabolic flow).
 % Author:       Timothy Sipkens, 2018-12-27
-%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   sp          Structure defining various setpoint parameters 
 %               (e.g. m_star, V). Use 'get_setpoint' method to generate 
@@ -18,7 +18,7 @@
 
 function [Lambda,G0] = tfer_1S_pb(sp,m,d,z,prop)
 
-[tau,~,~,rs] = tfer_pma.parse_inputs(sp,m,d,z,prop);
+[tau,~,~,rs] = parse_inputs(sp,m,d,z,prop);
         % parse inputs for common parameters
 
 %-- Estimate device parameter --------------------------------------------%
@@ -35,7 +35,7 @@ min_fun = @(rL,r0,ii) F(rL,ii)-F(r0,ii)-prop.L;
 
 
 %-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) tfer_pma.G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
+G0 = @(r) G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
 
 ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
 rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
