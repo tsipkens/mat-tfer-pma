@@ -1,7 +1,7 @@
 
 % TFER_EHARA    Evaluates the transfer function for a PMA in Case 1S as per Ehara et al. (1996).
 % Author:       Timothy Sipkens, 2018-12-27
-%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   sp          Structure defining various setpoint parameters 
 %               (e.g. m_star, V). Use 'get_setpoint' method to generate 
@@ -17,7 +17,7 @@
 
 function [Lambda] = tfer_ehara(sp,m,d,z,prop)
 
-[tau,~,~,rs] = tfer_pma.parse_inputs(sp,m,d,z,prop);
+[tau,~,~,rs] = parse_inputs(sp,m,d,z,prop);
         % parse inputs for common parameters
 
 %-- Estimate device parameter --------------------------------------------%

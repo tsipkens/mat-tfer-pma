@@ -1,10 +1,7 @@
 
 % G_FUN     Function used in root-finding procedure to specify search interval.
 % Author:   Timothy Sipkens, 2019-02-02
-%=========================================================================%
-
-function G = G_fun(min_fun,rL,rs,r1,r2,alpha,beta)
-%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   min_fun     Function to minimize, depends on case letter (Sipkens et al.)
 %   rL          Particle exit radius
@@ -16,7 +13,9 @@ function G = G_fun(min_fun,rL,rs,r1,r2,alpha,beta)
 %
 % Outputs:
 %   G           The value of G0 following root-finding procedure
-%-------------------------------------------------------------------------%
+%=========================================================================%
+
+function G = G_fun(min_fun,rL,rs,r1,r2,alpha,beta)
 
 
 condit = (alpha^2) < (beta^2./(rs.^4));

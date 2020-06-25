@@ -1,7 +1,7 @@
 
-% TFER_1S_DIFF	Evaluates the transfer function for a PMA in Case A (w/ diffusion).
+% TFER_1C_DIFF  Evaluates the transfer function for a PMA in Case B (w/ diffusion).
 % Author:       Timothy Sipkens, 2018-12-27
-%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   sp          Structure defining various setpoint parameters 
 %               (e.g. m_star, V). Use 'get_setpoint' method to generate 
@@ -16,14 +16,14 @@
 %   G0          Function mapping final to initial radial position
 %=========================================================================%
 
-function [Lambda,G0] = tfer_1S_diff(sp,m,d,z,prop)
+function [Lambda,G0] = tfer_1C_diff(sp,m,d,z,prop)
 
-[~,~,D] = tfer_pma.parse_inputs(sp,m,d,z,prop); % get diffusion coeff.
+[~,~,D] = parse_inputs(sp,m,d,z,prop); % get diffusion coeff.
 sig = sqrt(2.*prop.L.*D./prop.v_bar); % diffusive spreading parameter
 
 
 %-- Evaluate relevant functions ------------------------------------------%
-[~,G0] = tfer_pma.tfer_1S(sp,m,d,z,prop);
+[~,G0] = tfer_1C(sp,m,d,z,prop);
     % get G0 function for this case
 
 rho_fun = @(G,r) (G-r)./(sqrt(2).*sig); % recurring quantity

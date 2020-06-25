@@ -1,7 +1,7 @@
 
 % TFER_FD   Evaluates the transfer function of a PMA using finite differences.
 % Author:   Timothy Sipkens, 2018-12-27
-%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   sp          Structure defining various setpoint parameters (e.g. m_star, V)
 %   m           Particle mass
@@ -22,7 +22,7 @@
 
 function [Lambda,n] = tfer_FD(sp,m,d,z,prop)
 
-[tau,C0,D] = tfer_pma.parse_inputs(sp,m,d,z,prop);
+[tau,C0,D] = parse_inputs(sp,m,d,z,prop);
         % parse inputs for common parameters
 
 
@@ -93,7 +93,7 @@ for ii=ind % loop over mass (not m_star)
     
     %-- Primary loop for finite difference ---------------------%
     for jj = 2:nz
-        n_vec = tfer_pma.tridiag([0,a],b,c,RHS(n_vec));
+        n_vec = tridiag([0,a],b,c,RHS(n_vec));
             % solve system using Thomas algorithm
         
         if D0(ii)<1e-3 % for low diffusion, stabalize by smoothing oscillations

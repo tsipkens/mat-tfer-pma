@@ -1,7 +1,7 @@
 
 % TFER_W1_PB    Evaluates the transfer function for a PMA in Case E (w/ parabolic flow).
 % Author:       Timothy Sipkens, 2019-03-21
-%-------------------------------------------------------------------------%
+% 
 % Inputs:
 %   sp          Structure defining various setpoint parameters 
 %               (e.g. m_star, V). Use 'get_setpoint' method to generate 
@@ -18,7 +18,7 @@
 
 function [Lambda,G0] = tfer_W1_pb(sp,m,d,z,prop)
 
-[tau,C0] = tfer_pma.parse_inputs(sp,m,d,z,prop);
+[tau,C0] = parse_inputs(sp,m,d,z,prop);
         % parse inputs for common parameters
 
 %-- Estimate equilibrium radius ------------------------------------------%
@@ -43,7 +43,7 @@ min_fun = @(rL,r0,ii) F(rL,ii)-F(r0,ii)-prop.L;
 
 
 %-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) tfer_pma.G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
+G0 = @(r) G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
 
 ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
 rb = min(prop.r2,max(prop.r1,G0(prop.r2)));

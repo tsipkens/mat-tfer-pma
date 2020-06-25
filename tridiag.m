@@ -2,10 +2,7 @@
 % TRIDIAG   Solve a tridiagonal matrix system using the Thomas algorithm.
 % Author:   Timothy Sipkens, 2019-01-19
 % Note:     Adapted from the Olfert laboratory.
-%=========================================================================%
-
-function x = tridiag(a,b,c,y)
-%-------------------------------------------------------------------------%
+% 
 % This function solves the  N x N  tridiagonal system for x:
 %
 %  [ b(1)  c(1)                                  ] [  x(1)  ]   [  y(1)  ] 
@@ -19,9 +16,9 @@ function x = tridiag(a,b,c,y)
 %  y must be a vector (row or column); N is determined from its length.
 %  a, b, c must be vectors of lengths N, N, and N-1 respectively.
 %  a(1) is ignored.
-%
-%-------------------------------------------------------------------------%
+%=========================================================================%
 
+function x = tridiag(a,b,c,y)
 
 %-- Check that the input arrays have acceptable sizes --------------------%
 N = length(y);
