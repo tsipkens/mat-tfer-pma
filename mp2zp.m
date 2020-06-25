@@ -10,8 +10,8 @@
 %   prop        CPMA/DMA properties structure
 %
 % Outputs:
-%   Zp          Electromobility
 %   B           Mechanical mobility
+%   Zp          Electromobility
 %   d           Mobility diameter (implied by mass-mobility relation)
 % 
 % Note:
@@ -19,14 +19,14 @@
 %   diameter and then estimates the mobility using dm2zp.
 %=========================================================================%
 
-function [Zp,B,d] = mp2zp(m,z,T,P,prop)
+function [B,Zp,d] = mp2zp(m,z,T,P,prop)
 
 
 %-- Parse inputs ---------------------------------------------------------%
-if ~exist('T','var'); T = []; end
-if ~exist('P','var'); P = []; end
+if ~exist('T', 'var'); T = []; end
+if ~exist('P', 'var'); P = []; end
 
-if ~exist('prop','var'); prop = []; end
+if ~exist('prop', 'var'); prop = []; end
 if or(isempty(prop),...
         ~and(isfield(prop,'rho0'),...
         isfield(prop,'Dm'))) % get parameters for the mass-mobility relation
@@ -36,15 +36,15 @@ end
 %-------------------------------------------------------------------------%
 
 
-d = (m./prop.rho0).^(1/prop.Dm);
+d = (m ./ prop.rho0) .^ (1 / prop.Dm);
     % use mass-mobility relationship to get mobility diameter
 
     
 %-- Use mobility diameter to get particle electro and mechanical mobl. ---%
 if or(isempty(T),isempty(P))
-    [Zp,B] = dm2zp(d,z);
+    [B, Zp] = dm2zp(d, z);
 else
-    [Zp,B] = dm2zp(d,z,T,P);
+    [B, Zp] = dm2zp(d, z, T, P);
 end
 
 end
