@@ -1,18 +1,18 @@
 
-# MATLAB tools for PMA transfer function evaluation (mat-tfer-pma)
+# Matlab tools for PMA transfer function evaluation (mat-tfer-pma)
 
 [![DOI](https://zenodo.org/badge/191454449.svg)](https://zenodo.org/badge/latestdoi/191454449)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 [![Version](https://img.shields.io/badge/Version-2.0.1-blue.svg)]()
 
-The attached MATLAB functions evaluate the transfer function of particle mass analyzers (PMAs), including the centrifugal particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). This is primarily done using a novel set of expressions derived from particle tracking methods, information for which is given in an associated paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20]. A function is also included to perform finite difference simulations of the particle number throughout the classifier and evaluate the resultant numerical transfer function. Further information on the different methods in this program is given as header information in each file, such that only a brief overview is provided here.
+The attached Matlab functions evaluate the transfer function of particle mass analyzers (PMAs), including the centrifugal particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). This is primarily done using a novel set of expressions derived from particle tracking methods, information for which is given in an associated paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20]. A function is also included to perform finite difference simulations of the particle number throughout the classifier and evaluate the resultant numerical transfer function. Further information on the different methods in this program is given as header information in each file, such that only a brief overview is provided here.
 
 This program contains two main components:
 
 1. The upper directory contains the relevant functions for evaluating the transfer function of a PMA. A good demonstration of how these functions can be imported into other projects is [mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion),
 where it is used to speed or improve the accuracy of PMA data inversion.
 
-2. The `scripts/`  folder contains a series of `main*` scripts in, which are used to call and analyze the transfer function under different conditions. Of particular note is the `main` script that evaluates the full range of available methods and produces figures similar to those in the associate paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20] and poster [(Sipkens, Olfert and Rogak, 2019b)][eac19].
+2. The `test/`  folder contains a series of `main*` scripts in, which are used to call and analyze the transfer function under different conditions. Of particular note is the `main` script that evaluates the full range of available methods and produces figures similar to those in the associate paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20] and poster [(Sipkens, Olfert and Rogak, 2019b)][eac19].
 
 These two components are each discussed in more detail below.
 
@@ -49,7 +49,7 @@ The codes are also occasionally modified with additional suffixes with the follo
 
 The  `tfer_*` functions share common inputs:
 
-1. `sp` - A MATLAB structure containing the relevant setpoint parameters (see [1.2](1.2-determining-the-setpoint:-get_setpoint(...)) for the relevant function used to create this structure).
+1. `sp` - A Matlab structure containing the relevant setpoint parameters (see [1.2](1.2-determining-the-setpoint:-get_setpoint(...)) for the relevant function used to create this structure).
 
 2. `m` - The masses at which the transfer function will be evaluated.
 
@@ -57,7 +57,7 @@ The  `tfer_*` functions share common inputs:
 
 4. `z` - The integer charge state (either as a scalar or as a vector with the same length as `m`) at which the transfer function is to be evaluated.
 
-5. `prop` - A MATLAB structure that contains the properties of the particle mass analyzer. This includes fields that describe the inner radius, `r1`; outer radius, `r2`; length, `L`; and flows, `Q*`. A sample script to generate this quantity is included as `prop_pma( )` in the upper directory.
+5. `prop` - A Matlab structure that contains the properties of the particle mass analyzer. This includes fields that describe the inner radius, `r1`; outer radius, `r2`; length, `L`; and flows, `Q*`. A sample script to generate this quantity is included as `prop_pma( )` in the upper directory.
 
 The functions also often share common outputs:
 
@@ -83,7 +83,7 @@ For the latter quantity, the setpoint generally requires the practitioner to spe
 4. the angular speed at the centerline, `omega`; and
 5. the angular speed at the inner electrode, `omega1`;.
 
-For this program, if `m_star` is specified as one of the setpoint parameters, any one of the other parameters can be specified. If `m_star` is not specified, the program will expect inputs for `V` and `omega`. Other combinations are not currently supported. The name-value pairs are specified similar to other MATLAB functions. For example, to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter
+For this program, if `m_star` is specified as one of the setpoint parameters, any one of the other parameters can be specified. If `m_star` is not specified, the program will expect inputs for `V` and `omega`. Other combinations are not currently supported. The name-value pairs are specified similar to other Matlab functions. For example, to specify `m_star` as 0.1 fg and `V` as 20 V, one can enter
 
 ```Matlab
 sp = get_setpoint(prop,'m_star',0.1e-18,'V',20);
@@ -119,12 +119,12 @@ d = (m./prop.rho0).^(1/prop.Dm);
 
 The default values can be found in that function (`prop.Dm = 3;` and `prop.rho0 = 1000*pi/6;` at the time of writing).  
 
-## 2. Demonstration scripts: main*
+## 2. Test scripts: main*
 
-These scripts are included to demonstrate evaluation of the transfer function over multiple cases. These scripts first initialize the PMA setpoint, `sp`; properties, `prop`; and vectors at which the transfer function will be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating the transfer function and plotting the results. In order to use the scripts, one must first add the `scripts/` folder to the Matlab path. When in the `mat-tfer-pma` directory, enter
+The scripts in the `test/` folder are included to demonstrate evaluation of the transfer function over multiple cases. These scripts first initialize the PMA setpoint, `sp`; properties, `prop`; and vectors at which the transfer function will be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating the transfer function and plotting the results. In order to use the scripts, one must first add the `test/` folder to the Matlab path. When in the `mat-tfer-pma` directory, enter
 
 ```Matlab
-addpath scripts;
+addpath test;
 ```
 on the command line. The scripts can then be called by (i) entering their name on the command line or (ii) expanding the folder in the file explorer within Matlab, opening the file, and pressing "Run" (i.e., the green play button) in the Matlab ribbon.  
 
@@ -151,7 +151,7 @@ This program was written by Timothy A. Sipkens ([tsipkens@mail.ubc.ca](mailto:ts
 This code should be cited by:
 
 1. citing the associated journal article describing the particle tracking methods used in this program [(Sipkens, Olfert, and Rogak, 2019a)][ast20], and
-    
+   
 2. citing the code directly (either using the DOI assigned to the version of code used - see the archived versions of this code on [Zenodo](https://zenodo.org/badge/latestdoi/191454449) - or, less formally, making reference to the GitHub repository at https://github.com/tsipkens/mat-tfer-pma). 
 
 #### References
