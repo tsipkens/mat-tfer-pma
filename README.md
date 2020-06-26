@@ -121,12 +121,14 @@ The default values can be found in that function (`prop.Dm = 3;` and `prop.rho0 
 
 ## 2. Demonstration scripts: main*
 
-These scripts are included to demonstrate evaluation of the transfer function over multiple cases. These scripts first initialize the PMA setpoint, `sp`; properties, `prop`; and vectors at which the transfer function will be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating the transfer function and plotting the results. In order to use the scripts, one must first add the `scripts/` folder to the Matlab path. When in the `mat-tfer-pma` directory, enter
+These scripts are included to demonstrate evaluation of the transfer function over multiple cases. These scripts first initialize the PMA setpoint, `sp`; properties, `prop`; and vectors at which the transfer function will be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating the transfer function and plotting the results. 
+
+In order to use the scripts, one must first add the `scripts/` folder to the Matlab path. When in the `mat-tfer-pma` directory, enter
 
 ```Matlab
 addpath scripts;
 ```
-on the command line. The scripts can then be called by (i) entering their name on the command line or (ii) expanding the folder in the file explorer within Matlab, opening the file, and pressing "Run" (i.e., the green play button) in the Matlab ribbon.  
+on the MATLAB command line. The scripts can then be called by (i) entering their name on the command line or (ii) expanding the folder in the file explorer within Matlab, opening the file, and pressing "Run" (i.e., the green play button) in the Matlab ribbon.  
 
 The `main` script, without any other text appended, is included to replicate the results of [(Sipkens, Olfert, and Rogak, 2020a)][ast20], where Figure 2 that is produced by this procedure will resemble the figures in that article.
 
