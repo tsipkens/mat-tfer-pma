@@ -18,11 +18,11 @@ These two components are each discussed in more detail below.
 
 ## 1. Upper directory and evaluating the transfer function
 
-The functions in the upper directory general fall into three categories. 
+The functions in the upper directory general fall into three categories.
 
 ### 1.1 Methods to evaluate transfer functions: tfer_*(...)
 
-The  `tfer_*` functions form the core of the program and evaluate the transfer function for the various cases presented in the associated work [(Sipkens, Olfert, and Rogak, 2020a)][ast20]. 
+The  `tfer_*` functions form the core of the program and evaluate the transfer function for the various cases presented in the associated work [(Sipkens, Olfert, and Rogak, 2020a)][ast20].
 
 Alphanumeric codes are appended to the filenames and refer to the method or approximation used in transfer function evaluation. Details on these alphanumeric codes are provided in the associated journal article [(Sipkens, Olfert, and Rogak, 2019a)][ast20]. The following acts only as a brief summary:
 
@@ -67,7 +67,7 @@ The functions also often share common outputs:
 
 ### 1.2 Determining the setpoint: get_setpoint(...)
 
-This function parses a series of name-value pairs to output a cohesive structure fully defining the device setpoint, output in the form of `sp` or a *setpoint structure*. 
+This function parses a series of name-value pairs to output a cohesive structure fully defining the device setpoint, output in the form of `sp` or a *setpoint structure*.
 
 This method takes two inputs:
 
@@ -109,7 +109,7 @@ Note that the input to the function must either be (a) two vectors of the  same 
 
 #### 1.3 Remaining functions
 
-The remaining functions help in transfer function evaluation, with the details provided in each file. This includes functions to convert between particle mass and electromobility. 
+The remaining functions help in transfer function evaluation, with the details provided in each file. This includes functions to convert between particle mass and electromobility.
 
 Notably, `mp2zp.m` invokes the mass-mobility relation to determine the mobility of particles. There are certain assumptions implicit in this evaluation that should be checked by the user. The mass-mobility exponent, `Dm`, and effective density, `rho0`, used when invoking the mass-mobility relation are specified in the `prop` structure. The mobility diameter is then estimated as:
 
@@ -121,12 +121,14 @@ The default values can be found in that function (`prop.Dm = 3;` and `prop.rho0 
 
 ## 2. Test scripts: main*
 
-The scripts in the `test/` folder are included to demonstrate evaluation of the transfer function over multiple cases. These scripts first initialize the PMA setpoint, `sp`; properties, `prop`; and vectors at which the transfer function will be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating the transfer function and plotting the results. In order to use the scripts, one must first add the `test/` folder to the Matlab path. When in the `mat-tfer-pma` directory, enter
+The scripts in the `test/` folder are included to demonstrate evaluation of the transfer function over multiple cases. These scripts first initialize the PMA setpoint, `sp`; properties, `prop`; and vectors at which the transfer function will be evaluated, `m`, `d` and `z`.  The scripts proceed by evaluating the transfer function and plotting the results.
+
+In order to use the scripts, one must first add the `test/` folder to the Matlab path. When in the `mat-tfer-pma` directory, enter
 
 ```Matlab
 addpath test;
 ```
-on the command line. The scripts can then be called by (i) entering their name on the command line or (ii) expanding the folder in the file explorer within Matlab, opening the file, and pressing "Run" (i.e., the green play button) in the Matlab ribbon.  
+on the MATLAB command line. The scripts can then be called by (i) entering their name on the command line or (ii) expanding the folder in the file explorer within Matlab, opening the file, and pressing "Run" (i.e., the green play button) in the Matlab ribbon.  
 
 The `main` script, without any other text appended, is included to replicate the results of [(Sipkens, Olfert, and Rogak, 2020a)][ast20], where Figure 2 that is produced by this procedure will resemble the figures in that article.
 
@@ -134,7 +136,7 @@ Other scripts, `main_*` are intended to replicate figures in other works and to 
 
 ## 3. Using the repo in other projects
 
-This program is designed to be used in other projects. The [mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion) project, for example, uses this project as a submodule and greatly speeds the generation of kernel required for 2D inversions, as per [Sipkens, Olfert, and Rogak, (2020b)][jas20]). 
+This program is designed to be used in other projects. The [mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion) project, for example, uses this project as a submodule and greatly speeds the generation of kernel required for 2D inversions, as per [Sipkens, Olfert, and Rogak, (2020b)][jas20]).
 
 ----------------------------------------------------------------------
 
@@ -151,8 +153,8 @@ This program was written by Timothy A. Sipkens ([tsipkens@mail.ubc.ca](mailto:ts
 This code should be cited by:
 
 1. citing the associated journal article describing the particle tracking methods used in this program [(Sipkens, Olfert, and Rogak, 2019a)][ast20], and
-   
-2. citing the code directly (either using the DOI assigned to the version of code used - see the archived versions of this code on [Zenodo](https://zenodo.org/badge/latestdoi/191454449) - or, less formally, making reference to the GitHub repository at https://github.com/tsipkens/mat-tfer-pma). 
+
+2. citing the code directly (either using the DOI assigned to the version of code used - see the archived versions of this code on [Zenodo](https://zenodo.org/badge/latestdoi/191454449) - or, less formally, making reference to the GitHub repository at https://github.com/tsipkens/mat-tfer-pma).
 
 #### References
 
