@@ -6,13 +6,14 @@
 %   prop        Properties of particle mass analyzer
 %   varargin    Name-value pairs for setpoint
 %                   (two values required, if one value is specified, uses Rm = 3)
+%                   ('m_star',double) - Setpoint mass in fg (i.e., 1e-18 for a 1 fg particle)
 %                   ('Rm',double) - Resolution
 %                   ('omega1',double) - Angular speed of inner electrode
 %                   ('V',double) - Setpoint voltage
 % 
 % Sample outputs:
 %   sp          Struct containing mutliple setpoint parameters (V, alpha, etc.)
-%   m_star      Setpoint mass, assuming a singly charged particle
+%   m_star      Setpoint mass, assuming a singly charged particle, in fg
 % 
 % Notes:
 %   As a script, this code uses variables currently in the 
@@ -27,6 +28,23 @@
 %== GET_SETPOINT =========================================================%
 %   Wrapper function for get_setpoint0 to loop through a range of setpoints.
 function [sp,m_star] = get_setpoint(prop,varargin)
+
+%-- Parse inputs ---------------------------------------------------------%
+if ~exist('prop','var'); prop = struct(); end
+if isempty(prop); prop = prop_pma; end
+
+if isempty(varargin) % if empty input, return empty structure
+    sp.m_star = []; sp.V = []; sp.Rm = [];
+    sp.omega = []; sp.omega1 = []; sp.omega2 = [];
+    sp.alpha = []; sp.beta = [];
+    sp.m_max = [];
+    m_star = [];
+    return;
+end
+
+if length(varargin)==2; varargin = [varargin,'Rm',3]; end % by default use Rm = 3
+%-------------------------------------------------------------------------%
+
 
 n = max(length(varargin{2}),length(varargin{4})); % number of setpoints
 
@@ -59,12 +77,8 @@ sp = struct('m_star',[],'V',[],'Rm',[],'omega',[],...
 
 
 %-- Parse inputs ---------------------------------------------------------%
-if length(varargin)==2 % only a single setpoint parameter is specified, assume Rm = 3
-    [sp.Rm] = 3; % by default use resolution, with value of 3
-else
-    for ii=1:2:length(varargin)
-        sp.(varargin{ii}) = varargin{ii+1};
-    end
+for ii=1:2:length(varargin)
+    sp.(varargin{ii}) = varargin{ii+1};
 end
 %-------------------------------------------------------------------------%
 
