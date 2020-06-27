@@ -5,6 +5,8 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 [![Version](https://img.shields.io/badge/Version-2.0.1-blue.svg)]()
 
+**Note**: A python version of some of these transfer functions is available at https://github.com/tsipkens/py-tfer-pma. 
+
 The attached Matlab functions evaluate the transfer function of particle mass analyzers (PMAs), including the centrifugal particle mass analyzer (CPMA) and aerosol particle mass analyzer (APM). This is primarily done using a novel set of expressions derived from particle tracking methods, information for which is given in an associated paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20]. A function is also included to perform finite difference simulations of the particle number throughout the classifier and evaluate the resultant numerical transfer function. Further information on the different methods in this program is given as header information in each file, such that only a brief overview is provided here.
 
 This program contains two main components:
