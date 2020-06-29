@@ -60,8 +60,8 @@ for zz=1:length(z_vec)
     %-- Diffusive transfer functions -----------------------------------------%
     %-- Method 1C --------------------------------%
     tic;
-    k_1C_pb(:,zz) = ...
-        tfer_1C_pb(sp,m,d,z,prop);
+    k_1S_pb(:,zz) = ...
+        tfer_1S_pb(sp,m,d,z,prop);
     t(12) = toc;
     
     tic;
