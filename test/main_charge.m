@@ -60,9 +60,14 @@ for zz=1:length(z_vec)
     %-- Diffusive transfer functions -----------------------------------------%
     %-- Method 1C --------------------------------%
     tic;
+    k_1S_pb(:,zz) = ...
+        tfer_1S(sp,m,d,z,prop);
+    t(12) = toc;
+    
+    tic;
     k_1C_diff(:,zz) = ...
         tfer_1C_diff(sp,m,d,z,prop);
-    t(12) = toc;
+    t(13) = toc;
 end
 
 disp('Complete.');
@@ -76,6 +81,7 @@ m_plot = m./m_star;
 figure(2);
 plot(m_plot,k_1C_diff);
 hold on;
+plot(m_plot,k_1S_pb);
 plot(m_plot,min(k_FD,1),'k');
 hold off;
 

@@ -18,7 +18,7 @@
 function G = G_fun(min_fun,rL,rs,r1,r2,alpha,beta)
 
 
-condit = (alpha^2) < (beta^2./(rs.^4));
+condit = (alpha^2) < (beta^2 ./ (rs.^4));
     % whether or not lambda is positive of negative
 
 ns = length(rs); % number of equilirbrium radii to consider (one per particle mass considered)
@@ -85,10 +85,10 @@ for jj=1:nL % loop throught all specified particle exit radii
             else % zero is in interval [rL,min(r2,rs)]
                 if sign(min_fun(rL(jj),rL(jj),ii))==sign(min_fun(rL(jj),min(rs(ii)-offset,r2),ii))
                 % if sign does not change in interval [rL,min(r2,rs)], return min(r2,rs)
-                    G(jj,ii) = min(rs(ii)-offset,r2);
+                    G(jj,ii) = min(rs(ii) - offset,r2);
                     
                 else % find zero in interval [rL,min(r2,rs)]
-                    G(jj,ii) = fzero(@(r0) min_fun(rL(jj),r0,ii), [rL(jj),min(rs(ii)-offset,r2)]);
+                    G(jj,ii) = fzero(@(r0) min_fun(rL(jj), r0, ii), [rL(jj), min(rs(ii)-offset, r2)]);
                     
                 end
             end

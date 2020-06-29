@@ -30,30 +30,30 @@ if isempty(z); z = 1; end % if integer charge is not specified, use z = 1
 
 %-- Set up mobility calculations -----------------------------------------%
 e = 1.60218e-19; % electron charge [C]
-q = z.*e; % particle charge
+q = z .* e; % particle charge
 
 
 %-- Evaluate mechanical mobility -----------------------------------------%
 if isempty(d) % if mobility diameter is NOT specified
     warning('Invoking mass-mobility relation to determine Zp.');
-    B = mp2zp(m,z,prop.T,prop.p,prop);
+    B = mp2zp(m, z, prop.T, prop.p, prop);
 else % if mobility diameter is specified
-    B = dm2zp(d,z,prop.T,prop.p);
+    B = dm2zp(d, z, prop.T, prop.p);
 end
 
 
 %-- Evaluate output parameters -------------------------------------------%
-tau = B.*m;
-D = prop.D(B).*z; % diffusion as a function of mechanical mobiltiy and charge state
-C0 = sp.V.*q./log(1/prop.r_hat); % calcualte recurring C0 parameter
+tau = B .* m;
+D = prop.D(B) .* z; % diffusion as a function of mechanical mobiltiy and charge state
+C0 = sp.V .* q ./ log(1/prop.r_hat); % calcualte recurring C0 parameter
 
 if nargout>=4 % if required, calculate equilbirium radius
-    if round((sqrt(C0./sp.m_star)-sqrt(C0./sp.m_star-4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc
-        rs = real((sqrt(C0./m)-...
-            sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha));
+    if round((sqrt(C0./sp.m_star) - sqrt(C0./sp.m_star - 4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc
+        rs = real((sqrt(C0./m) - ...
+            sqrt(C0./m - 4*sp.alpha*sp.beta)) ./ (2*sp.alpha));
     else
-        rs = real((sqrt(C0./m)+...
-            sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha));
+        rs = real((sqrt(C0./m) + ...
+            sqrt(C0./m - 4*sp.alpha*sp.beta)) ./ (2*sp.alpha));
     end
 end
 
