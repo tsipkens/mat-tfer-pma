@@ -48,13 +48,28 @@ D = prop.D(B) .* z; % diffusion as a function of mechanical mobiltiy and charge 
 C0 = sp.V .* q ./ log(1/prop.r_hat); % calcualte recurring C0 parameter
 
 if nargout>=4 % if required, calculate equilbirium radius
-    if round((sqrt(C0./sp.m_star) - sqrt(C0./sp.m_star - 4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc
-        rs = real((sqrt(C0./m) - ...
-            sqrt(C0./m - 4*sp.alpha*sp.beta)) ./ (2*sp.alpha));
-    else
-        rs = real((sqrt(C0./m) + ...
-            sqrt(C0./m - 4*sp.alpha*sp.beta)) ./ (2*sp.alpha));
-    end
+% Note: Whether to pick the +ive of -ive root for rs is chosen based on a
+% heuristic approach. Specifically, the root closer to the centerline is
+% chosen, except when the -ive root is zero (which is the case for APM 
+% conditions, where the +ive root should always be used).
+    
+    % evaluate +ive and -ive roots
+    r_m = (sqrt(C0./m) - ...
+        sqrt(C0./m - 4*sp.alpha*sp.beta)) ./ (2*sp.alpha);
+    r_p = (sqrt(C0./m) + ...
+        sqrt(C0./m - 4*sp.alpha*sp.beta)) ./ (2*sp.alpha);
+    
+    % determine which root is closer to centerline radius
+    [~,idx] = min([abs(r_m-prop.rc); abs(r_p-prop.rc)]);
+    idx(r_m==0) = 2; % avoid zero values for APM case
+    
+    % assign one of the two roots to rs
+    rs = r_m; % by default use -ive root
+    rs(idx==2) = r_p(idx==2); % if closer to +ive root, use +ive root
+    
+    
+    % zero out cases where no equilibrium radius exists (also removes complex numbers)
+    rs(C0./m < (4*sp.alpha*sp.beta)) = 0;
 end
 
 

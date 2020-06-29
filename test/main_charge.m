@@ -11,13 +11,13 @@ close all;
 Rm = 10; % equivalent resolution of transfer functions (Reavell et al.)
 
 m_star = 0.01e-18; % mass in kg (1 fg = 1e-18 kg)
-m = linspace(1e-10,5,801).*m_star; % vector of mass
+m = linspace(1e-10,5,801) .* m_star; % vector of mass
 
 prop = prop_pma('olfert'); % get properties of the CPMA
 % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
 
 rho_eff = 900; % effective density (held constant over integer charge states)
-prop.rho0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
+prop.rho0 = rho_eff * pi / 6; % copy mass-mobility relation info (only used to find Rm)
 prop.Dm = 3;
 
 sp = get_setpoint(prop,'m_star',m_star,'Rm',Rm);
@@ -61,7 +61,7 @@ for zz=1:length(z_vec)
     %-- Method 1C --------------------------------%
     tic;
     k_1S_pb(:,zz) = ...
-        tfer_1S(sp,m,d,z,prop);
+        tfer_1S_pb(sp,m,d,z,prop);
     t(12) = toc;
     
     tic;
@@ -79,9 +79,10 @@ disp(' ');
 m_plot = m./m_star;
 
 figure(2);
-plot(m_plot,k_1C_diff);
-hold on;
+% plot(m_plot,k_1C_diff);
 plot(m_plot,k_1S_pb);
+hold on;
+% plot(m_plot,k_1S_pb);
 plot(m_plot,min(k_FD,1),'k');
 hold off;
 
