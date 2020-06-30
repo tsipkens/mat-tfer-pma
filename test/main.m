@@ -38,7 +38,7 @@ sp = get_setpoint(prop,'m_star',m_star,'Rm',Rm);
 %-- Finite difference solution -------------------------------------------%
 tic;
 [k_FD,n] = tfer_FD(sp,...
-    m,d,1,prop);
+    m,d,z,prop);
 t(1) = toc;
 
 
