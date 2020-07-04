@@ -59,7 +59,7 @@ The  `tfer_*` functions share common inputs:
 
 4. `z` - The integer charge state (either as a scalar or as a vector with the same length as `m`) at which the transfer function is to be evaluated.
 
-5. `prop` - A Matlab structure that contains the properties of the particle mass analyzer. This includes fields that describe the inner radius, `r1`; outer radius, `r2`; length, `L`; and flows, `Q*`. A sample script to generate this quantity is included as `prop_pma( )` in the upper directory.
+5. `prop` - A Matlab structure that contains the properties of the particle mass analyzer. This includes fields that describe the inner radius, `r1`; outer radius, `r2`; length, `L`; and flows, `Q*`. A sample script to generate this quantity is included as `prop_pma(...)` in the upper directory.
 
 The functions also often share common outputs:
 
@@ -69,9 +69,18 @@ The functions also often share common outputs:
 
 ### 1.2 Determining the setpoint: get_setpoint(...)
 
-This function parses a series of name-value pairs to output a cohesive structure fully defining the device setpoint, output in the form of `sp` or a *setpoint structure*.
+This function parses a series of name-value pairs to output a cohesive structure fully defining the device setpoint, output in the form of `sp` or a *setpoint structure*. A sample set of values for this structure is found below (the precise values will depend on the PMA properties and mass-mobility relation values set in the device):
 
-This method takes two inputs:
+| Variable | *m*<sup>\*</sup> | *V* | *R*<sub>m</sub> | **ω** | **ω**<sub>1</sub> | **ω**<sub>2</sub> | **α** | **β** | *m*<sub>max</sub> |
+| ------ | :------------------------: | :-------: | :--------------------: | :--------------: | :--------------------------: | :--------------------------: | :-------------: | :------------: | :-------------------------: |
+| Field name | `m_star` | `V` | `Rm` | `omega1` | `omega1` | `omega2` | `alpha` | `beta` | `m_max` |
+| 1      |    1.0×10<sup>-20</sup>    |   24.4    |           10           |     2,583.9      |           2,583.5            |           2,505.2            |       176       |      8.66      |    1.1×10<sup>-20</sup>     |
+| 2      |    1.0×10<sup>-19</sup>    |    104    |           10           |     1,659.5      |           1,684.3            |           1,633.3            |       115       |      5.65      |    1.1×10<sup>-19</sup>     |
+| 3      |    1.0×10<sup>-18</sup>    |    398    |           10           |     1,026.5      |           1,042.4            |           1,010.8            |      71.0       |      3.50      |    1.1×10<sup>-18</sup>     |
+| 4      |    1.0×10<sup>-17</sup>    |   1,280   |           10           |      582.69      |            591.77            |            573.83            |      40.3       |      1.99      |    1.1×10<sup>-17</sup>     |
+| ...    |                            |           |                        |                  |                              |                              |                 |                |                             |
+
+The function itself takes two inputs:
 
 1. `prop` - This is the aforementioned struct that contains the properties of the particle mass analyzer, such as its dimensions and the flow rate, and
 
@@ -136,7 +145,7 @@ The `main` script, without any other text appended, is included to replicate the
 
 Other scripts, `main_*` are intended to replicate figures in other works and to consider multiple charging.
 
-## 3. Using the repo in other projects
+## 3. Using this repository in other projects
 
 This program is designed to be used in other projects. The [mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion) project, for example, uses this project as a submodule and greatly speeds the generation of kernel required for 2D inversions, as per [Sipkens, Olfert, and Rogak, (2020b)][jas20]).
 
