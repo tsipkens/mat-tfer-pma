@@ -71,7 +71,7 @@ The functions also often share common outputs:
 
 This function parses a series of name-value pairs to output a cohesive structure fully defining the device setpoint, output in the form of `sp` or a *setpoint structure*. A sample set of values for this structure is found below (the precise values will depend on the PMA properties and mass-mobility relation values set in the device):
 
-| Variable | *m*<sup>\*</sup> | *V* | *R*<sub>m</sub> | **ω** | **ω**<sub>1</sub> | **ω**<sub>2</sub> | **α** | **β** | *m*<sub>max</sub> |
+| Variable | *m*<sup>\*</sup> [kg] | *V* [V] | *R*<sub>m</sub> | **ω** [rad/s] | **ω**<sub>1 </sub> [rad/s] | **ω**<sub>2</sub> [rad/s] | **α** [s<sup>-1</sup>] | **β** [m<sup>2</sup>⋅s<sup>-1</sup>] | *m*<sub>max</sub> [kg] |
 | ------ | :------------------------: | :-------: | :--------------------: | :--------------: | :--------------------------: | :--------------------------: | :-------------: | :------------: | :-------------------------: |
 | Field name | `m_star` | `V` | `Rm` | `omega1` | `omega1` | `omega2` | `alpha` | `beta` | `m_max` |
 | 1      |    1.0×10<sup>-20</sup>    |   24.4    |           10           |     2,583.9      |           2,583.5            |           2,505.2            |       176       |      8.66      |    1.1×10<sup>-20</sup>     |

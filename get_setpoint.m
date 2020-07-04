@@ -6,14 +6,14 @@
 %   prop        Properties of particle mass analyzer
 %   varargin    Name-value pairs for setpoint
 %                   (two values required, if one value is specified, uses Rm = 3)
-%                   ('m_star',double) - Setpoint mass in fg (i.e., 1e-18 for a 1 fg particle)
+%                   ('m_star',double) - Setpoint mass in kg (i.e., 1e-18 for a 1 fg particle)
 %                   ('Rm',double) - Resolution
 %                   ('omega1',double) - Angular speed of inner electrode
 %                   ('V',double) - Setpoint voltage
 % 
 % Sample outputs:
 %   sp          Struct containing mutliple setpoint parameters (V, alpha, etc.)
-%   m_star      Setpoint mass, assuming a singly charged particle, in fg
+%   m_star      Setpoint mass, assuming a singly charged particle, in kg
 % 
 % Notes:
 %   As a script, this code uses variables currently in the 
