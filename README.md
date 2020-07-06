@@ -16,7 +16,22 @@ where it is used to speed or improve the accuracy of PMA data inversion.
 
 2. The `test/`  folder contains a series of `main*` scripts in, which are used to call and analyze the transfer function under different conditions. Of particular note is the `main` script that evaluates the full range of available methods and produces figures similar to those in the associate paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20] and poster [(Sipkens, Olfert and Rogak, 2019b)][eac19].
 
-These two components are each discussed in more detail below.
+These two components are discussed in more detail below. A simple set of commands to evaluate the transfer function using this program is: 
+
+``` Matlab
+m_star = 0.01e-18; % define setpoint mass in kg (1 fg = 1e-18 kg)
+m = linspace(0.8, 1.2, 601) .* m_star; % vector of particle masses
+
+prop = prop_pma; % get properties of the CPMA (e.g., r1, r2, etc.)
+
+sp = get_setpoint(prop, 'm_star', m_star, 'Rm', 3);
+	% get setpoint parameters using mass setpoint and resolution
+
+[k_1C, G0_1C] = tfer_1C(sp, m, d, z, prop);
+	% evaluate transfer function using Case 1C
+```
+
+This evaluates the transfer function at a mass setpoint of 0.01 fg and a resolution of 3 (using the default mass-mobility relation and properties specified in the `prop_pma` function). 
 
 ## 1. Upper directory and evaluating the transfer function
 
