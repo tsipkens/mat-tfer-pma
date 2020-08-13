@@ -16,22 +16,53 @@ where it is used to speed or improve the accuracy of PMA data inversion.
 
 2. The `test/`  folder contains a series of `main*` scripts in, which are used to call and analyze the transfer function under different conditions. Of particular note is the `main` script that evaluates the full range of available methods and produces figures similar to those in the associate paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20] and poster [(Sipkens, Olfert and Rogak, 2019b)][eac19].
 
-These two components are discussed in more detail below. A simple set of commands to evaluate the transfer function using this program is: 
+These two components are discussed in more detail below. 
+
+### Demonstration
+
+What follows is a simple set of commands to evaluate the transfer function using this program. To start, define some fundamental properties, including the mass setpoint, `m_star`; the masses at which to evaluate the transfer function, `m`; the mobility diameter of the particles, `d` (note, using `d = []` will result in using the mass-mobility relation, using the values in the `prop` structure defined below); and the integer charge state at which to evaluate the transfer function, `z`:
 
 ``` Matlab
 m_star = 0.01e-18; % define setpoint mass in kg (1 fg = 1e-18 kg)
+
 m = linspace(0.8, 1.2, 601) .* m_star; % vector of particle masses
+d = []; % mobility diameter
+z = 1; % integer charge state
+```
 
-prop = prop_pma; % get properties of the CPMA (e.g., r1, r2, etc.)
+Next, generate a structure that contains the properties of the particle mass analyzer, such as its geometry dimensions:  
 
-sp = get_setpoint(prop, 'm_star', m_star, 'Rm', 3);
+``` Matlab
+prop = prop_pma(); % get properties of the CPMA (e.g., r1, r2, etc.)
+```
+
+The default parameters here correspond to a centrifugal particle mass analyzer (CPMA), where the electrodes rotate at different speed. We could return an aerosol particle mass analyzer (APM) by setting the ratio of electrode speeds to unity, using:
+
+``` Matlab
+prop.omega_hat = 1; % for APM conditions
+```
+
+Now we generate a setpoint structure. This quantity is crucial in this program, taking the `prop` structure generated above and two name-value pair arguments that specify the setpoint for the PMA. For example, using the mass setpoint `m_star` above and a resolution (as defined by [Reavell, Symonds, and Rushton (2011)][reavell]) of 10, we can compute the other relevant parameters to describe the PMA setpoint using:
+
+``` Matlab
+sp = get_setpoint(prop, 'm_star', m_star, 'Rm', 10);
 	% get setpoint parameters using mass setpoint and resolution
+```
 
-[k_1C, G0_1C] = tfer_1C(sp, m, d, z, prop);
+More information on the setpoint structure and the get_setpoint function is provided in Section 1.2 below. Now, let's evaluate the transfer function for some of the cases considered in [Sipkens, Olfert, and Rogak (2020a)][ast20]. For example, for **Case 1C**, where the fluid velocity profile is approximated using a 1st-order Taylor series expansion about the cetnerline radius, one can compute the transfer function as: 
+
+``` Matlab
+[Lambda_1C, ~] = tfer_1C(sp, m, d, z, prop);
 	% evaluate transfer function using Case 1C
 ```
 
-This evaluates the transfer function at a mass setpoint of 0.01 fg and a resolution of 3 (using the default mass-mobility relation and properties specified in the `prop_pma` function). 
+Finally, plotting the transfer function: 
+
+``` Matlab
+plot(m, Lambda_1C);
+```
+
+Overall, this procedure evaluates the transfer function at a mass setpoint of 0.01 fg and a resolution of 10 (using the default mass-mobility relation and properties specified in the `prop_pma` function) using the **Case 1C** expression from [Sipkens, Olfert, and Rogak (2020a)][ast20]. 
 
 ## 1. Upper directory and evaluating the transfer function
 
@@ -186,6 +217,8 @@ This code should be cited by:
 
 [Ehara, K., C. Hagwood, and K. J. Coakley. 1996. Novel method to classify aerosol particles according to their mass-to-charge ratio—Aerosol particle mass analyser. *J. Aerosol Sci.* 27:2, 217–34. DOI: 10.1016/0021-8502(95)00562-5.][ehara96]
 
+[Reavell, K., J. P. R. Symonds, and M. G. Rushton. 2011. Simplified approximations to centrifugal particle mass analyser performance. Poster presented at the European Aerosol Conference, Manchester, UK, September 4.][reavell]
+
 [Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2019. Examination of the methods available to compute the transfer function of CPMA and APM devices. Poster presented at the European Aerosol Conference. Gothenburg, Sweden, August 26.][eac19]
 
 [Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2020a. New approaches to calculate the transfer function of particle mass analyzers. *Aerosol Sci. Technol.* 54:1, 111-127. DOI: 10.1080/02786826.2019.1680794.][ast20]
@@ -196,3 +229,4 @@ This code should be cited by:
 [ast20]: https://doi.org/10.1080/02786826.2019.1680794
 [eac19]: https://www.researchgate.net/publication/336549933_Examination_of_the_methods_available_to_compute_the_transfer_function_of_CPMA_and_APM_devices
 [jas20]: https://doi.org/10.1016/j.jaerosci.2019.105484
+[reavell]: https://www.researchgate.net/publication/267448365_Simplified_Approximations_to_Centrifugal_Particle_Mass_Analyser_Performance
