@@ -18,7 +18,7 @@ where it is used to speed or improve the accuracy of PMA data inversion.
 
 These two components are discussed in more detail below. 
 
-### Demonstration
+### Quick start
 
 What follows is a simple set of commands to evaluate the transfer function using this program. To start, define some fundamental properties, including the mass setpoint, `m_star`; the masses at which to evaluate the transfer function, `m`; the mobility diameter of the particles, `d` (note, using `d = []` will result in using the mass-mobility relation, using the values in the `prop` structure defined below); and the integer charge state at which to evaluate the transfer function, `z`:
 
