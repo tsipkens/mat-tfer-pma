@@ -22,7 +22,7 @@ z = 1; % integer charge state
 
 rho_eff = 900; % effective density
 Dm = 3;
-d = (6.*m./(rho_eff.*pi)).^(1/3);
+d = (6.*m./(rho_eff.*pi)).^(1/Dm);
     % specify mobility diameter vector with constant effective density
 
 prop = prop_pma('olfert'); % get properties of the CPMA
