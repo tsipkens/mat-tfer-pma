@@ -22,7 +22,7 @@ d = (6.*m./(rho_eff.*pi)).^(1/3);
     % specify mobility diameter vector with constant effective density
 
 prop = prop_pma('ehara'); % get properties of the CPMA
-prop.m0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
+prop.m0 = rho_eff * pi / 6 * 1e-27; % copy mass-mobility relation info (only used to find Rm)
 prop.Dm = 3;
 
 sp = get_setpoint(prop,'V',V,'omega',omega);

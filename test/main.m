@@ -20,14 +20,15 @@ m = linspace(0.8,1.2,601).*m_star; % vector of mass
 
 z = 1; % integer charge state
 
-rho_eff = 900; % effective density
+rho_eff100 = 900; % effective density
 Dm = 3;
-m0 = pi * rho_eff / 6 * 100 ^ (3-Dm);
-d = (6.*m./(rho_eff.*pi)).^(1/Dm);
+m100 = rho_eff100 * (pi * (100e-9)^3 / 6);
+m0 = m100 * (1/100) ^ Dm;
+d = 1e-9 .* (m ./ m0) .^ (1/Dm);
     % specify mobility diameter vector with constant effective density
 
 prop = prop_pma('olfert'); % get properties of the CPMA
-prop.m0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
+prop.m0 = m0; % copy mass-mobility relation info (only used to find Rm)
 prop.Dm = Dm;
 
 % prop.omega_hat = 1; % NOTE: Uncomment for APM condition

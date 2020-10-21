@@ -36,7 +36,7 @@ end
 %-------------------------------------------------------------------------%
 
 
-d = (m ./ prop.m0) .^ (1 / prop.Dm);
+d = 1e-9 .* (m ./ prop.m0) .^ (1 / prop.Dm);
     % use mass-mobility relationship to get mobility diameter
 
     
