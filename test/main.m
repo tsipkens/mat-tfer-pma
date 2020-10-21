@@ -22,7 +22,7 @@ z = 1; % integer charge state
 
 rho_eff = 900; % effective density
 Dm = 3;
-m0 = rho_eff*pi/6;
+m0 = pi * rho_eff / 6 * 100 ^ (3-Dm);
 d = (6.*m./(rho_eff.*pi)).^(1/Dm);
     % specify mobility diameter vector with constant effective density
 
