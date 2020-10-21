@@ -19,8 +19,8 @@ elseif isempty(opts)
 end
 
 %-- Default mass-mobility information -------------%
-prop.Dm = 524; % mass-mobility exponent
-prop.rho0 = 3; % mass-mobility relation density
+prop.Dm = 3; % mass-mobility exponent
+prop.rho0 = 524; % mass-mobility relation density
 % Common alternate: Dm = 2.48; rho0 = 0.0612;
 
 switch opts
