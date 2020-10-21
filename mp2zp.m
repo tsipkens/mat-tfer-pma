@@ -28,7 +28,7 @@ if ~exist('P', 'var'); P = []; end
 
 if ~exist('prop', 'var'); prop = []; end
 if or(isempty(prop),...
-        ~and(isfield(prop,'rho0'),...
+        ~and(isfield(prop,'m0'),...
         isfield(prop,'Dm'))) % get parameters for the mass-mobility relation
     error(['Please specify the mass-mobility relation parameters ',...
         'in the prop structure.']);
@@ -36,7 +36,7 @@ end
 %-------------------------------------------------------------------------%
 
 
-d = (m ./ prop.rho0) .^ (1 / prop.Dm);
+d = (m ./ prop.m0) .^ (1 / prop.Dm);
     % use mass-mobility relationship to get mobility diameter
 
     

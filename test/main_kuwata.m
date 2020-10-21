@@ -21,7 +21,7 @@ d = 100e-9.*ones(size(m));
     % specify mobility diameter vector with constant effective density
 
 prop = prop_pma('kuwata'); % get properties of the CPMA
-prop.rho0 = 900*pi/6; % copy mass-mobility relation info (only used to find Rm)
+prop.m0 = 900*pi/6; % copy mass-mobility relation info (only used to find Rm)
 prop.Dm = 3;
 prop.D = @(B) 1e-10.*ones(size(B)); % reduce diffusion
 

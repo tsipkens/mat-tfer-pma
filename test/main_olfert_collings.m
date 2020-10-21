@@ -23,7 +23,7 @@ d = (6.*m./(rho_eff.*pi)).^(1/3);
 
 prop = prop_pma('olfert-collings'); % get properties of the CPMA
 prop.D = @(B) 1e-10.*ones(size(B));
-prop.rho0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
+prop.m0 = rho_eff*pi/6; % copy mass-mobility relation info (only used to find Rm)
 prop.Dm = 3;
 
 prop_cpma = prop;

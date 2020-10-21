@@ -17,7 +17,7 @@ prop = prop_pma('olfert'); % get properties of the CPMA
 % prop.omega_hat = 1; % NOTE: Uncomment for APM condition
 
 rho_eff = 900; % effective density (held constant over integer charge states)
-prop.rho0 = rho_eff * pi / 6; % copy mass-mobility relation info (only used to find Rm)
+prop.m0 = rho_eff * pi / 6; % copy mass-mobility relation info (only used to find Rm)
 prop.Dm = 3;
 
 sp = get_setpoint(prop,'m_star',m_star,'Rm',Rm);
