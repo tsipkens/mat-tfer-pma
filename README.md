@@ -14,7 +14,7 @@ This program contains two main components:
 1. The upper directory contains the relevant functions for evaluating the transfer function of a PMA. A good demonstration of how these functions can be imported into other projects is [mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion),
 where it is used to speed or improve the accuracy of PMA data inversion.
 
-2. The `test/`  folder contains a series of `main*` scripts in, which are used to call and analyze the transfer function under different conditions. Of particular note is the `main` script that evaluates the full range of available methods and produces figures similar to those in the associate paper [(Sipkens, Olfert, and Rogak, 2020a)][ast20] and poster [(Sipkens, Olfert and Rogak, 2019b)][eac19].
+2. The `test/`  folder contains a series of `main*` scripts in, which are used to call and analyze the transfer function under different conditions. Of particular note is the `main` script that evaluates the full range of available methods and produces figures similar to those in the associate paper [(Sipkens, Olfert, and Rogak, 2020b)][ast20] and poster [(Sipkens, Olfert and Rogak, 2020ab)][eac19].
 
 These two components are discussed in more detail below. 
 
@@ -72,7 +72,7 @@ The functions in the upper directory general fall into three categories.
 
 The  `tfer_*` functions form the core of the program and evaluate the transfer function for the various cases presented in the associated work [(Sipkens, Olfert, and Rogak, 2020a)][ast20].
 
-Alphanumeric codes are appended to the filenames and refer to the method or approximation used in transfer function evaluation. Details on these alphanumeric codes are provided in the associated journal article [(Sipkens, Olfert, and Rogak, 2019a)][ast20]. The following acts only as a brief summary:
+Alphanumeric codes are appended to the filenames and refer to the method or approximation used in transfer function evaluation. Details on these alphanumeric codes are provided in the associated journal article [(Sipkens, Olfert, and Rogak, 2020a)][ast20]. The following acts only as a brief summary:
 
 | Code  | Description                                                  |
 | :---- | :----------------------------------------------------------- |
@@ -193,7 +193,7 @@ Other scripts, `main_*` are intended to replicate figures in other works and to 
 
 ## 3. Using this repository in other projects
 
-This program is designed to be used in other projects. The [mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion) project, for example, uses this project as a submodule and greatly speeds the generation of kernel required for 2D inversions, as per [Sipkens, Olfert, and Rogak, (2020b)][jas20]).
+This program is designed to be used in other projects. The [mat-2d-aerosol-inversion](https://github.com/tsipkens/mat-2d-aerosol-inversion) project, for example, uses this project as a submodule and greatly speeds the generation of kernel required for 2D inversions, as per [Sipkens, Olfert, and Rogak, (2020c)][jas20]).
 
 ----------------------------------------------------------------------
 
@@ -209,7 +209,7 @@ This program was written by Timothy A. Sipkens ([tsipkens@mail.ubc.ca](mailto:ts
 
 This code should be cited by:
 
-1. citing the associated journal article describing the particle tracking methods used in this program [(Sipkens, Olfert, and Rogak, 2019a)][ast20], and
+1. citing the associated journal article describing the particle tracking methods used in this program [(Sipkens, Olfert, and Rogak, 2020a)][ast20], and
 
 2. citing the code directly (either using the DOI assigned to the version of code used - see the archived versions of this code on [Zenodo](https://zenodo.org/badge/latestdoi/191454449) - or, less formally, making reference to the GitHub repository at https://github.com/tsipkens/mat-tfer-pma).
 
@@ -219,11 +219,11 @@ This code should be cited by:
 
 [Reavell, K., J. P. R. Symonds, and M. G. Rushton. 2011. Simplified approximations to centrifugal particle mass analyser performance. Poster presented at the European Aerosol Conference, Manchester, UK, September 4.][reavell]
 
-[Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2019. Examination of the methods available to compute the transfer function of CPMA and APM devices. Poster presented at the European Aerosol Conference. Gothenburg, Sweden, August 26.][eac19]
+[Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2020a. Examination of the methods available to compute the transfer function of CPMA and APM devices. Poster presented at the European Aerosol Conference. Gothenburg, Sweden, August 26.][eac19]
 
-[Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2020a. New approaches to calculate the transfer function of particle mass analyzers. *Aerosol Sci. Technol.* 54:1, 111-127. DOI: 10.1080/02786826.2019.1680794.][ast20]
+[Sipkens, T. A., J. S. Olfert, and S. N. Rogak. 2020b. New approaches to calculate the transfer function of particle mass analyzers. *Aerosol Sci. Technol.* 54:1, 111-127. DOI: 10.1080/02786826.2020a.1680794.][ast20]
 
-[Sipkens, T. A., Olfert, J. S., & Rogak, S. N. 2020b. Inversion methods to determine two-dimensional aerosol mass-mobility distributions: A critical comparison of established methods. *J. Aerosol Sci.* 104, 105484. DOI: 10.1016/j.jaerosci.2019.105484][jas20]
+[Sipkens, T. A., Olfert, J. S., & Rogak, S. N. 2020c. Inversion methods to determine two-dimensional aerosol mass-mobility distributions: A critical comparison of established methods. *J. Aerosol Sci.* 104, 105484. DOI: 10.1016/j.jaerosci.2020a.105484][jas20]
 
 [ehara96]: https://doi.org/10.1016/0021-8502(95)00562-5
 [ast20]: https://doi.org/10.1080/02786826.2019.1680794
