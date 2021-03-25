@@ -1,29 +1,30 @@
 
 % PROP_PMA  Generates the prop struct used to summarize CPMA parameters.
-% Author:   Timothy Sipkens, 2019-06-26
-% 
-% Input:
-%   opt         Options string specifying parameter set
-%                   (Optional, default 'Olfert')
-%
-% Output:
-%   prop        Properties struct for use in evaluating transfer function
-%=========================================================================%
+%  
+%  PROP = prop_pma() creates a default PMA properties structure for use in 
+%  evaluating transfer function. This is equiavlent to prop_pma('olfert').
+%  
+%  PROP = prop_pma(SPEC) add a string specifying parameter set. 
+%  
+%  AUTHOR: Timothy Sipkens, 2019-06-26
 
-function [prop] = prop_pma(opts)
+function [prop] = prop_pma(spec)
 
-if ~exist('opts','var') % if type of property set is not specified
-    opts = 'olfert';
-elseif isempty(opts)
-    opts = 'olfert';
+if ~exist('spec', 'var') % if type of property set is not specified
+    spec = 'olfert';
+elseif isempty(spec)
+    spec = 'olfert';
 end
 
 %-- Default mass-mobility information -------------%
 prop.Dm = 3; % mass-mobility exponent
 prop.m0 = 4.7124e-25; % mass-mobility pre-factor
-% Universal relation (Olfert and Rogak): Dm = 2.48; m0 = 2.9280e-24;
 
-switch opts
+% Universal relation (Olfert and Rogak)
+% prop.Dm = 2.48;
+% prop.m0 = 2.9280e-24;
+
+switch spec
 
     %-- CPMA parameters from Olfert lab ----------------------------------%
     case 'olfert'
@@ -99,4 +100,8 @@ kB = 1.3806488e-23; % Boltzmann's constant
 prop.D = @(B) kB.*prop.T.*B; % diffusion coefficient
 
 
+% Fill mass-mobility relation equivalents.
+prop = prop_massmob(prop);
+
 end
+
