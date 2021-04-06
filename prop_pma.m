@@ -68,6 +68,9 @@ switch spec
         prop.Q = 0.5/1000/60; % aerosol flowrate [m^3/s]
         prop.T = 295; % system temperature [K]
         prop.p = 1; % system pressure [atm]
+        
+        prop.m0 = 900 * pi / 6 * 1e-27; % copy mass-mobility relation info (only used to find Rm)
+        prop.Dm = 3;
 
     %-- Parameters from Kuwata --------------------------%
     case 'kuwata'
