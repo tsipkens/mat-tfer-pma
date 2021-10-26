@@ -26,7 +26,8 @@ prop.m0 = 4.7124e-25; % mass-mobility pre-factor
 
 % Read case-specific properties from YAML file.
 % Uses read_yaml(...) method given as a subfunction in this file.
-prop = read_yaml(['prop', filesep, spec, '.yaml'], prop);
+[fd, ~] = fileparts(mfilename('fullpath'));  % get current folder
+prop = read_yaml([fd, filesep, 'prop', filesep, spec, '.yaml'], prop);
 
 
 %-- Parameters related to CPMA geometry ----------------------------------%
