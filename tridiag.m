@@ -18,7 +18,7 @@
 %  a(1) is ignored.
 %=========================================================================%
 
-function x = tridiag(a,b,c,y)
+function x = tridiag(a, b, c, y)
 
 %-- Check that the input arrays have acceptable sizes --------------------%
 N = length(y);
@@ -38,16 +38,16 @@ end
 y(1) = y(1)/b(1);
 
 for ii = 2:N
-    c(ii-1) = c(ii-1)/beta;
-    beta = b(ii) - a(ii)*c(ii-1);
-    y(ii) = (y(ii) - a(ii)*y(ii-1))/beta;
+    c(ii-1) = c(ii-1) / beta;
+    beta = b(ii) - a(ii) * c(ii-1);
+    y(ii) = (y(ii) - a(ii) * y(ii-1)) / beta;
 end
 
 
 %-- Phase 2: Back-substitution -------------------------------------------%
 x(N) = y(N);
 for ii = (N-1):-1:1
-    x(ii) = y(ii) - c(ii)*x(ii+1);
+    x(ii) = y(ii) - c(ii) * x(ii+1);
 end
 
 end

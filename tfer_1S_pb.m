@@ -22,26 +22,30 @@ function [Lambda,G0] = tfer_1S_pb(sp,m,d,z,prop)
         % parse inputs for common parameters
 
 %-- Estimate device parameter --------------------------------------------%
-lam = 2 .* tau .* (sp.alpha^2 - sp.beta^2 ./ (rs.^4)) .* prop.L ./ prop.v_bar;
+lam = 2 .* tau .* ([sp.alpha]' .^ 2 - [sp.beta]' .^ 2 ./ (rs.^4)) .* prop.L ./ prop.v_bar;
 
 A1 = -3 * prop.L ./ (2 .* lam .* prop.del^2);
 A2 = rs.^2 + prop.rc^2 - 2*prop.rc.*rs - prop.del^2;
-A3 = @(r,ii) (r.^2) ./2 + (rs(ii) - 2 * prop.rc) .* r;
 
+% Loop over setpoints.
+Lambda = zeros(size(A1));
+for jj=1:size(Lambda,1)
+    A3 = @(r,ii) (r.^2) ./2 + (rs(jj,ii) - 2 * prop.rc) .* r;
+    
+    %-- Set up F function for minimization -------------------------------%
+    F = @(r,ii) A1(jj,ii) .* (A2(jj,ii) .* log(r - rs(jj,ii)) + A3(r,ii));
+    min_fun = @(rL,r0,ii) F(rL,ii) - F(r0,ii) - prop.L;
 
-%-- Set up F function for minimization -----------------------------------%
-F = @(r,ii) A1(ii) .* (A2(ii) .* log(r - rs(ii)) + A3(r,ii));
-min_fun = @(rL,r0,ii) F(rL,ii) - F(r0,ii) - prop.L;
+    %-- Evaluate G0 and transfer function --------------------------------%
+    G0 = @(r) G_fun(min_fun, r, rs(jj,:), ...
+        prop.r1, prop.r2, sp(jj).alpha, sp(jj).beta);
 
+    ra = min(prop.r2, max(prop.r1, G0(prop.r1)));
+    rb = min(prop.r2, max(prop.r1, G0(prop.r2)));
 
-%-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) G_fun(min_fun, r, rs, prop.r1, prop.r2, sp.alpha, sp.beta);
-
-ra = min(prop.r2, max(prop.r1, G0(prop.r1)));
-rb = min(prop.r2, max(prop.r1, G0(prop.r2)));
-
-Lambda = 3/4 .* (rb - ra) ./ prop.del - 1/4 .* ((rb - prop.rc) ./ prop.del).^3+...
-    1/4 .* ((ra - prop.rc) ./ prop.del).^3;
+    Lambda(jj,:) = 3/4 .* (rb - ra) ./ prop.del - 1/4 .* ((rb - prop.rc) ./ prop.del).^3+...
+        1/4 .* ((ra - prop.rc) ./ prop.del).^3;
+end
 
 end
 

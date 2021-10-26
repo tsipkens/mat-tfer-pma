@@ -21,7 +21,7 @@
 %           the integer charge state and particle mobility. 
 %=========================================================================%
 
-function [tau,C0,D,rs] = parse_inputs(sp,m,d,z,prop)
+function [tau, C0, D, rs] = parse_inputs(sp, m, d, z, prop)
 
 
 %-- Parse inputs ---------------------------------------------------------%
@@ -45,7 +45,7 @@ end
 %-- Evaluate output parameters -------------------------------------------%
 tau = B .* m;
 D = prop.D(B) .* z; % diffusion as a function of mechanical mobiltiy and charge state
-C0 = sp.V .* q ./ log(1/prop.r_hat); % calcualte recurring C0 parameter
+C0 = [sp.V]' .* q ./ log(1/prop.r_hat); % calcualte recurring C0 parameter
 
 if nargout>=4 % if required, calculate equilbirium radius
 % Note: Whether to pick the +ive of -ive root for rs is chosen based on a
@@ -54,22 +54,22 @@ if nargout>=4 % if required, calculate equilbirium radius
 % conditions, where the +ive root should always be used).
     
     % evaluate +ive and -ive roots
-    r_m = (sqrt(C0./m) - ...
-        sqrt(C0./m - 4*sp.alpha*sp.beta)) ./ (2*sp.alpha);
-    r_p = (sqrt(C0./m) + ...
-        sqrt(C0./m - 4*sp.alpha*sp.beta)) ./ (2*sp.alpha);
+    r_m = (sqrt(C0 ./ m) - ...
+        sqrt(C0 ./ m - 4 .* [sp.alpha]' .* [sp.beta]')) ./ (2 .* [sp.alpha]');
+    r_p = (sqrt(C0 ./ m) + ...
+        sqrt(C0 ./ m - 4 .* [sp.alpha]' .* [sp.beta]')) ./ (2 .* [sp.alpha]');
     
     % determine which root is closer to centerline radius
-    [~,idx] = min([abs(r_m-prop.rc); abs(r_p-prop.rc)]);
-    idx(r_m==0) = 2; % avoid zero values for APM case
+    bo = abs(r_m-prop.rc) > abs(r_p-prop.rc);
+    bo(r_m==0) = 1; % avoid zero values for APM case
     
     % assign one of the two roots to rs
     rs = r_m; % by default use -ive root
-    rs(idx==2) = r_p(idx==2); % if closer to +ive root, use +ive root
+    rs(bo) = r_p(bo); % if closer to +ive root, use +ive root
     
     
     % zero out cases where no equilibrium radius exists (also removes complex numbers)
-    rs(C0./m < (4*sp.alpha*sp.beta)) = 0;
+    rs(C0 ./ m < (4 .* [sp.alpha]' .* [sp.beta]')) = 0;
 end
 
 

@@ -17,13 +17,13 @@
 
 function [Lambda] = tfer_tri(sp,m,~,~,~)
 
-m_del = sp.m_max-sp.m_star; % FWHM of the transfer function (related to resolution)
-m_min = 2.*sp.m_star-sp.m_max; % lower end of the transfer function
+m_del = [sp.m_max]' - [sp.m_star]'; % FWHM of the transfer function (related to resolution)
+m_min = 2 .* [sp.m_star]' - [sp.m_max]'; % lower end of the transfer function
 
-Lambda = zeros(size(m))+...
-    (m<=sp.m_star).*(m>m_min).*(m-m_min)./m_del+...
-    (m>sp.m_star).*(m<sp.m_max).*((sp.m_star-m)./m_del+1);
-        % evaluate the transfer function
+% Evaluate the transfer function.
+Lambda = zeros(length(sp), length(m))+...
+    (m <= [sp.m_star]') .* (m > m_min) .* (m - m_min) ./ m_del + ...
+    (m > [sp.m_star]') .* (m < [sp.m_max]') .* (([sp.m_star]' - m) ./ m_del + 1);
 
 end
 

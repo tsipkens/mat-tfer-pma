@@ -16,40 +16,41 @@
 %   G0          Function mapping final to initial radial position
 %=========================================================================%
 
-function [Lambda,G0] = tfer_W1_pb(sp,m,d,z,prop)
+function [Lambda, G0] = tfer_W1_pb(sp, m, d, z, prop)
 
-[tau,C0] = parse_inputs(sp,m,d,z,prop);
+[tau, C0, ~, rs] = parse_inputs(sp, m, d, z, prop);
         % parse inputs for common parameters
 
-%-- Estimate equilibrium radius ------------------------------------------%
-if round((sqrt(C0./m_star)-sqrt(C0./m_star-4*sp.alpha*sp.beta))/(2*sp.alpha),15)==prop.rc
-    rs = real((sqrt(C0./m)-sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha)); % equiblirium radius for a given mass
-else
-    rs = real((sqrt(C0./m)+sqrt(C0./m-4*sp.alpha*sp.beta))./(2*sp.alpha)); % equiblirium radius for a given mass
-end
-
-
 %-- Estimate recurring quantities ----------------------------------------%
-A1 = -3.*prop.v_bar./(4.*tau.*sp.omega1.^4.*prop.del^2);
-A2 = sp.omega1.^2.*(prop.rc^2-prop.del^2)+C0./m;
-A3 = 4*prop.rc.*sp.omega1.*sqrt(C0./m);
-A4 = @(r,ii) sp.omega1.^2.*(r.^2-4*prop.rc.*r);
+A1 = -3 .* prop.v_bar ./ (4 .* tau .* [sp.omega1]' .^ 4 .* prop.del .^ 2);
+A2 = [sp.omega1]' .^ 2 .* (prop.rc .^ 2 - prop.del .^ 2) + C0 ./ m;
+A3 = 4 .* prop.rc .* [sp.omega1]' .* sqrt(C0 ./ m);
 
 
-%-- Set up F function for minimization -----------------------------------%
-F = @(r,ii) A1(ii).*(A2(ii).*log(C0./m(ii)-(sp.omega1.*r).^2)+...
-    A3(ii).*atanh(sqrt(m(ii)./C0).*sp.omega1.*r)+A4(r,ii));
-min_fun = @(rL,r0,ii) F(rL,ii)-F(r0,ii)-prop.L;
+% Loop over setpoints.
+Lambda = zeros(size(A1));
+for jj=1:size(Lambda,1)
+    
+    A4 = @(r,ii) sp(jj).omega1 .^ 2 .* (r .^ 2 - 4 .* prop.rc .* r);
+    
+    %-- Set up F function for minimization -------------------------------%
+    F = @(r,ii) A1(jj,ii) .* (A2(jj,ii) .* log(C0(jj) ./ m(ii) - ...
+        (sp(jj).omega1 .* r) .^2 )+...
+        A3(jj,ii) .* atanh(sqrt(m(ii) ./ C0(jj)) .* sp(jj).omega1 .* r) + ...
+        A4(r, ii));
+    min_fun = @(rL,r0,ii) F(rL,ii) - F(r0,ii) - prop.L;
 
+    %-- Evaluate G0 and transfer function --------------------------------%
+    G0 = @(r) G_fun(min_fun, r, rs(jj,:), ...
+        prop.r1, prop.r2, sp(jj).alpha, sp(jj).beta);
 
-%-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) G_fun(min_fun,r,rs,prop.r1,prop.r2,sp.alpha,sp.beta);
+    ra = min(prop.r2, max(prop.r1, G0(prop.r1)));
+    rb = min(prop.r2, max(prop.r1, G0(prop.r2)));
 
-ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
-rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
-
-Lambda = 3/4.*(rb-ra)./prop.del-1/4.*((rb-prop.rc)./prop.del).^3+...
-    1/4.*((ra-prop.rc)./prop.del).^3;
+    Lambda(jj,:) = 3/4 .* (rb - ra) ./ prop.del - ...
+        1/4 .* ((rb - prop.rc) ./ prop.del) .^ 3 + ...
+        1/4 .* ((ra - prop.rc) ./ prop.del) .^ 3;
+end
 
 end
 

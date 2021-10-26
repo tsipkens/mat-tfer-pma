@@ -15,20 +15,23 @@
 %   Lambda      Transfer function
 %=========================================================================%
 
-function [Lambda] = tfer_ehara(sp,m,d,z,prop)
+function [Lambda] = tfer_ehara(sp, m, d, z, prop)
 
-[tau,~,~,rs] = parse_inputs(sp,m,d,z,prop);
+[tau, ~, ~, rs] = parse_inputs(sp, m, d, z, prop);
         % parse inputs for common parameters
 
 %-- Estimate device parameter --------------------------------------------%
-lam = 2.*tau.*(sp.alpha^2-sp.beta^2./(rs.^4)).*prop.L./prop.v_bar;
+lam = 2 .* tau .* ([sp.alpha]' .^ 2 - ...
+    [sp.beta]' .^ 2 ./ (rs .^ 4)) .* prop.L ./ prop.v_bar;
 
 
 %-- Evaluate transfer function -------------------------------------------%
-rho_s = (rs-prop.rc)/prop.del;
-Lambda = ((1-rho_s)+(1+rho_s).*exp(-lam))./2.*and(1<rho_s,rho_s<coth(lam./2))+...
-    exp(-lam).*and(-1<rho_s,rho_s<1)+...
-    ((1+rho_s)+(1-rho_s).*exp(-lam))./2.*and(-coth(lam./2)<rho_s,rho_s<-1);
+rho_s = (rs - prop.rc) ./ prop.del;
+Lambda = ((1 - rho_s) + (1 + rho_s) .* exp(-lam)) ./ 2 .* ...
+    and(1 < rho_s, rho_s<coth(lam ./ 2)) + ...
+    exp(-lam) .* and(-1 < rho_s, rho_s < 1) + ...
+    ((1 + rho_s) + (1 - rho_s) .* ...
+    exp(-lam)) ./ 2 .* and(-coth(lam ./ 2) < rho_s, rho_s < -1);
 
 
 end

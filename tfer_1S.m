@@ -16,13 +16,13 @@
 %   G0          Function mapping final to initial radial position
 %=========================================================================%
 
-function [Lambda,G0] = tfer_1S(sp,m,d,z,prop)
+function [Lambda, G0] = tfer_1S(sp, m, d, z, prop)
 
-[tau,~,~,rs] = parse_inputs(sp, m, d, z, prop);
+[tau, ~, ~, rs] = parse_inputs(sp, m, d, z, prop);
         % parse inputs for common parameters
 
 %-- Estimate device parameter --------------------------------------------%
-lam = 2 .* tau .* (sp.alpha^2 - sp.beta^2 ./ (rs.^4)) .* prop.L ./ prop.v_bar;
+lam = 2 .* tau .* ([sp.alpha]' .^ 2 - [sp.beta]' .^ 2 ./ (rs .^ 4)) .* prop.L ./ prop.v_bar;
 
 
 %-- Evaluate G0 and transfer function ------------------------------------%

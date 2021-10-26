@@ -16,23 +16,29 @@
 %   G0          Function mapping final to initial radial position
 %=========================================================================%
 
-function [Lambda,G0] = tfer_W1(sp,m,d,z,prop)
+function [Lambda, G0] = tfer_W1(sp, m, d, z, prop)
 
-[tau,C0,~,rs] = parse_inputs(sp,m,d,z,prop);
+if prop.omega_hat ~= 1
+    warning(['WARNING: omega_hat ~= 1! ', ...
+        '<strong>tfer_W1</strong> output is likely inaccurate.'])
+end
+
+[tau, C0, ~, rs] = parse_inputs(sp, m, d, z, prop);
         % parse inputs for common parameters
 
 %-- Estimate device parameter --------------------------------------------%
-lam = 2.*tau.*(sp.alpha^2-sp.beta^2./(rs.^4)).*prop.L./prop.v_bar;
+lam = 2 .* tau .* ([sp.alpha]' .^ 2 - ...
+    [sp.beta]' .^ 2 ./ (rs .^ 4)) .* prop.L ./ prop.v_bar;
 
 
 %-- Evaluate G0 and transfer function ------------------------------------%
-G0 = @(r) 1./(sp.omega1.*sqrt(m)).*...
-    sqrt((m.*sp.omega1^2.*r.^2-C0).*exp(-lam)+C0);
+G0 = @(r) 1 ./ ([sp.omega1]' .* sqrt(m)).*...
+    sqrt((m .* [sp.omega1]' .^ 2 .* r .^ 2 - C0) .* exp(-lam) + C0);
 
-ra = min(prop.r2,max(prop.r1,G0(prop.r1)));
-rb = min(prop.r2,max(prop.r1,G0(prop.r2)));
+ra = min(prop.r2, max(prop.r1, G0(prop.r1)));
+rb = min(prop.r2, max(prop.r1, G0(prop.r2)));
 
-Lambda = (1/(2*prop.del)).*(rb-ra);
+Lambda = (1 ./ (2 .* prop.del)) .* (rb - ra);
 
 end
 
