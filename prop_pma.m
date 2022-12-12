@@ -27,7 +27,7 @@ prop.m0 = 4.7124e-25; % mass-mobility pre-factor
 % Read case-specific properties from YAML file.
 % Uses read_yaml(...) method given as a subfunction in this file.
 [fd, ~] = fileparts(mfilename('fullpath'));  % get current folder
-prop = read_yaml([fd, filesep, 'prop', filesep, spec, '.yaml'], prop);
+prop = read_yaml([spec, '.yaml'], prop);
 
 
 %-- Parameters related to CPMA geometry ----------------------------------%
@@ -64,7 +64,7 @@ if ~exist('prop', 'var'); prop = []; end
 if isempty(prop); prop = struct(); end
 
 % If file of presets does not exist.
-if ~isfile(file_path)
+if and(~isfile(file_path), ~isfile(['prop', filesep, file_path]))
     error(['PMA properties not available for provided case. ',...
             'Try a different string in the `prop_pma(str)` call.']);
 end
