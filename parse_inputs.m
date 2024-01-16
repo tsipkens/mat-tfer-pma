@@ -44,7 +44,7 @@ end
 
 %-- Evaluate output parameters -------------------------------------------%
 tau = B .* m;
-D = prop.D(B) .* z; % diffusion as a function of mechanical mobiltiy and charge state
+D = prop.D(B); % diffusion as a function of mechanical mobiltiy and charge state
 C0 = [sp.V]' .* q ./ log(1/prop.r_hat); % calcualte recurring C0 parameter
 
 if nargout>=4 % if required, calculate equilbirium radius
